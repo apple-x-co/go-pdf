@@ -52,49 +52,49 @@ func main() {
 		fmt.Println("error:", err)
 		return
 	}
-	fmt.Printf("%v\n", decoded)
-
-	aaa(decoded)
-
-	//for _, linerLayout := range decoded.LinearLayouts {
-	//	fmt.Printf("orientation: %v\n", linerLayout.Orientation)
-	//
-	//	for _, element := range linerLayout.Elements {
-	//		fmt.Printf("type: %v\n", element.Type)
-	//	}
-	//}
-
-	//--------------------------------------------------------------------
+	//fmt.Printf("%v\n", decoded)
 
 	pdf := gopdf.GoPdf{}
 	pdf.Start(gopdf.Config{PageSize: *gopdf.PageSizeA4})
-	pdf.AddPage()
 	if err := pdf.AddTTFFont("default", *ttfPath); err != nil {
 		log.Print(err.Error())
 		return
 	}
-	err = pdf.SetFont("default", "", 14)
-	if err != nil {
+	if err := pdf.SetFont("default", "", 14); err != nil {
 		log.Print(err.Error())
 		return
 	}
-	_ = pdf.Cell(nil, "あいうえお")
-	_ = pdf.WritePdf(*outputPath)
+
+	drawPdf(&pdf, decoded)
+
+	if err := pdf.WritePdf(*outputPath); err != nil {
+		log.Print(err.Error())
+		return
+	}
+
+	_ = pdf.Close()
 }
 
-func aaa(linerLayout types.LinerLayout) {
+func drawPdf(pdf *gopdf.GoPdf, linerLayout types.LinerLayout) {
 
 	fmt.Printf("orientation: %v\n", linerLayout.Orientation)
 
+	pdf.AddPage() // todo: 出力ごとに今の高さを調べて、必要なときに自動改行を行うようにする
+
 	for _, element := range linerLayout.Elements {
-		fmt.Printf("%v\n", element)
-
-		//fmt.Printf("element: %v\n", element)
-
-		//fmt.Printf("type: %v\n", element.Type)
+		switch element.Type {
+		case "text":
+			var decoded types.ElementText
+			_ = json.Unmarshal(element.Attributes, &decoded)
+			_ = pdf.Cell(nil, decoded.Text)
+		case "image":
+			var decoded types.ElementImage
+			_ = json.Unmarshal(element.Attributes, &decoded)
+			_ = pdf.Cell(nil, decoded.Path)
+		}
 	}
 
 	for _, linerLayout := range linerLayout.LinearLayouts {
-		aaa(linerLayout)
+		drawPdf(pdf, linerLayout)
 	}
 }

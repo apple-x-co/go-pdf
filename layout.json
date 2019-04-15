@@ -6,7 +6,15 @@
       "elements": [
         {
           "type": "text",
-          "text": "abc"
+          "attributes": {
+            "text": "def"
+          }
+        },
+        {
+          "type": "image",
+          "attributes": {
+            "path": "sample2.png"
+          }
         }
       ]
     }
@@ -14,7 +22,15 @@
   "elements": [
     {
       "type": "text",
-      "text": "abc"
+      "attributes": {
+        "text": "abc"
+      }
+    },
+    {
+      "type": "image",
+      "attributes": {
+        "path": "sample.png"
+      }
     }
   ]
 }
