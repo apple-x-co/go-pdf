@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/signintech/gopdf"
+	"log"
 
 	flag "github.com/spf13/pflag"
 )
@@ -14,6 +15,7 @@ func main() {
 	var (
 		inputPath   = flag.StringP("in", "i", "go-pdf.json", "file path of input json.")
 		outputPath  = flag.StringP("out", "o", "go-pdf.pdf", "file path of output pdf.")
+		ttfPath     = flag.StringP("ttf", "t", "go-pdf.pdf", "file path of ttf.")
 		showHelp    = flag.BoolP("help", "h", false, "show help message")
 		showVersion = flag.BoolP("version", "v", false, "show version")
 	)
@@ -33,17 +35,16 @@ func main() {
 	pdf := gopdf.GoPdf{}
 	pdf.Start(gopdf.Config{PageSize: *gopdf.PageSizeA4})
 	pdf.AddPage()
-	//err := pdf.AddTTFFont("wts11", "../ttf/wts11.ttf")
-	//if err != nil {
-	//	log.Print(err.Error())
-	//	return
-	//}
-	//
-	//err = pdf.SetFont("wts11", "", 14)
-	//if err != nil {
-	//	log.Print(err.Error())
-	//	return
-	//}
-	//pdf.Cell(nil, "您好")
+	err := pdf.AddTTFFont("default", *ttfPath)
+	if err != nil {
+		log.Print(err.Error())
+		return
+	}
+	err = pdf.SetFont("default", "", 14)
+	if err != nil {
+		log.Print(err.Error())
+		return
+	}
+	_ = pdf.Cell(nil, "あいうえお")
 	_ = pdf.WritePdf(*outputPath)
 }

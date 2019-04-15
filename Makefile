@@ -36,4 +36,4 @@ clean:
 .PHONY: ci-test
 ci-test:
 	if [ ! -d work ]; then mkdir work; fi
-	./bin/$(BIN)-dev-mac --in go-pdf.json --out work/go-pdf.pdf
+	./bin/$(BIN)-dev-mac --in go-pdf.json --out work/go-pdf.pdf --ttf fonts/TakaoPGothic.ttf
