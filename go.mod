@@ -1,4 +1,4 @@
-module go-pdf
+module apple-x-co/go-pdf
 
 go 1.12
 
