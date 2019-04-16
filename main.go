@@ -154,12 +154,16 @@ func drawPdf(pdf *gopdf.GoPdf, page types.Page, linerLayout types.LinerLayout) {
 				}
 			}
 
-			_ = pdf.Image(decoded.Path, pdf.GetX(), pdf.GetY(), &imageRect)
+			if decoded.X != 0 || decoded.Y != 0 {
+				_ = pdf.Image(decoded.Path, decoded.X, decoded.Y, &imageRect)
+			} else {
+				_ = pdf.Image(decoded.Path, pdf.GetX(), pdf.GetY(), &imageRect)
 
-			if linerLayout.IsHorizontal() {
-				pdf.SetX(pdf.GetX() + imageRect.W)
-			} else if linerLayout.IsVertical() {
-				pdf.SetY(pdf.GetY() + imageRect.H)
+				if linerLayout.IsHorizontal() {
+					pdf.SetX(pdf.GetX() + imageRect.W)
+				} else if linerLayout.IsVertical() {
+					pdf.SetY(pdf.GetY() + imageRect.H)
+				}
 			}
 		}
 	}

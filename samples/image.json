@@ -52,6 +52,14 @@
               "width": 100,
               "height": 100
             }
+          },
+          {
+            "type": "image",
+            "attributes": {
+              "path": "work/sample4.png",
+              "x": 500,
+              "y": 0
+            }
           }
         ]
       }

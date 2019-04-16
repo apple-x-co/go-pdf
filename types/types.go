@@ -50,4 +50,6 @@ type ElementImage struct {
 	Path   string  `json:"path"`
 	Width  float64 `json:"width"`
 	Height float64 `json:"height"`
+	X      float64 `json:"x"`
+	Y      float64 `json:"y"`
 }
