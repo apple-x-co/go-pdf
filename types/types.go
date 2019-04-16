@@ -3,11 +3,12 @@ package types
 import "encoding/json"
 
 type PDF struct {
-	Width      float64 `json:"width"`
-	Height     float64 `json:"height"`
-	LineHeight float64 `json:"line_height"`
-	TextColor  Color   `json:"text_color"`
-	Pages      []Page  `json:"pages"`
+	Width         float64 `json:"width"`
+	Height        float64 `json:"height"`
+	LineHeight    float64 `json:"line_height"`
+	TextColor     Color   `json:"text_color"`
+	Pages         []Page  `json:"pages"`
+	AutoPageBreak bool    `json:"auto_page_break,string"`
 }
 
 type Page struct {

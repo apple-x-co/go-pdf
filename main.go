@@ -47,7 +47,7 @@ func main() {
 		return
 	}
 
-	var pdf = types.PDF{LineHeight: 20, TextColor: types.Color{R: 0, G: 0, B: 0}}
+	var pdf = types.PDF{LineHeight: 20, TextColor: types.Color{R: 0, G: 0, B: 0}, AutoPageBreak: true}
 	bytes := []byte(string(b))
 	if err := json.Unmarshal(bytes, &pdf); err != nil {
 		fmt.Println("error:", err)
@@ -160,6 +160,10 @@ func drawPdf(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout) {
 				} else {
 					gp.Br(20)
 				}
+			}
+
+			if gp.GetY()+imageRect.H > pdf.Height && pdf.AutoPageBreak {
+				gp.AddPage()
 			}
 
 			if decoded.X != 0 || decoded.Y != 0 {
