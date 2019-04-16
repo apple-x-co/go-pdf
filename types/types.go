@@ -6,9 +6,18 @@ type PDF struct {
 	Width         float64 `json:"width"`
 	Height        float64 `json:"height"`
 	LineHeight    float64 `json:"line_height"`
+	TextSize      int     `json:"text_size"`
 	TextColor     Color   `json:"text_color"`
 	Pages         []Page  `json:"pages"`
 	AutoPageBreak bool    `json:"auto_page_break,string"`
+	textCapHeight float64 `json:"text_cap_height"`
+}
+
+func (P *PDF) TextCapHeight() float64 {
+	return P.textCapHeight
+}
+func (P *PDF) SetTextCapHeight(textCapHeight float64) {
+	P.textCapHeight = textCapHeight
 }
 
 type Page struct {

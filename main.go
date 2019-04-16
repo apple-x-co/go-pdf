@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/signintech/gopdf"
+	"github.com/signintech/gopdf/fontmaker/core"
 	"image"
 	"io/ioutil"
 	"log"
@@ -47,7 +48,7 @@ func main() {
 		return
 	}
 
-	var pdf = types.PDF{LineHeight: 20, TextColor: types.Color{R: 0, G: 0, B: 0}, AutoPageBreak: true}
+	var pdf = types.PDF{LineHeight: 20, TextSize: 14, TextColor: types.Color{R: 0, G: 0, B: 0}, AutoPageBreak: true}
 	bytes := []byte(string(b))
 	if err := json.Unmarshal(bytes, &pdf); err != nil {
 		fmt.Println("error:", err)
@@ -61,10 +62,17 @@ func main() {
 		log.Print(err.Error())
 		return
 	}
-	if err := gp.SetFont("default", "", 14); err != nil {
+	if err := gp.SetFont("default", "", pdf.TextSize); err != nil {
 		log.Print(err.Error())
 		return
 	}
+
+	var parser core.TTFParser
+	if err := parser.Parse(*ttfPath); err != nil {
+		log.Print(err.Error())
+		return
+	}
+	pdf.SetTextCapHeight(float64(float64(parser.CapHeight()) * 1000.00 / float64(parser.UnitsPerEm())))
 
 	gp.SetTextColor(pdf.TextColor.R, pdf.TextColor.G, pdf.TextColor.B)
 
@@ -102,19 +110,20 @@ func drawPdf(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout) {
 			var decoded = types.ElementText{Color: types.Color{R: pdf.TextColor.R, G: pdf.TextColor.G, B: pdf.TextColor.B}, Width: -1, Height: -1}
 			_ = json.Unmarshal(element.Attributes, &decoded)
 
-			var measureRect gopdf.Rect
+			var textRect gopdf.Rect
 
 			if decoded.Width != -1 || decoded.Height != -1 {
-				measureRect = gopdf.Rect{W: decoded.Width, H: decoded.Height}
+				textRect = gopdf.Rect{W: decoded.Width, H: decoded.Height}
 			} else {
 				measureWidth, _ := gp.MeasureTextWidth(decoded.Text)
-				measureRect = gopdf.Rect{W: measureWidth, H: 0}
+				measureHeight := pdf.TextCapHeight() * (float64(pdf.TextSize) / 1000.0)
+				textRect = gopdf.Rect{W: measureWidth, H: measureHeight}
 			}
 
 			gp.SetTextColor(decoded.Color.R, decoded.Color.G, decoded.Color.B)
 
 			if linerLayout.IsHorizontal() {
-				if x+measureRect.W > width {
+				if x+textRect.W > width {
 					if lineHeight := linerLayout.LineHeight; lineHeight != 0 {
 						gp.Br(lineHeight)
 					} else if lineHeight := pdf.LineHeight; lineHeight != 0 {
@@ -124,9 +133,18 @@ func drawPdf(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout) {
 					}
 				}
 
-				_ = gp.Cell(&measureRect, decoded.Text)
+				// todo: 実際のページの高さより早く改ページしてしまっている。
+				if gp.GetY()+textRect.H > pdf.Height && pdf.AutoPageBreak {
+					gp.AddPage()
+				}
+
+				_ = gp.Cell(&textRect, decoded.Text)
 			} else if linerLayout.IsVertical() {
-				_ = gp.Cell(&measureRect, decoded.Text)
+				if gp.GetY()+textRect.H > pdf.Height && pdf.AutoPageBreak {
+					gp.AddPage()
+				}
+
+				_ = gp.Cell(&textRect, decoded.Text)
 				gp.SetX(gp.MarginLeft())
 				gp.SetY(gp.GetY() + linerLayout.LineHeight)
 			}
