@@ -20,7 +20,7 @@
               {
                 "type": "text",
                 "attributes": {
-                  "text": "abcdefghijklmn01",
+                  "text": "1page",
                   "color": {
                     "r": 0,
                     "g": 0,
@@ -1009,7 +1009,7 @@
               {
                 "type": "text",
                 "attributes": {
-                  "text": "abcdefghijklmn01",
+                  "text": "2page",
                   "color": {
                     "r": 0,
                     "g": 0,
