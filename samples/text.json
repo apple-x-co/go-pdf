@@ -1,0 +1,57 @@
+{
+  "width": 595,
+  "height": 842,
+  "line_height": 50,
+  "liner_layout": {
+    "orientation": "vertical",
+    "linear_layouts": [
+      {
+        "orientation": "horizontal",
+        "elements": [
+          {
+            "type": "text",
+            "attributes": {
+              "text": "abcdefghijklmn01"
+            }
+          },
+          {
+            "type": "line_break",
+            "attributes": {
+              "height": 20
+            }
+          },
+          {
+            "type": "text",
+            "attributes": {
+              "text": "abcdefghijklmn02"
+            }
+          },
+          {
+            "type": "text",
+            "attributes": {
+              "text": "abcdefghijklmn03"
+            }
+          },
+          {
+            "type": "text",
+            "attributes": {
+              "text": "abcdefghijklmn04"
+            }
+          },
+          {
+            "type": "text",
+            "attributes": {
+              "text": "abcdefghijklmn05"
+            }
+          },
+          {
+            "type": "text",
+            "attributes": {
+              "text": "abcdefghijklmn06"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
