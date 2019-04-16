@@ -50,6 +50,18 @@
             "attributes": {
               "text": "abcdefghijklmn06"
             }
+          },
+          {
+            "type": "line_break",
+            "attributes": {
+              "height": 20
+            }
+          },
+          {
+            "type": "text",
+            "attributes": {
+              "text": "abcdefghijklmn07"
+            }
           }
         ]
       }

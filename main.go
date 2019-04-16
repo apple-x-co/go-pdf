@@ -55,7 +55,7 @@ func main() {
 	//fmt.Printf("%v\n", page)
 
 	pdf := gopdf.GoPdf{}
-	pdf.Start(gopdf.Config{PageSize: gopdf.Rect{W: page.Width, H: page.Height}})
+	pdf.Start(gopdf.Config{PageSize: gopdf.Rect{W: page.Width, H: page.Height}, Unit: gopdf.Unit_PT})
 	if err := pdf.AddTTFFont("default", *ttfPath); err != nil {
 		log.Print(err.Error())
 		return
@@ -87,7 +87,7 @@ func drawPdf(pdf *gopdf.GoPdf, page types.Page, linerLayout types.LinerLayout) {
 	fmt.Printf("orientation: %v\n", linerLayout.Orientation)
 
 	width := page.Width - pdf.MarginLeft() - pdf.MarginRight()
-	height := page.Height - pdf.MarginTop() - pdf.MarginBottom()
+	//height := page.Height - pdf.MarginTop() - pdf.MarginBottom()
 
 	for _, element := range linerLayout.Elements {
 		x := pdf.GetX()
@@ -104,31 +104,25 @@ func drawPdf(pdf *gopdf.GoPdf, page types.Page, linerLayout types.LinerLayout) {
 			_ = json.Unmarshal(element.Attributes, &decoded)
 
 			measureWidth, _ := pdf.MeasureTextWidth(decoded.Text)
-			fmt.Printf("------------------\n")
-			fmt.Printf("text: %v\n", decoded.Text)
-			fmt.Printf("x: %v\n", x)
-			fmt.Printf("measureWidth: %v\n", measureWidth)
-			fmt.Printf("width: %v\n", width)
-			fmt.Printf("height: %v\n", height)
-			if x+measureWidth > width {
-				fmt.Printf("break!!\n")
-				if lineHeight := linerLayout.LineHeight; lineHeight != 0 {
-					pdf.Br(lineHeight)
-				} else if lineHeight := page.LineHeight; lineHeight != 0 {
-					pdf.Br(lineHeight)
-				} else {
-					pdf.Br(20)
+			measureRect := gopdf.Rect{W: measureWidth, H: 0}
+
+			if linerLayout.IsHorizontal() {
+				if x+measureWidth > width {
+					fmt.Printf("break!!\n")
+					if lineHeight := linerLayout.LineHeight; lineHeight != 0 {
+						pdf.Br(lineHeight)
+					} else if lineHeight := page.LineHeight; lineHeight != 0 {
+						pdf.Br(lineHeight)
+					} else {
+						pdf.Br(20)
+					}
 				}
-			}
 
-			// todo: 文字描画に必要な矩形を取得
-			// todo: 現在の座標位置と縦横サイズと矩形を比較して、次の行に入る場合は改行。入らない場合は改ページをする
-			_ = pdf.Cell(nil, decoded.Text)
-			//_ = pdf.MultiCell(nil, decoded.Text)
-
-			if linerLayout.IsVertical() {
+				_ = pdf.Cell(&measureRect, decoded.Text)
+			} else if linerLayout.IsVertical() {
+				_ = pdf.Cell(&measureRect, decoded.Text)
 				pdf.SetX(pdf.MarginLeft())
-				//pdf.SetY()
+				pdf.SetY(pdf.GetY() + linerLayout.LineHeight)
 			}
 
 		case "image":
