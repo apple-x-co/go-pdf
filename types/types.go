@@ -49,8 +49,10 @@ type ElementLineBreak struct {
 }
 
 type ElementText struct {
-	Text  string `json:"text"`
-	Color Color  `json:"color"`
+	Text   string  `json:"text"`
+	Color  Color   `json:"color"`
+	Width  float64 `json:"width"`
+	Height float64 `json:"height"`
 }
 
 type ElementImage struct {

@@ -36,7 +36,9 @@
               {
                 "type": "text",
                 "attributes": {
-                  "text": "abcdefghijklmn02"
+                  "text": "abcdefghijklmn02",
+                  "width": 200,
+                  "height": 200
                 }
               },
               {

@@ -99,16 +99,22 @@ func drawPdf(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout) {
 			gp.Br(decoded.Height)
 
 		case "text":
-			var decoded = types.ElementText{Color: types.Color{R: pdf.TextColor.R, G: pdf.TextColor.G, B: pdf.TextColor.B}}
+			var decoded = types.ElementText{Color: types.Color{R: pdf.TextColor.R, G: pdf.TextColor.G, B: pdf.TextColor.B}, Width: -1, Height: -1}
 			_ = json.Unmarshal(element.Attributes, &decoded)
 
-			measureWidth, _ := gp.MeasureTextWidth(decoded.Text)
-			measureRect := gopdf.Rect{W: measureWidth, H: 0}
+			var measureRect gopdf.Rect
+
+			if decoded.Width != -1 || decoded.Height != -1 {
+				measureRect = gopdf.Rect{W: decoded.Width, H: decoded.Height}
+			} else {
+				measureWidth, _ := gp.MeasureTextWidth(decoded.Text)
+				measureRect = gopdf.Rect{W: measureWidth, H: 0}
+			}
 
 			gp.SetTextColor(decoded.Color.R, decoded.Color.G, decoded.Color.B)
 
 			if linerLayout.IsHorizontal() {
-				if x+measureWidth > width {
+				if x+measureRect.W > width {
 					if lineHeight := linerLayout.LineHeight; lineHeight != 0 {
 						gp.Br(lineHeight)
 					} else if lineHeight := pdf.LineHeight; lineHeight != 0 {
@@ -128,24 +134,24 @@ func drawPdf(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout) {
 			gp.SetTextColor(pdf.TextColor.R, pdf.TextColor.G, pdf.TextColor.B)
 
 		case "image":
-			var decoded types.ElementImage
+			var decoded = types.ElementImage{X: -1, Y: -1, Width: -1, Height: -1}
 			_ = json.Unmarshal(element.Attributes, &decoded)
 
 			imageRect := gopdf.Rect{}
-			if decoded.Width != 0 && decoded.Height != 0 {
+			if decoded.Width != -1 && decoded.Height != -1 {
 				imageRect.W = decoded.Width
 				imageRect.H = decoded.Height
-			} else if decoded.Width == 0 && decoded.Height == 0 {
+			} else if decoded.Width == -1 && decoded.Height == -1 {
 				file, _ := os.Open(decoded.Path)
 				img, _, _ := image.DecodeConfig(file)
 				imageRect.W = float64(img.Width)
 				imageRect.H = float64(img.Height)
-			} else if decoded.Width == 0 && decoded.Height != 0 {
+			} else if decoded.Width == -1 && decoded.Height != -1 {
 				file, _ := os.Open(decoded.Path)
 				img, _, _ := image.DecodeConfig(file)
 				imageRect.H = decoded.Height
 				imageRect.W = float64(img.Width) * (imageRect.H / float64(img.Height))
-			} else if decoded.Width != 0 && decoded.Height == 0 {
+			} else if decoded.Width != -1 && decoded.Height == -1 {
 				file, _ := os.Open(decoded.Path)
 				img, _, _ := image.DecodeConfig(file)
 				imageRect.W = decoded.Width
@@ -166,7 +172,7 @@ func drawPdf(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout) {
 				gp.AddPage()
 			}
 
-			if decoded.X != 0 || decoded.Y != 0 {
+			if decoded.X != -1 || decoded.Y != -1 {
 				_ = gp.Image(decoded.Path, decoded.X, decoded.Y, &imageRect)
 			} else {
 				_ = gp.Image(decoded.Path, gp.GetX(), gp.GetY(), &imageRect)
