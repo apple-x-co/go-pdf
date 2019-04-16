@@ -133,7 +133,7 @@ func drawPdf(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout) {
 					}
 				}
 
-				// todo: 実際のページの高さより早く改ページしてしまっている。
+				// fixme: 実際のページの高さより早く改ページしてしまっている。
 				if gp.GetY()+textRect.H > pdf.Height && pdf.AutoPageBreak {
 					gp.AddPage()
 				}
