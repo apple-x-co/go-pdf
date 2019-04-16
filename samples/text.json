@@ -1,12 +1,13 @@
 {
   "width": 595,
   "height": 842,
-  "line_height": 50,
+  "line_height": 100,
   "liner_layout": {
     "orientation": "vertical",
     "linear_layouts": [
       {
         "orientation": "horizontal",
+        "line_height": 20,
         "elements": [
           {
             "type": "text",

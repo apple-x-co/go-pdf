@@ -11,6 +11,7 @@ type Page struct {
 
 type LinerLayout struct {
 	Orientation   string        `json:"orientation"`
+	LineHeight    float64       `json:"line_height"`
 	LinearLayouts []LinerLayout `json:"linear_layouts"`
 	Elements      []Element     `json:"elements"`
 }
