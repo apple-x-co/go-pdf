@@ -7,6 +7,7 @@ type Page struct {
 	Height      float64     `json:"height"`
 	LineHeight  float64     `json:"line_height"`
 	LinerLayout LinerLayout `json:"liner_layout"`
+	TextColor   Color       `json:"text_color"`
 }
 
 type LinerLayout struct {
@@ -43,7 +44,8 @@ type ElementLineBreak struct {
 }
 
 type ElementText struct {
-	Text string `json:"text"`
+	Text  string `json:"text"`
+	Color Color  `json:"color"`
 }
 
 type ElementImage struct {
@@ -52,4 +54,10 @@ type ElementImage struct {
 	Height float64 `json:"height"`
 	X      float64 `json:"x"`
 	Y      float64 `json:"y"`
+}
+
+type Color struct {
+	R uint8 `json:"r"`
+	G uint8 `json:"g"`
+	B uint8 `json:"b"`
 }

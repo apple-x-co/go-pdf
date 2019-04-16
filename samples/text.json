@@ -1,7 +1,11 @@
 {
   "width": 595,
   "height": 842,
-  "line_height": 100,
+  "text_color": {
+    "r": 0,
+    "g": 255,
+    "b": 0
+  },
   "liner_layout": {
     "orientation": "vertical",
     "linear_layouts": [
@@ -12,7 +16,12 @@
           {
             "type": "text",
             "attributes": {
-              "text": "abcdefghijklmn01"
+              "text": "abcdefghijklmn01",
+              "color": {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
             }
           },
           {
