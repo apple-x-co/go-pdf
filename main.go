@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/signintech/gopdf"
+	"image"
 	"io/ioutil"
 	"log"
 	"os"
@@ -65,12 +66,6 @@ func main() {
 		return
 	}
 
-	left, top, right, bottom := pdf.Margins()
-	fmt.Printf("left: %v\n", left)
-	fmt.Printf("top: %v\n", top)
-	fmt.Printf("right: %v\n", right)
-	fmt.Printf("bottom: %v\n", bottom)
-
 	pdf.AddPage()
 	drawPdf(&pdf, page, page.LinerLayout)
 
@@ -84,7 +79,7 @@ func main() {
 
 func drawPdf(pdf *gopdf.GoPdf, page types.Page, linerLayout types.LinerLayout) {
 
-	fmt.Printf("orientation: %v\n", linerLayout.Orientation)
+	//fmt.Printf("orientation: %v\n", linerLayout.Orientation)
 
 	width := page.Width - pdf.MarginLeft() - pdf.MarginRight()
 	//height := page.Height - pdf.MarginTop() - pdf.MarginBottom()
@@ -108,7 +103,6 @@ func drawPdf(pdf *gopdf.GoPdf, page types.Page, linerLayout types.LinerLayout) {
 
 			if linerLayout.IsHorizontal() {
 				if x+measureWidth > width {
-					fmt.Printf("break!!\n")
 					if lineHeight := linerLayout.LineHeight; lineHeight != 0 {
 						pdf.Br(lineHeight)
 					} else if lineHeight := page.LineHeight; lineHeight != 0 {
@@ -128,8 +122,45 @@ func drawPdf(pdf *gopdf.GoPdf, page types.Page, linerLayout types.LinerLayout) {
 		case "image":
 			var decoded types.ElementImage
 			_ = json.Unmarshal(element.Attributes, &decoded)
-			//_ = pdf.Cell(nil, decoded.Path)
-			_ = pdf.Image(decoded.Path, 200, 50, nil)
+
+			imageRect := gopdf.Rect{}
+			if decoded.Width != 0 && decoded.Height != 0 {
+				imageRect.W = decoded.Width
+				imageRect.H = decoded.Height
+			} else if decoded.Width == 0 && decoded.Height == 0 {
+				file, _ := os.Open(decoded.Path)
+				img, _, _ := image.DecodeConfig(file)
+				imageRect.W = float64(img.Width)
+				imageRect.H = float64(img.Height)
+			} else if decoded.Width == 0 && decoded.Height != 0 {
+				file, _ := os.Open(decoded.Path)
+				img, _, _ := image.DecodeConfig(file)
+				imageRect.H = decoded.Height
+				imageRect.W = float64(img.Width) * (imageRect.H / float64(img.Height))
+			} else if decoded.Width != 0 && decoded.Height == 0 {
+				file, _ := os.Open(decoded.Path)
+				img, _, _ := image.DecodeConfig(file)
+				imageRect.W = decoded.Width
+				imageRect.H = float64(img.Height) * (imageRect.W / float64(img.Width))
+			}
+
+			if pdf.GetX()+imageRect.W > page.Width {
+				if lineHeight := linerLayout.LineHeight; lineHeight != 0 {
+					pdf.Br(lineHeight)
+				} else if lineHeight := page.LineHeight; lineHeight != 0 {
+					pdf.Br(lineHeight)
+				} else {
+					pdf.Br(20)
+				}
+			}
+
+			_ = pdf.Image(decoded.Path, pdf.GetX(), pdf.GetY(), &imageRect)
+
+			if linerLayout.IsHorizontal() {
+				pdf.SetX(pdf.GetX() + imageRect.W)
+			} else if linerLayout.IsVertical() {
+				pdf.SetY(pdf.GetY() + imageRect.H)
+			}
 		}
 	}
 
