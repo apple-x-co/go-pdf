@@ -2,7 +2,7 @@ package types
 
 import "encoding/json"
 
-type Page struct {
+type PDF struct {
 	Width       float64     `json:"width"`
 	Height      float64     `json:"height"`
 	LineHeight  float64     `json:"line_height"`
