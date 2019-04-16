@@ -47,16 +47,16 @@ func main() {
 		return
 	}
 
-	var page = types.PDF{LineHeight: 20, TextColor: types.Color{R: 0, G: 0, B: 0}}
+	var pdf = types.PDF{LineHeight: 20, TextColor: types.Color{R: 0, G: 0, B: 0}}
 	bytes := []byte(string(b))
-	if err := json.Unmarshal(bytes, &page); err != nil {
+	if err := json.Unmarshal(bytes, &pdf); err != nil {
 		fmt.Println("error:", err)
 		return
 	}
-	//fmt.Printf("%v\n", page)
+	//fmt.Printf("%v\n", pdf)
 
 	gp := gopdf.GoPdf{}
-	gp.Start(gopdf.Config{PageSize: gopdf.Rect{W: page.Width, H: page.Height}, Unit: gopdf.Unit_PT})
+	gp.Start(gopdf.Config{PageSize: gopdf.Rect{W: pdf.Width, H: pdf.Height}, Unit: gopdf.Unit_PT})
 	if err := gp.AddTTFFont("default", *ttfPath); err != nil {
 		log.Print(err.Error())
 		return
@@ -66,9 +66,12 @@ func main() {
 		return
 	}
 
-	gp.AddPage()
-	gp.SetTextColor(page.TextColor.R, page.TextColor.G, page.TextColor.B)
-	drawPdf(&gp, page, page.LinerLayout)
+	gp.SetTextColor(pdf.TextColor.R, pdf.TextColor.G, pdf.TextColor.B)
+
+	for _, page := range pdf.Pages {
+		gp.AddPage()
+		drawPdf(&gp, pdf, page.LinerLayout)
+	}
 
 	if err := gp.WritePdf(*outputPath); err != nil {
 		log.Print(err.Error())
@@ -78,12 +81,12 @@ func main() {
 	_ = gp.Close()
 }
 
-func drawPdf(gp *gopdf.GoPdf, page types.PDF, linerLayout types.LinerLayout) {
+func drawPdf(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout) {
 
 	//fmt.Printf("orientation: %v\n", linerLayout.Orientation)
 
-	width := page.Width - gp.MarginLeft() - gp.MarginRight()
-	//height := page.Height - gp.MarginTop() - gp.MarginBottom()
+	width := pdf.Width - gp.MarginLeft() - gp.MarginRight()
+	//height := pdf.Height - gp.MarginTop() - gp.MarginBottom()
 
 	for _, element := range linerLayout.Elements {
 		x := gp.GetX()
@@ -96,7 +99,7 @@ func drawPdf(gp *gopdf.GoPdf, page types.PDF, linerLayout types.LinerLayout) {
 			gp.Br(decoded.Height)
 
 		case "text":
-			var decoded = types.ElementText{Color: types.Color{R: page.TextColor.R, G: page.TextColor.G, B: page.TextColor.B}}
+			var decoded = types.ElementText{Color: types.Color{R: pdf.TextColor.R, G: pdf.TextColor.G, B: pdf.TextColor.B}}
 			_ = json.Unmarshal(element.Attributes, &decoded)
 
 			measureWidth, _ := gp.MeasureTextWidth(decoded.Text)
@@ -108,7 +111,7 @@ func drawPdf(gp *gopdf.GoPdf, page types.PDF, linerLayout types.LinerLayout) {
 				if x+measureWidth > width {
 					if lineHeight := linerLayout.LineHeight; lineHeight != 0 {
 						gp.Br(lineHeight)
-					} else if lineHeight := page.LineHeight; lineHeight != 0 {
+					} else if lineHeight := pdf.LineHeight; lineHeight != 0 {
 						gp.Br(lineHeight)
 					} else {
 						gp.Br(20)
@@ -122,7 +125,7 @@ func drawPdf(gp *gopdf.GoPdf, page types.PDF, linerLayout types.LinerLayout) {
 				gp.SetY(gp.GetY() + linerLayout.LineHeight)
 			}
 
-			gp.SetTextColor(page.TextColor.R, page.TextColor.G, page.TextColor.B)
+			gp.SetTextColor(pdf.TextColor.R, pdf.TextColor.G, pdf.TextColor.B)
 
 		case "image":
 			var decoded types.ElementImage
@@ -149,10 +152,10 @@ func drawPdf(gp *gopdf.GoPdf, page types.PDF, linerLayout types.LinerLayout) {
 				imageRect.H = float64(img.Height) * (imageRect.W / float64(img.Width))
 			}
 
-			if gp.GetX()+imageRect.W > page.Width {
+			if gp.GetX()+imageRect.W > pdf.Width {
 				if lineHeight := linerLayout.LineHeight; lineHeight != 0 {
 					gp.Br(lineHeight)
-				} else if lineHeight := page.LineHeight; lineHeight != 0 {
+				} else if lineHeight := pdf.LineHeight; lineHeight != 0 {
 					gp.Br(lineHeight)
 				} else {
 					gp.Br(20)
@@ -174,6 +177,6 @@ func drawPdf(gp *gopdf.GoPdf, page types.PDF, linerLayout types.LinerLayout) {
 	}
 
 	for _, linerLayout := range linerLayout.LinearLayouts {
-		drawPdf(gp, page, linerLayout)
+		drawPdf(gp, pdf, linerLayout)
 	}
 }
