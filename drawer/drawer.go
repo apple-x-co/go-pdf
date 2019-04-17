@@ -69,6 +69,7 @@ func drawText(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout, dec
 	gp.SetTextColor(decoded.Color.R, decoded.Color.G, decoded.Color.B)
 
 	if linerLayout.IsHorizontal() {
+		// LINE BREAK
 		if x+textRect.W > width {
 			if lineHeight := linerLayout.LineHeight; lineHeight != 0 {
 				gp.Br(lineHeight)
@@ -79,6 +80,7 @@ func drawText(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout, dec
 			}
 		}
 
+		// PAGE BREAK
 		if gp.GetY()+textRect.H > height && pdf.AutoPageBreak {
 			gp.AddPage()
 		}
