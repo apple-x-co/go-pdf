@@ -140,21 +140,6 @@ func drawText(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout, dec
 
 	gp.SetTextColor(decoded.Color.R, decoded.Color.G, decoded.Color.B)
 
-	if decoded.Border.Width != -1 {
-		gp.SetLineWidth(decoded.Border.Width)
-		gp.SetStrokeColor(decoded.Border.Color.R, decoded.Border.Color.G, decoded.Border.Color.B)
-		if decoded.BackgroundColor.R != 0 || decoded.BackgroundColor.G != 0 || decoded.BackgroundColor.B != 0 {
-			//gp.Line(gp.GetX(), gp.GetY(), gp.GetX()+textRect.W, gp.GetY())
-			//gp.Line(gp.GetX()+textRect.W, gp.GetY(), gp.GetX()+textRect.W, gp.GetY()+textRect.H)
-			//gp.Line(gp.GetX()+textRect.W, gp.GetY()+textRect.H, gp.GetX(), gp.GetY()+textRect.H)
-			//gp.Line(gp.GetX(), gp.GetY()+textRect.H, gp.GetX(), gp.GetY())
-			gp.SetFillColor(decoded.BackgroundColor.R, decoded.BackgroundColor.G, decoded.BackgroundColor.B)
-			gp.RectFromUpperLeftWithStyle(gp.GetX(), gp.GetY(), textRect.W, textRect.H, "FD")
-		} else {
-			gp.RectFromUpperLeft(gp.GetX(), gp.GetY(), textRect.W, textRect.H)
-		}
-	}
-
 	if linerLayout.IsHorizontal() {
 		if x+textRect.W > width {
 			if lineHeight := linerLayout.LineHeight; lineHeight != 0 {
@@ -170,10 +155,40 @@ func drawText(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout, dec
 			gp.AddPage()
 		}
 
+		if decoded.Border.Width != -1 {
+			gp.SetLineWidth(decoded.Border.Width)
+			gp.SetStrokeColor(decoded.Border.Color.R, decoded.Border.Color.G, decoded.Border.Color.B)
+			if decoded.BackgroundColor.R != 0 || decoded.BackgroundColor.G != 0 || decoded.BackgroundColor.B != 0 {
+				//gp.Line(gp.GetX(), gp.GetY(), gp.GetX()+textRect.W, gp.GetY())
+				//gp.Line(gp.GetX()+textRect.W, gp.GetY(), gp.GetX()+textRect.W, gp.GetY()+textRect.H)
+				//gp.Line(gp.GetX()+textRect.W, gp.GetY()+textRect.H, gp.GetX(), gp.GetY()+textRect.H)
+				//gp.Line(gp.GetX(), gp.GetY()+textRect.H, gp.GetX(), gp.GetY())
+				gp.SetFillColor(decoded.BackgroundColor.R, decoded.BackgroundColor.G, decoded.BackgroundColor.B)
+				gp.RectFromUpperLeftWithStyle(gp.GetX(), gp.GetY(), textRect.W, textRect.H, "FD")
+			} else {
+				gp.RectFromUpperLeft(gp.GetX(), gp.GetY(), textRect.W, textRect.H)
+			}
+		}
+
 		_ = gp.Cell(&textRect, decoded.Text)
 	} else if linerLayout.IsVertical() {
 		if gp.GetY()+textRect.H > height && pdf.AutoPageBreak {
 			gp.AddPage()
+		}
+
+		if decoded.Border.Width != -1 {
+			gp.SetLineWidth(decoded.Border.Width)
+			gp.SetStrokeColor(decoded.Border.Color.R, decoded.Border.Color.G, decoded.Border.Color.B)
+			if decoded.BackgroundColor.R != 0 || decoded.BackgroundColor.G != 0 || decoded.BackgroundColor.B != 0 {
+				//gp.Line(gp.GetX(), gp.GetY(), gp.GetX()+textRect.W, gp.GetY())
+				//gp.Line(gp.GetX()+textRect.W, gp.GetY(), gp.GetX()+textRect.W, gp.GetY()+textRect.H)
+				//gp.Line(gp.GetX()+textRect.W, gp.GetY()+textRect.H, gp.GetX(), gp.GetY()+textRect.H)
+				//gp.Line(gp.GetX(), gp.GetY()+textRect.H, gp.GetX(), gp.GetY())
+				gp.SetFillColor(decoded.BackgroundColor.R, decoded.BackgroundColor.G, decoded.BackgroundColor.B)
+				gp.RectFromUpperLeftWithStyle(gp.GetX(), gp.GetY(), textRect.W, textRect.H, "FD")
+			} else {
+				gp.RectFromUpperLeft(gp.GetX(), gp.GetY(), textRect.W, textRect.H)
+			}
 		}
 
 		_ = gp.Cell(&textRect, decoded.Text)
