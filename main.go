@@ -94,7 +94,7 @@ func drawPdf(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout) {
 	//fmt.Printf("orientation: %v\n", linerLayout.Orientation)
 
 	width := pdf.Width - gp.MarginLeft() - gp.MarginRight()
-	//height := pdf.Height - gp.MarginTop() - gp.MarginBottom()
+	height := pdf.Height - gp.MarginTop() - gp.MarginBottom()
 
 	for _, element := range linerLayout.Elements {
 		x := gp.GetX()
@@ -133,14 +133,13 @@ func drawPdf(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout) {
 					}
 				}
 
-				// fixme: 実際のページの高さより早く改ページしてしまっている。
-				if gp.GetY()+textRect.H > pdf.Height && pdf.AutoPageBreak {
+				if gp.GetY()+textRect.H > height && pdf.AutoPageBreak {
 					gp.AddPage()
 				}
 
 				_ = gp.Cell(&textRect, decoded.Text)
 			} else if linerLayout.IsVertical() {
-				if gp.GetY()+textRect.H > pdf.Height && pdf.AutoPageBreak {
+				if gp.GetY()+textRect.H > height && pdf.AutoPageBreak {
 					gp.AddPage()
 				}
 
@@ -186,7 +185,7 @@ func drawPdf(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout) {
 				}
 			}
 
-			if gp.GetY()+imageRect.H > pdf.Height && pdf.AutoPageBreak {
+			if gp.GetY()+imageRect.H > height && pdf.AutoPageBreak {
 				gp.AddPage()
 			}
 

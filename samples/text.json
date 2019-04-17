@@ -37,9 +37,7 @@
               {
                 "type": "text",
                 "attributes": {
-                  "text": "abcdefghijklmn02",
-                  "width": 200,
-                  "height": 200
+                  "text": "abcdefghijklmn02"
                 }
               },
               {
@@ -98,9 +96,7 @@
               {
                 "type": "text",
                 "attributes": {
-                  "text": "abcdefghijklmn02",
-                  "width": 200,
-                  "height": 200
+                  "text": "abcdefghijklmn02"
                 }
               },
               {
@@ -159,9 +155,7 @@
               {
                 "type": "text",
                 "attributes": {
-                  "text": "abcdefghijklmn02",
-                  "width": 200,
-                  "height": 200
+                  "text": "abcdefghijklmn02"
                 }
               },
               {
@@ -220,9 +214,7 @@
               {
                 "type": "text",
                 "attributes": {
-                  "text": "abcdefghijklmn02",
-                  "width": 200,
-                  "height": 200
+                  "text": "abcdefghijklmn02"
                 }
               },
               {
@@ -281,9 +273,7 @@
               {
                 "type": "text",
                 "attributes": {
-                  "text": "abcdefghijklmn02",
-                  "width": 200,
-                  "height": 200
+                  "text": "abcdefghijklmn02"
                 }
               },
               {
@@ -342,9 +332,7 @@
               {
                 "type": "text",
                 "attributes": {
-                  "text": "abcdefghijklmn02",
-                  "width": 200,
-                  "height": 200
+                  "text": "abcdefghijklmn02"
                 }
               },
               {
@@ -403,9 +391,7 @@
               {
                 "type": "text",
                 "attributes": {
-                  "text": "abcdefghijklmn02",
-                  "width": 200,
-                  "height": 200
+                  "text": "abcdefghijklmn02"
                 }
               },
               {
@@ -464,9 +450,7 @@
               {
                 "type": "text",
                 "attributes": {
-                  "text": "abcdefghijklmn02",
-                  "width": 200,
-                  "height": 200
+                  "text": "abcdefghijklmn02"
                 }
               },
               {
@@ -525,9 +509,7 @@
               {
                 "type": "text",
                 "attributes": {
-                  "text": "abcdefghijklmn02",
-                  "width": 200,
-                  "height": 200
+                  "text": "abcdefghijklmn02"
                 }
               },
               {
@@ -586,9 +568,7 @@
               {
                 "type": "text",
                 "attributes": {
-                  "text": "abcdefghijklmn02",
-                  "width": 200,
-                  "height": 200
+                  "text": "abcdefghijklmn02"
                 }
               },
               {
@@ -647,9 +627,7 @@
               {
                 "type": "text",
                 "attributes": {
-                  "text": "abcdefghijklmn02",
-                  "width": 200,
-                  "height": 200
+                  "text": "abcdefghijklmn02"
                 }
               },
               {
@@ -708,9 +686,7 @@
               {
                 "type": "text",
                 "attributes": {
-                  "text": "abcdefghijklmn02",
-                  "width": 200,
-                  "height": 200
+                  "text": "abcdefghijklmn02"
                 }
               },
               {
@@ -769,9 +745,66 @@
               {
                 "type": "text",
                 "attributes": {
-                  "text": "abcdefghijklmn02",
-                  "width": 200,
-                  "height": 200
+                  "text": "abcdefghijklmn02"
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "abcdefghijklmn03"
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "abcdefghijklmn04"
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "abcdefghijklmn05"
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "abcdefghijklmn06"
+                }
+              },
+              {
+                "type": "line_break",
+                "attributes": {
+                  "height": 20
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "abcdefghijklmn07"
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "abcdefghijklmn01",
+                  "color": {
+                    "r": 150,
+                    "g": 150,
+                    "b": 150
+                  }
+                }
+              },
+              {
+                "type": "line_break",
+                "attributes": {
+                  "height": 20
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "abcdefghijklmn02"
                 }
               },
               {
@@ -830,9 +863,7 @@
               {
                 "type": "text",
                 "attributes": {
-                  "text": "abcdefghijklmn02",
-                  "width": 200,
-                  "height": 200
+                  "text": "abcdefghijklmn02"
                 }
               },
               {
@@ -891,70 +922,7 @@
               {
                 "type": "text",
                 "attributes": {
-                  "text": "abcdefghijklmn02",
-                  "width": 200,
-                  "height": 200
-                }
-              },
-              {
-                "type": "text",
-                "attributes": {
-                  "text": "abcdefghijklmn03"
-                }
-              },
-              {
-                "type": "text",
-                "attributes": {
-                  "text": "abcdefghijklmn04"
-                }
-              },
-              {
-                "type": "text",
-                "attributes": {
-                  "text": "abcdefghijklmn05"
-                }
-              },
-              {
-                "type": "text",
-                "attributes": {
-                  "text": "abcdefghijklmn06"
-                }
-              },
-              {
-                "type": "line_break",
-                "attributes": {
-                  "height": 20
-                }
-              },
-              {
-                "type": "text",
-                "attributes": {
-                  "text": "abcdefghijklmn07"
-                }
-              },
-              {
-                "type": "text",
-                "attributes": {
-                  "text": "abcdefghijklmn01",
-                  "color": {
-                    "r": 1,
-                    "g": 1,
-                    "b": 1
-                  }
-                }
-              },
-              {
-                "type": "line_break",
-                "attributes": {
-                  "height": 20
-                }
-              },
-              {
-                "type": "text",
-                "attributes": {
-                  "text": "abcdefghijklmn02",
-                  "width": 200,
-                  "height": 200
+                  "text": "abcdefghijklmn02"
                 }
               },
               {
