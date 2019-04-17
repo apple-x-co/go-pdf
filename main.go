@@ -72,7 +72,7 @@ func main() {
 		log.Print(err.Error())
 		return
 	}
-	pdf.SetTextCapHeight(float64(float64(parser.CapHeight()) * 1000.00 / float64(parser.UnitsPerEm())))
+	pdf.SetTextHeight(float64(float64(parser.Ascender()+parser.XHeight()+parser.Descender()) * 1000.00 / float64(parser.UnitsPerEm())))
 
 	gp.SetTextColor(pdf.TextColor.R, pdf.TextColor.G, pdf.TextColor.B)
 
@@ -107,20 +107,35 @@ func drawPdf(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout) {
 			gp.Br(decoded.Height)
 
 		case "text":
-			var decoded = types.ElementText{Color: types.Color{R: pdf.TextColor.R, G: pdf.TextColor.G, B: pdf.TextColor.B}, Width: -1, Height: -1}
+			var decoded = types.ElementText{Color: types.Color{R: pdf.TextColor.R, G: pdf.TextColor.G, B: pdf.TextColor.B}, Width: -1, Height: -1, Border: types.Border{Width: -1, Color: types.Color{R: 0, B: 0, G: 0}}}
 			_ = json.Unmarshal(element.Attributes, &decoded)
 
 			var textRect gopdf.Rect
 
-			if decoded.Width != -1 || decoded.Height != -1 {
+			if decoded.Width != -1 && decoded.Height != -1 {
 				textRect = gopdf.Rect{W: decoded.Width, H: decoded.Height}
+			} else if decoded.Width != -1 && decoded.Height == -1 {
+				measureHeight := pdf.TextHeight() * (float64(pdf.TextSize) / 1000.0)
+				textRect = gopdf.Rect{W: decoded.Width, H: measureHeight}
+			} else if decoded.Width == -1 && decoded.Height != -1 {
+				measureWidth, _ := gp.MeasureTextWidth(decoded.Text)
+				textRect = gopdf.Rect{W: measureWidth, H: decoded.Height}
 			} else {
 				measureWidth, _ := gp.MeasureTextWidth(decoded.Text)
-				measureHeight := pdf.TextCapHeight() * (float64(pdf.TextSize) / 1000.0)
+				measureHeight := pdf.TextHeight() * (float64(pdf.TextSize) / 1000.0)
 				textRect = gopdf.Rect{W: measureWidth, H: measureHeight}
 			}
 
 			gp.SetTextColor(decoded.Color.R, decoded.Color.G, decoded.Color.B)
+
+			if decoded.Border.Width != -1 {
+				gp.SetLineWidth(decoded.Border.Width)
+				gp.SetStrokeColor(decoded.Border.Color.R, decoded.Border.Color.G, decoded.Border.Color.B)
+				gp.Line(gp.GetX(), gp.GetY(), gp.GetX()+textRect.W, gp.GetY())
+				gp.Line(gp.GetX()+textRect.W, gp.GetY(), gp.GetX()+textRect.W, gp.GetY()+textRect.H)
+				gp.Line(gp.GetX()+textRect.W, gp.GetY()+textRect.H, gp.GetX(), gp.GetY()+textRect.H)
+				gp.Line(gp.GetX(), gp.GetY()+textRect.H, gp.GetX(), gp.GetY())
+			}
 
 			if linerLayout.IsHorizontal() {
 				if x+textRect.W > width {

@@ -1,0 +1,65 @@
+{
+  "width": 595,
+  "height": 842,
+  "auto_page_break": "true",
+  "text_size": 14,
+  "text_color": {
+    "r": 1,
+    "g": 255,
+    "b": 1
+  },
+  "pages": [
+    {
+      "liner_layout": {
+        "orientation": "vertical",
+        "linear_layouts": [
+          {
+            "orientation": "horizontal",
+            "line_height": 20,
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "col1",
+                  "color": {
+                    "r": 1,
+                    "g": 1,
+                    "b": 1
+                  },
+                  "width": 200,
+                  "border": {
+                    "width": 1,
+                    "color": {
+                      "r": 1,
+                      "g": 1,
+                      "b": 1
+                    }
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "value1",
+                  "color": {
+                    "r": 1,
+                    "g": 1,
+                    "b": 1
+                  },
+                  "width": 200,
+                  "border": {
+                    "width": 1,
+                    "color": {
+                      "r": 1,
+                      "g": 1,
+                      "b": 1
+                    }
+                  }
+                }
+              }            ]
+          }
+        ]
+      }
+    }
+  ]
+}
