@@ -174,11 +174,21 @@ func drawText(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout, dec
 		} else if decoded.IsAlignRight() {
 			gp.SetX(gp.GetX() + textRect.W - measureWidth)
 		}
+		if decoded.IsValignMiddle() {
+			gp.SetY(gp.GetY() + ((textRect.H / 2) - (measureHeight / 2)))
+		} else if decoded.IsValignBottom() {
+			gp.SetY(gp.GetY() + textRect.H - measureHeight)
+		}
 
 		_ = gp.Cell(&textRect, decoded.Text)
 
 		if decoded.IsAlignCenter() {
 			gp.SetX(gp.GetX() - ((textRect.W / 2) - (measureWidth / 2)))
+		}
+		if decoded.IsValignMiddle() {
+			gp.SetY(gp.GetY() - ((textRect.H / 2) - (measureHeight / 2)))
+		} else if decoded.IsValignBottom() {
+			gp.SetY(gp.GetY() - textRect.H + measureHeight)
 		}
 	} else if linerLayout.IsVertical() {
 		if gp.GetY()+textRect.H > height && pdf.AutoPageBreak {

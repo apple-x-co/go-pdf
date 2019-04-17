@@ -65,6 +65,7 @@ type ElementText struct {
 	Border          Border  `json:"border"`
 	BackgroundColor Color   `json:"background_color"`
 	Align           string  `json:"align"`
+	Valign          string  `json:"valign"`
 }
 
 func (ET *ElementText) IsAlignCenter() bool {
@@ -72,6 +73,12 @@ func (ET *ElementText) IsAlignCenter() bool {
 }
 func (ET *ElementText) IsAlignRight() bool {
 	return ET.Align == "right"
+}
+func (ET *ElementText) IsValignMiddle() bool {
+	return ET.Valign == "middle"
+}
+func (ET *ElementText) IsValignBottom() bool {
+	return ET.Valign == "bottom"
 }
 
 type ElementImage struct {

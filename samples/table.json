@@ -27,6 +27,7 @@
                     "b": 1
                   },
                   "width": 150,
+                  "height": 100,
                   "border": {
                     "width": 1,
                     "color": {
@@ -48,6 +49,7 @@
                     "b": 1
                   },
                   "width": 150,
+                  "height": 100,
                   "background_color": {
                     "r": 0,
                     "g": 200,
@@ -60,7 +62,8 @@
                       "g": 1,
                       "b": 1
                     }
-                  }
+                  },
+                  "valign": "bottom"
                 }
               }
             ]
@@ -79,6 +82,7 @@
                     "b": 1
                   },
                   "width": 150,
+                  "height": 100,
                   "border": {
                     "width": 1,
                     "color": {
@@ -100,6 +104,7 @@
                     "b": 1
                   },
                   "width": 150,
+                  "height": 100,
                   "background_color": {
                     "r": 0,
                     "g": 200,
@@ -112,9 +117,11 @@
                       "g": 1,
                       "b": 1
                     }
-                  }
+                  },
+                  "valign": "middle"
                 }
-              }            ]
+              }
+            ]
           }
         ]
       }
