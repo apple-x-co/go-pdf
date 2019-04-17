@@ -63,6 +63,10 @@ type ElementText struct {
 	Width           float64 `json:"width"`
 	Height          float64 `json:"height"`
 	Border          Border  `json:"border"`
+	BorderTop       Border  `json:"border_top"`
+	BorderRight     Border  `json:"border_right"`
+	BorderBottom    Border  `json:"border_bottom"`
+	BorderLeft      Border  `json:"border_left"`
 	BackgroundColor Color   `json:"background_color"`
 	Align           string  `json:"align"`
 	Valign          string  `json:"valign"`

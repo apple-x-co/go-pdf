@@ -20,7 +20,16 @@ func Draw(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout) {
 			gp.Br(decoded.Height)
 
 		case "text":
-			var decoded = types.ElementText{Color: types.Color{R: pdf.TextColor.R, G: pdf.TextColor.G, B: pdf.TextColor.B}, BackgroundColor: types.Color{R: 0, G: 0, B: 0}, Width: -1, Height: -1, Border: types.Border{Width: -1, Color: types.Color{R: 0, B: 0, G: 0}}}
+			var decoded = types.ElementText{
+				Color:           types.Color{R: pdf.TextColor.R, G: pdf.TextColor.G, B: pdf.TextColor.B},
+				BackgroundColor: types.Color{R: 0, G: 0, B: 0},
+				Width:           -1,
+				Height:          -1,
+				Border:          types.Border{Width: -1, Color: types.Color{R: 0, B: 0, G: 0}},
+				BorderTop:       types.Border{Width: -1, Color: types.Color{R: 0, B: 0, G: 0}},
+				BorderRight:     types.Border{Width: -1, Color: types.Color{R: 0, B: 0, G: 0}},
+				BorderBottom:    types.Border{Width: -1, Color: types.Color{R: 0, B: 0, G: 0}},
+				BorderLeft:      types.Border{Width: -1, Color: types.Color{R: 0, B: 0, G: 0}}}
 			_ = json.Unmarshal(element.Attributes, &decoded)
 			drawText(gp, pdf, linerLayout, decoded)
 
@@ -74,6 +83,7 @@ func drawText(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout, dec
 			gp.AddPage()
 		}
 
+		// BORDER
 		if decoded.Border.Width != -1 {
 			gp.SetLineWidth(decoded.Border.Width)
 			gp.SetStrokeColor(decoded.Border.Color.R, decoded.Border.Color.G, decoded.Border.Color.B)
@@ -87,8 +97,25 @@ func drawText(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout, dec
 			} else {
 				gp.RectFromUpperLeft(gp.GetX(), gp.GetY(), textRect.W, textRect.H)
 			}
+		} else if decoded.BorderTop.Width != -1 {
+			gp.SetLineWidth(decoded.BorderTop.Width)
+			gp.SetStrokeColor(decoded.BorderTop.Color.R, decoded.BorderTop.Color.G, decoded.BorderTop.Color.B)
+			gp.Line(gp.GetX(), gp.GetY(), gp.GetX()+textRect.W, gp.GetY())
+		} else if decoded.BorderRight.Width != -1 {
+			gp.SetLineWidth(decoded.BorderRight.Width)
+			gp.SetStrokeColor(decoded.BorderRight.Color.R, decoded.BorderRight.Color.G, decoded.BorderRight.Color.B)
+			gp.Line(gp.GetX()+textRect.W, gp.GetY(), gp.GetX()+textRect.W, gp.GetY()+textRect.H)
+		} else if decoded.BorderBottom.Width != -1 {
+			gp.SetLineWidth(decoded.BorderBottom.Width)
+			gp.SetStrokeColor(decoded.BorderBottom.Color.R, decoded.BorderBottom.Color.G, decoded.BorderBottom.Color.B)
+			gp.Line(gp.GetX()+textRect.W, gp.GetY()+textRect.H, gp.GetX(), gp.GetY()+textRect.H)
+		} else if decoded.BorderLeft.Width != -1 {
+			gp.SetLineWidth(decoded.BorderLeft.Width)
+			gp.SetStrokeColor(decoded.BorderLeft.Color.R, decoded.BorderLeft.Color.G, decoded.BorderLeft.Color.B)
+			gp.Line(gp.GetX(), gp.GetY()+textRect.H, gp.GetX(), gp.GetY())
 		}
 
+		// ALIGN & VALIGN
 		if decoded.IsAlignCenter() {
 			gp.SetX(gp.GetX() + ((textRect.W / 2) - (measureWidth / 2)))
 		} else if decoded.IsAlignRight() {
@@ -100,8 +127,10 @@ func drawText(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout, dec
 			gp.SetY(gp.GetY() + textRect.H - measureHeight)
 		}
 
+		// DRAW TEXT
 		_ = gp.Cell(&textRect, decoded.Text)
 
+		// RESET ALIGN & VALIGN
 		if decoded.IsAlignCenter() {
 			gp.SetX(gp.GetX() - ((textRect.W / 2) - (measureWidth / 2)))
 		}
