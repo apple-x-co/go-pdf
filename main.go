@@ -169,15 +169,15 @@ func drawText(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout, dec
 			}
 		}
 
-		if decoded.Align == "center" {
+		if decoded.IsAlignCenter() {
 			gp.SetX(gp.GetX() + ((textRect.W / 2) - (measureWidth / 2)))
-		} else if decoded.Align == "right" {
+		} else if decoded.IsAlignRight() {
 			gp.SetX(gp.GetX() + textRect.W - measureWidth)
 		}
 
 		_ = gp.Cell(&textRect, decoded.Text)
 
-		if decoded.Align == "center" {
+		if decoded.IsAlignCenter() {
 			gp.SetX(gp.GetX() - ((textRect.W / 2) - (measureWidth / 2)))
 		}
 	} else if linerLayout.IsVertical() {

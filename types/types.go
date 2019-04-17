@@ -67,6 +67,13 @@ type ElementText struct {
 	Align           string  `json:"align"`
 }
 
+func (ET *ElementText) IsAlignCenter() bool {
+	return ET.Align == "center"
+}
+func (ET *ElementText) IsAlignRight() bool {
+	return ET.Align == "right"
+}
+
 type ElementImage struct {
 	Path   string  `json:"path"`
 	Width  float64 `json:"width"`
