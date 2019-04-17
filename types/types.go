@@ -64,6 +64,7 @@ type ElementText struct {
 	Height          float64 `json:"height"`
 	Border          Border  `json:"border"`
 	BackgroundColor Color   `json:"background_color"`
+	Align           string  `json:"align"`
 }
 
 type ElementImage struct {

@@ -34,7 +34,8 @@
                       "g": 1,
                       "b": 1
                     }
-                  }
+                  },
+                  "align": "center"
                 }
               },
               {
@@ -61,7 +62,8 @@
                     }
                   }
                 }
-              }            ]
+              }
+            ]
           },
           {
             "orientation": "horizontal",
@@ -70,7 +72,7 @@
               {
                 "type": "text",
                 "attributes": {
-                  "text": "col1",
+                  "text": "col2",
                   "color": {
                     "r": 1,
                     "g": 1,
@@ -84,13 +86,14 @@
                       "g": 1,
                       "b": 1
                     }
-                  }
+                  },
+                  "align": "right"
                 }
               },
               {
                 "type": "text",
                 "attributes": {
-                  "text": "value1",
+                  "text": "value2",
                   "color": {
                     "r": 1,
                     "g": 1,

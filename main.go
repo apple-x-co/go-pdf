@@ -122,19 +122,18 @@ func drawText(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout, dec
 	width := pdf.Width - gp.MarginLeft() - gp.MarginRight()
 	height := pdf.Height - gp.MarginTop() - gp.MarginBottom()
 
+	measureWidth, _ := gp.MeasureTextWidth(decoded.Text)
+	measureHeight := pdf.TextHeight() * (float64(pdf.TextSize) / 1000.0)
+
 	var textRect gopdf.Rect
 
 	if decoded.Width != -1 && decoded.Height != -1 {
 		textRect = gopdf.Rect{W: decoded.Width, H: decoded.Height}
 	} else if decoded.Width != -1 && decoded.Height == -1 {
-		measureHeight := pdf.TextHeight() * (float64(pdf.TextSize) / 1000.0)
 		textRect = gopdf.Rect{W: decoded.Width, H: measureHeight}
 	} else if decoded.Width == -1 && decoded.Height != -1 {
-		measureWidth, _ := gp.MeasureTextWidth(decoded.Text)
 		textRect = gopdf.Rect{W: measureWidth, H: decoded.Height}
 	} else {
-		measureWidth, _ := gp.MeasureTextWidth(decoded.Text)
-		measureHeight := pdf.TextHeight() * (float64(pdf.TextSize) / 1000.0)
 		textRect = gopdf.Rect{W: measureWidth, H: measureHeight}
 	}
 
@@ -170,7 +169,17 @@ func drawText(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout, dec
 			}
 		}
 
+		if decoded.Align == "center" {
+			gp.SetX(gp.GetX() + ((textRect.W / 2) - (measureWidth / 2)))
+		} else if decoded.Align == "right" {
+			gp.SetX(gp.GetX() + textRect.W - measureWidth)
+		}
+
 		_ = gp.Cell(&textRect, decoded.Text)
+
+		if decoded.Align == "center" {
+			gp.SetX(gp.GetX() - ((textRect.W / 2) - (measureWidth / 2)))
+		}
 	} else if linerLayout.IsVertical() {
 		if gp.GetY()+textRect.H > height && pdf.AutoPageBreak {
 			gp.AddPage()
