@@ -4,6 +4,8 @@ json to pdf
 
 ## How to use
 
+### basic
+
 ```bash
 go-pdf --in layout.json --out output.pdf --ttf fonts/TakaoPGothic.ttf
 
