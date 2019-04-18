@@ -11,6 +11,7 @@ type PDF struct {
 	Pages         []Page  `json:"pages"`
 	AutoPageBreak bool    `json:"auto_page_break,string"`
 	CompressLevel int     `json:"compress_level"`
+	Password      string  `json:"password"`
 	textHeight    float64 `json:"text_cap_height"`
 }
 

@@ -62,7 +62,23 @@ func main() {
 	//fmt.Printf("%v\n", pdf)
 
 	gp := gopdf.GoPdf{}
-	gp.Start(gopdf.Config{PageSize: gopdf.Rect{W: pdf.Width, H: pdf.Height}, Unit: gopdf.Unit_PT})
+
+	if pdf.Password == "" {
+		gp.Start(gopdf.Config{PageSize: gopdf.Rect{W: pdf.Width, H: pdf.Height}, Unit: gopdf.Unit_PT})
+	} else {
+		gp.Start(
+			gopdf.Config{
+				PageSize: gopdf.Rect{W: pdf.Width, H: pdf.Height},
+				Unit:     gopdf.Unit_PT,
+				Protection: gopdf.PDFProtectionConfig{
+					UseProtection: true,
+					Permissions:   gopdf.PermissionsPrint | gopdf.PermissionsCopy | gopdf.PermissionsModify,
+					OwnerPass:     []byte(pdf.Password),
+					UserPass:      []byte(pdf.Password),
+				},
+			})
+	}
+
 	gp.SetCompressLevel(pdf.CompressLevel)
 
 	if err := gp.AddTTFFont("default", *ttfPath); err != nil {
