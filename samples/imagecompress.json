@@ -19,6 +19,20 @@
               "path": "work/sample1.jpg",
               "width": 100
             }
+          },
+          {
+            "type": "image",
+            "attributes": {
+              "path": "work/sample1.jpg",
+              "width": 100,
+              "resize": "true"
+            }
+          },
+          {
+            "type": "image",
+            "attributes": {
+              "path": "work/100.png"
+            }
           }
         ]
       }

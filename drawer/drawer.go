@@ -7,7 +7,6 @@ import (
 	"github.com/nfnt/resize"
 	"github.com/signintech/gopdf"
 	"image"
-	"image/gif"
 	"image/jpeg"
 	"image/png"
 	"os"
@@ -220,9 +219,8 @@ func drawImage(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout, de
 		gp.AddPage()
 	}
 
-	// fixme: リサイズをすると、おかしい！
 	if decoded.Resize && ((decoded.Width != -1 && decoded.Width < float64(imgConfig.Width)) || (decoded.Height != -1 && decoded.Height < float64(imgConfig.Height))) {
-		resizedImg := resize.Resize(uint(imageRect.W), uint(imageRect.H), img, resize.Lanczos3)
+		resizedImg := resize.Resize(uint(imageRect.W)*2, uint(imageRect.H)*2, img, resize.Lanczos3)
 
 		resizedBuf := new(bytes.Buffer)
 		switch imgType {
@@ -234,10 +232,6 @@ func drawImage(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout, de
 			if err := jpeg.Encode(resizedBuf, resizedImg, nil); err != nil {
 				panic(err)
 			}
-		case "gif":
-			if err := gif.Encode(resizedBuf, resizedImg, nil); err != nil {
-				panic(err)
-			}
 		}
 
 		imageHoloder, err := gopdf.ImageHolderByBytes(resizedBuf.Bytes())
@@ -246,9 +240,9 @@ func drawImage(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout, de
 		}
 
 		if decoded.X != -1 || decoded.Y != -1 {
-			_ = gp.ImageByHolder(imageHoloder, decoded.X, decoded.Y, nil)
+			_ = gp.ImageByHolder(imageHoloder, decoded.X, decoded.Y, &imageRect)
 		} else {
-			_ = gp.ImageByHolder(imageHoloder, gp.GetX(), gp.GetY(), nil)
+			_ = gp.ImageByHolder(imageHoloder, gp.GetX(), gp.GetY(), &imageRect)
 
 			if linerLayout.IsHorizontal() {
 				gp.SetX(gp.GetX() + imageRect.W)
