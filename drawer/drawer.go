@@ -12,16 +12,38 @@ import (
 	"os"
 )
 
-func Draw(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout) {
+type context struct {
+	currentHeight float64
+}
 
+func (c *context) MaxHeight() float64 {
+	return c.currentHeight
+}
+func (c *context) SetMaxHeight(lineHeight float64) {
+	if c.currentHeight < lineHeight {
+		c.currentHeight = lineHeight
+	}
+}
+func (c *context) ClearCurrentHeight() {
+	c.currentHeight = 0
+}
+
+func Draw(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout) {
 	//fmt.Printf("orientation: %v\n", linerLayout.Orientation)
 
+	ctx := context{currentHeight: 0}
+
+	draw(gp, pdf, linerLayout, &ctx)
+}
+
+func draw(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout, ctx *context) {
 	for _, element := range linerLayout.Elements {
 		switch element.Type {
 		case "line_break":
 			var decoded types.ElementLineBreak
 			_ = json.Unmarshal(element.Attributes, &decoded)
 			gp.Br(decoded.Height)
+			ctx.ClearCurrentHeight()
 
 		case "text":
 			var decoded = types.ElementText{
@@ -36,7 +58,7 @@ func Draw(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout) {
 				BorderLeft:      types.Border{Width: -1, Color: types.Color{R: 0, B: 0, G: 0}},
 			}
 			_ = json.Unmarshal(element.Attributes, &decoded)
-			drawText(gp, pdf, linerLayout, decoded)
+			drawText(gp, pdf, linerLayout, decoded, ctx)
 
 		case "image":
 			var decoded = types.ElementImage{
@@ -47,17 +69,17 @@ func Draw(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout) {
 				Resize: false,
 			}
 			_ = json.Unmarshal(element.Attributes, &decoded)
-			drawImage(gp, pdf, linerLayout, decoded)
+			drawImage(gp, pdf, linerLayout, decoded, ctx)
 		}
 	}
 
 	for _, linerLayout := range linerLayout.LinearLayouts {
-		Draw(gp, pdf, linerLayout)
+		draw(gp, pdf, linerLayout, ctx)
 	}
 
 }
 
-func drawText(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout, decoded types.ElementText) {
+func drawText(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout, decoded types.ElementText, ctx *context) {
 	x := gp.GetX()
 	width := pdf.Width - gp.MarginLeft() - gp.MarginRight()
 	height := pdf.Height - gp.MarginTop() - gp.MarginBottom()
@@ -84,27 +106,23 @@ func drawText(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout, dec
 		if x+textRect.W > width {
 			if lineHeight := linerLayout.LineHeight; lineHeight != 0 {
 				gp.Br(lineHeight)
-			} else if lineHeight := pdf.LineHeight; lineHeight != 0 {
-				gp.Br(lineHeight)
 			} else {
-				gp.Br(20)
+				gp.Br(ctx.MaxHeight())
 			}
+			ctx.ClearCurrentHeight()
 		}
 
 		// PAGE BREAK
 		if gp.GetY()+textRect.H > height && pdf.AutoPageBreak {
 			gp.AddPage()
+			ctx.ClearCurrentHeight()
 		}
 
-		// BORDER
+		// BORDER, FILL
 		if decoded.Border.Width != -1 {
 			gp.SetLineWidth(decoded.Border.Width)
 			gp.SetStrokeColor(decoded.Border.Color.R, decoded.Border.Color.G, decoded.Border.Color.B)
 			if decoded.BackgroundColor.R != 0 || decoded.BackgroundColor.G != 0 || decoded.BackgroundColor.B != 0 {
-				//gp.Line(gp.GetX(), gp.GetY(), gp.GetX()+textRect.W, gp.GetY())
-				//gp.Line(gp.GetX()+textRect.W, gp.GetY(), gp.GetX()+textRect.W, gp.GetY()+textRect.H)
-				//gp.Line(gp.GetX()+textRect.W, gp.GetY()+textRect.H, gp.GetX(), gp.GetY()+textRect.H)
-				//gp.Line(gp.GetX(), gp.GetY()+textRect.H, gp.GetX(), gp.GetY())
 				gp.SetFillColor(decoded.BackgroundColor.R, decoded.BackgroundColor.G, decoded.BackgroundColor.B)
 				gp.RectFromUpperLeftWithStyle(gp.GetX(), gp.GetY(), textRect.W, textRect.H, "FD")
 			} else {
@@ -143,6 +161,9 @@ func drawText(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout, dec
 		// DRAW TEXT
 		_ = gp.Cell(&textRect, decoded.Text)
 
+		// STORE MAX HEIGHT
+		ctx.SetMaxHeight(textRect.H)
+
 		// RESET ALIGN & VALIGN
 		if decoded.IsAlignCenter() {
 			gp.SetX(gp.GetX() - ((textRect.W / 2) - (measureWidth / 2)))
@@ -153,34 +174,25 @@ func drawText(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout, dec
 			gp.SetY(gp.GetY() - textRect.H + measureHeight)
 		}
 	} else if linerLayout.IsVertical() {
+		ctx.ClearCurrentHeight()
+
+		// PAGE BREAK
 		if gp.GetY()+textRect.H > height && pdf.AutoPageBreak {
 			gp.AddPage()
 		}
 
-		if decoded.Border.Width != -1 {
-			gp.SetLineWidth(decoded.Border.Width)
-			gp.SetStrokeColor(decoded.Border.Color.R, decoded.Border.Color.G, decoded.Border.Color.B)
-			if decoded.BackgroundColor.R != 0 || decoded.BackgroundColor.G != 0 || decoded.BackgroundColor.B != 0 {
-				//gp.Line(gp.GetX(), gp.GetY(), gp.GetX()+textRect.W, gp.GetY())
-				//gp.Line(gp.GetX()+textRect.W, gp.GetY(), gp.GetX()+textRect.W, gp.GetY()+textRect.H)
-				//gp.Line(gp.GetX()+textRect.W, gp.GetY()+textRect.H, gp.GetX(), gp.GetY()+textRect.H)
-				//gp.Line(gp.GetX(), gp.GetY()+textRect.H, gp.GetX(), gp.GetY())
-				gp.SetFillColor(decoded.BackgroundColor.R, decoded.BackgroundColor.G, decoded.BackgroundColor.B)
-				gp.RectFromUpperLeftWithStyle(gp.GetX(), gp.GetY(), textRect.W, textRect.H, "FD")
-			} else {
-				gp.RectFromUpperLeft(gp.GetX(), gp.GetY(), textRect.W, textRect.H)
-			}
-		}
+		// TODO: horizontal で実装した機能をこちらでも実装
 
+		// DRAW TEXT
 		_ = gp.Cell(&textRect, decoded.Text)
-		gp.SetX(gp.MarginLeft())
-		gp.SetY(gp.GetY() + linerLayout.LineHeight)
+
+		gp.Br(textRect.H)
 	}
 
 	gp.SetTextColor(pdf.TextColor.R, pdf.TextColor.G, pdf.TextColor.B)
 }
 
-func drawImage(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout, decoded types.ElementImage) {
+func drawImage(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout, decoded types.ElementImage, ctx *context) {
 	height := pdf.Height - gp.MarginTop() - gp.MarginBottom()
 
 	file, _ := os.Open(decoded.Path)
@@ -205,20 +217,26 @@ func drawImage(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout, de
 		imageRect.H = float64(imgConfig.Height) * (imageRect.W / float64(imgConfig.Width))
 	}
 
+	// LINE BREAK
 	if gp.GetX()+imageRect.W > pdf.Width {
 		if lineHeight := linerLayout.LineHeight; lineHeight != 0 {
 			gp.Br(lineHeight)
-		} else if lineHeight := pdf.LineHeight; lineHeight != 0 {
-			gp.Br(lineHeight)
 		} else {
-			gp.Br(20)
+			gp.Br(ctx.MaxHeight())
 		}
+		ctx.ClearCurrentHeight()
 	}
 
+	// PAGE BREAK
 	if gp.GetY()+imageRect.H > height && pdf.AutoPageBreak {
 		gp.AddPage()
+		ctx.ClearCurrentHeight()
 	}
 
+	// STORE MAX HEIGHT
+	ctx.SetMaxHeight(imageRect.H)
+
+	// RESIZE
 	if decoded.Resize && ((decoded.Width != -1 && decoded.Width < float64(imgConfig.Width)) || (decoded.Height != -1 && decoded.Height < float64(imgConfig.Height))) {
 		resizedImg := resize.Resize(uint(imageRect.W)*2, uint(imageRect.H)*2, img, resize.Lanczos3)
 
@@ -239,10 +257,13 @@ func drawImage(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout, de
 			panic(err)
 		}
 
+		// DRAW IMAGE
 		if decoded.X != -1 || decoded.Y != -1 {
 			_ = gp.ImageByHolder(imageHoloder, decoded.X, decoded.Y, &imageRect)
 		} else {
 			_ = gp.ImageByHolder(imageHoloder, gp.GetX(), gp.GetY(), &imageRect)
+
+			// TODO: vertical のときの動きを修正
 
 			if linerLayout.IsHorizontal() {
 				gp.SetX(gp.GetX() + imageRect.W)
@@ -254,10 +275,13 @@ func drawImage(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout, de
 		return
 	}
 
+	// DRAW IMAGE
 	if decoded.X != -1 || decoded.Y != -1 {
 		_ = gp.Image(decoded.Path, decoded.X, decoded.Y, &imageRect)
 	} else {
 		_ = gp.Image(decoded.Path, gp.GetX(), gp.GetY(), &imageRect)
+
+		// TODO: vertical のときの動きを修正
 
 		if linerLayout.IsHorizontal() {
 			gp.SetX(gp.GetX() + imageRect.W)

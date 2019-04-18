@@ -49,7 +49,6 @@ func main() {
 	}
 
 	var pdf = types.PDF{
-		LineHeight:    20,
 		TextSize:      14,
 		TextColor:     types.Color{R: 0, G: 0, B: 0},
 		AutoPageBreak: true,
