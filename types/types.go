@@ -93,6 +93,7 @@ type ElementImage struct {
 	Height float64 `json:"height"`
 	X      float64 `json:"x"`
 	Y      float64 `json:"y"`
+	Resize bool    `json:"resize,string"`
 }
 
 type Color struct {

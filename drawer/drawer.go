@@ -2,9 +2,14 @@ package drawer
 
 import (
 	"apple-x-co/go-pdf/types"
+	"bytes"
 	"encoding/json"
+	"github.com/nfnt/resize"
 	"github.com/signintech/gopdf"
 	"image"
+	"image/gif"
+	"image/jpeg"
+	"image/png"
 	"os"
 )
 
@@ -29,12 +34,19 @@ func Draw(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout) {
 				BorderTop:       types.Border{Width: -1, Color: types.Color{R: 0, B: 0, G: 0}},
 				BorderRight:     types.Border{Width: -1, Color: types.Color{R: 0, B: 0, G: 0}},
 				BorderBottom:    types.Border{Width: -1, Color: types.Color{R: 0, B: 0, G: 0}},
-				BorderLeft:      types.Border{Width: -1, Color: types.Color{R: 0, B: 0, G: 0}}}
+				BorderLeft:      types.Border{Width: -1, Color: types.Color{R: 0, B: 0, G: 0}},
+			}
 			_ = json.Unmarshal(element.Attributes, &decoded)
 			drawText(gp, pdf, linerLayout, decoded)
 
 		case "image":
-			var decoded = types.ElementImage{X: -1, Y: -1, Width: -1, Height: -1}
+			var decoded = types.ElementImage{
+				X:      -1,
+				Y:      -1,
+				Width:  -1,
+				Height: -1,
+				Resize: false,
+			}
 			_ = json.Unmarshal(element.Attributes, &decoded)
 			drawImage(gp, pdf, linerLayout, decoded)
 		}
@@ -172,25 +184,26 @@ func drawText(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout, dec
 func drawImage(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout, decoded types.ElementImage) {
 	height := pdf.Height - gp.MarginTop() - gp.MarginBottom()
 
+	file, _ := os.Open(decoded.Path)
+	imgConfig, _, _ := image.DecodeConfig(file)
+
+	_, _ = file.Seek(0, 0)
+	img, imgType, _ := image.Decode(file)
+	_ = file.Close()
+
 	imageRect := gopdf.Rect{}
 	if decoded.Width != -1 && decoded.Height != -1 {
 		imageRect.W = decoded.Width
 		imageRect.H = decoded.Height
 	} else if decoded.Width == -1 && decoded.Height == -1 {
-		file, _ := os.Open(decoded.Path)
-		img, _, _ := image.DecodeConfig(file)
-		imageRect.W = float64(img.Width)
-		imageRect.H = float64(img.Height)
+		imageRect.W = float64(imgConfig.Width)
+		imageRect.H = float64(imgConfig.Height)
 	} else if decoded.Width == -1 && decoded.Height != -1 {
-		file, _ := os.Open(decoded.Path)
-		img, _, _ := image.DecodeConfig(file)
 		imageRect.H = decoded.Height
-		imageRect.W = float64(img.Width) * (imageRect.H / float64(img.Height))
+		imageRect.W = float64(imgConfig.Width) * (imageRect.H / float64(imgConfig.Height))
 	} else if decoded.Width != -1 && decoded.Height == -1 {
-		file, _ := os.Open(decoded.Path)
-		img, _, _ := image.DecodeConfig(file)
 		imageRect.W = decoded.Width
-		imageRect.H = float64(img.Height) * (imageRect.W / float64(img.Width))
+		imageRect.H = float64(imgConfig.Height) * (imageRect.W / float64(imgConfig.Width))
 	}
 
 	if gp.GetX()+imageRect.W > pdf.Width {
@@ -205,6 +218,46 @@ func drawImage(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout, de
 
 	if gp.GetY()+imageRect.H > height && pdf.AutoPageBreak {
 		gp.AddPage()
+	}
+
+	// fixme: リサイズをすると、おかしい！
+	if decoded.Resize && ((decoded.Width != -1 && decoded.Width < float64(imgConfig.Width)) || (decoded.Height != -1 && decoded.Height < float64(imgConfig.Height))) {
+		resizedImg := resize.Resize(uint(imageRect.W), uint(imageRect.H), img, resize.Lanczos3)
+
+		resizedBuf := new(bytes.Buffer)
+		switch imgType {
+		case "png":
+			if err := png.Encode(resizedBuf, resizedImg); err != nil {
+				panic(err)
+			}
+		case "jpeg":
+			if err := jpeg.Encode(resizedBuf, resizedImg, nil); err != nil {
+				panic(err)
+			}
+		case "gif":
+			if err := gif.Encode(resizedBuf, resizedImg, nil); err != nil {
+				panic(err)
+			}
+		}
+
+		imageHoloder, err := gopdf.ImageHolderByBytes(resizedBuf.Bytes())
+		if err != nil {
+			panic(err)
+		}
+
+		if decoded.X != -1 || decoded.Y != -1 {
+			_ = gp.ImageByHolder(imageHoloder, decoded.X, decoded.Y, nil)
+		} else {
+			_ = gp.ImageByHolder(imageHoloder, gp.GetX(), gp.GetY(), nil)
+
+			if linerLayout.IsHorizontal() {
+				gp.SetX(gp.GetX() + imageRect.W)
+			} else if linerLayout.IsVertical() {
+				gp.SetY(gp.GetY() + imageRect.H)
+			}
+		}
+
+		return
 	}
 
 	if decoded.X != -1 || decoded.Y != -1 {
