@@ -10,6 +10,7 @@ type PDF struct {
 	TextColor     Color   `json:"text_color"`
 	Pages         []Page  `json:"pages"`
 	AutoPageBreak bool    `json:"auto_page_break,string"`
+	CompressLevel int     `json:"compress_level"`
 	textHeight    float64 `json:"text_cap_height"`
 }
 

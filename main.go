@@ -48,7 +48,12 @@ func main() {
 		return
 	}
 
-	var pdf = types.PDF{LineHeight: 20, TextSize: 14, TextColor: types.Color{R: 0, G: 0, B: 0}, AutoPageBreak: true}
+	var pdf = types.PDF{
+		LineHeight:    20,
+		TextSize:      14,
+		TextColor:     types.Color{R: 0, G: 0, B: 0},
+		AutoPageBreak: true,
+		CompressLevel: 0}
 	bytes := []byte(string(b))
 	if err := json.Unmarshal(bytes, &pdf); err != nil {
 		fmt.Println("error:", err)
@@ -58,6 +63,8 @@ func main() {
 
 	gp := gopdf.GoPdf{}
 	gp.Start(gopdf.Config{PageSize: gopdf.Rect{W: pdf.Width, H: pdf.Height}, Unit: gopdf.Unit_PT})
+	gp.SetCompressLevel(pdf.CompressLevel)
+
 	if err := gp.AddTTFFont("default", *ttfPath); err != nil {
 		log.Print(err.Error())
 		return
