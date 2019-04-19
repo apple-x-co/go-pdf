@@ -80,14 +80,13 @@ func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 
 func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.LinerLayout) {
 	for _, element := range linerLayout.Elements {
-		switch element.Type {
-		case "line_break":
+		if element.Type.IsLineBreak() {
 			var decoded types.ElementLineBreak
 			_ = json.Unmarshal(element.Attributes, &decoded)
 			p.gp.Br(decoded.Height)
 			p.clearCurrentHeight()
 
-		case "text":
+		} else if element.Type.IsText() {
 			var decoded = types.ElementText{
 				Color:           types.Color{R: documentConfigure.TextColor.R, G: documentConfigure.TextColor.G, B: documentConfigure.TextColor.B},
 				BackgroundColor: types.Color{R: 0, G: 0, B: 0},
@@ -102,7 +101,7 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 			_ = json.Unmarshal(element.Attributes, &decoded)
 			p.drawText(documentConfigure, linerLayout, decoded)
 
-		case "image":
+		} else if element.Type.IsImage() {
 			var decoded = types.ElementImage{
 				X:      -1,
 				Y:      -1,
@@ -112,6 +111,7 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 			}
 			_ = json.Unmarshal(element.Attributes, &decoded)
 			p.drawImage(documentConfigure, linerLayout, decoded)
+
 		}
 	}
 
@@ -142,7 +142,7 @@ func (p *PDF) drawText(documentConfigure types.DocumentConfigure, linerLayout ty
 
 	p.gp.SetTextColor(decoded.Color.R, decoded.Color.G, decoded.Color.B)
 
-	if linerLayout.IsHorizontal() {
+	if linerLayout.Orientation.IsHorizontal() {
 		// LINE BREAK
 		if x+textRect.W > width {
 			if lineHeight := linerLayout.LineHeight; lineHeight != 0 {
@@ -188,14 +188,14 @@ func (p *PDF) drawText(documentConfigure types.DocumentConfigure, linerLayout ty
 		}
 
 		// ALIGN & VALIGN
-		if decoded.IsAlignCenter() {
+		if decoded.Align.IsCenter() {
 			p.gp.SetX(p.gp.GetX() + ((textRect.W / 2) - (measureWidth / 2)))
-		} else if decoded.IsAlignRight() {
+		} else if decoded.Align.IsRight() {
 			p.gp.SetX(p.gp.GetX() + textRect.W - measureWidth)
 		}
-		if decoded.IsValignMiddle() {
+		if decoded.Valign.IsMiddle() {
 			p.gp.SetY(p.gp.GetY() + ((textRect.H / 2) - (measureHeight / 2)))
-		} else if decoded.IsValignBottom() {
+		} else if decoded.Valign.IsBottom() {
 			p.gp.SetY(p.gp.GetY() + textRect.H - measureHeight)
 		}
 
@@ -206,15 +206,15 @@ func (p *PDF) drawText(documentConfigure types.DocumentConfigure, linerLayout ty
 		p.setMaxHeight(textRect.H)
 
 		// RESET ALIGN & VALIGN
-		if decoded.IsAlignCenter() {
+		if decoded.Align.IsCenter() {
 			p.gp.SetX(p.gp.GetX() - ((textRect.W / 2) - (measureWidth / 2)))
 		}
-		if decoded.IsValignMiddle() {
+		if decoded.Valign.IsMiddle() {
 			p.gp.SetY(p.gp.GetY() - ((textRect.H / 2) - (measureHeight / 2)))
-		} else if decoded.IsValignBottom() {
+		} else if decoded.Valign.IsMiddle() {
 			p.gp.SetY(p.gp.GetY() - textRect.H + measureHeight)
 		}
-	} else if linerLayout.IsVertical() {
+	} else if linerLayout.Orientation.IsVertical() {
 		p.clearCurrentHeight()
 
 		// PAGE BREAK
@@ -306,9 +306,9 @@ func (p *PDF) drawImage(documentConfigure types.DocumentConfigure, linerLayout t
 
 			// TODO: vertical のときの動きを修正
 
-			if linerLayout.IsHorizontal() {
+			if linerLayout.Orientation.IsHorizontal() {
 				p.gp.SetX(p.gp.GetX() + imageRect.W)
-			} else if linerLayout.IsVertical() {
+			} else if linerLayout.Orientation.IsVertical() {
 				p.gp.SetY(p.gp.GetY() + imageRect.H)
 			}
 		}
@@ -324,9 +324,9 @@ func (p *PDF) drawImage(documentConfigure types.DocumentConfigure, linerLayout t
 
 		// TODO: vertical のときの動きを修正
 
-		if linerLayout.IsHorizontal() {
+		if linerLayout.Orientation.IsHorizontal() {
 			p.gp.SetX(p.gp.GetX() + imageRect.W)
-		} else if linerLayout.IsVertical() {
+		} else if linerLayout.Orientation.IsVertical() {
 			p.gp.SetY(p.gp.GetY() + imageRect.H)
 		}
 	}
