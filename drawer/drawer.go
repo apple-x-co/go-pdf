@@ -28,15 +28,15 @@ func (c *context) ClearCurrentHeight() {
 	c.currentHeight = 0
 }
 
-func Draw(gp *gopdf.GoPdf, pdf types.DocumentConfigure, linerLayout types.LinerLayout) {
+func Draw(gp *gopdf.GoPdf, documentConfigure types.DocumentConfigure, linerLayout types.LinerLayout) {
 	//fmt.Printf("orientation: %v\n", linerLayout.Orientation)
 
 	ctx := context{currentHeight: 0}
 
-	draw(gp, pdf, linerLayout, &ctx)
+	draw(gp, documentConfigure, linerLayout, &ctx)
 }
 
-func draw(gp *gopdf.GoPdf, pdf types.DocumentConfigure, linerLayout types.LinerLayout, ctx *context) {
+func draw(gp *gopdf.GoPdf, documentConfigure types.DocumentConfigure, linerLayout types.LinerLayout, ctx *context) {
 	for _, element := range linerLayout.Elements {
 		switch element.Type {
 		case "line_break":
@@ -47,7 +47,7 @@ func draw(gp *gopdf.GoPdf, pdf types.DocumentConfigure, linerLayout types.LinerL
 
 		case "text":
 			var decoded = types.ElementText{
-				Color:           types.Color{R: pdf.TextColor.R, G: pdf.TextColor.G, B: pdf.TextColor.B},
+				Color:           types.Color{R: documentConfigure.TextColor.R, G: documentConfigure.TextColor.G, B: documentConfigure.TextColor.B},
 				BackgroundColor: types.Color{R: 0, G: 0, B: 0},
 				Width:           -1,
 				Height:          -1,
@@ -58,7 +58,7 @@ func draw(gp *gopdf.GoPdf, pdf types.DocumentConfigure, linerLayout types.LinerL
 				BorderLeft:      types.Border{Width: -1, Color: types.Color{R: 0, B: 0, G: 0}},
 			}
 			_ = json.Unmarshal(element.Attributes, &decoded)
-			drawText(gp, pdf, linerLayout, decoded, ctx)
+			drawText(gp, documentConfigure, linerLayout, decoded, ctx)
 
 		case "image":
 			var decoded = types.ElementImage{
@@ -69,23 +69,23 @@ func draw(gp *gopdf.GoPdf, pdf types.DocumentConfigure, linerLayout types.LinerL
 				Resize: false,
 			}
 			_ = json.Unmarshal(element.Attributes, &decoded)
-			drawImage(gp, pdf, linerLayout, decoded, ctx)
+			drawImage(gp, documentConfigure, linerLayout, decoded, ctx)
 		}
 	}
 
 	for _, linerLayout := range linerLayout.LinearLayouts {
-		draw(gp, pdf, linerLayout, ctx)
+		draw(gp, documentConfigure, linerLayout, ctx)
 	}
 
 }
 
-func drawText(gp *gopdf.GoPdf, pdf types.DocumentConfigure, linerLayout types.LinerLayout, decoded types.ElementText, ctx *context) {
+func drawText(gp *gopdf.GoPdf, documentConfigure types.DocumentConfigure, linerLayout types.LinerLayout, decoded types.ElementText, ctx *context) {
 	x := gp.GetX()
-	width := pdf.Width - gp.MarginLeft() - gp.MarginRight()
-	height := pdf.Height - gp.MarginTop() - gp.MarginBottom()
+	width := documentConfigure.Width - gp.MarginLeft() - gp.MarginRight()
+	height := documentConfigure.Height - gp.MarginTop() - gp.MarginBottom()
 
 	measureWidth, _ := gp.MeasureTextWidth(decoded.Text)
-	measureHeight := pdf.TextHeight() * (float64(pdf.TextSize) / 1000.0)
+	measureHeight := documentConfigure.TextHeight() * (float64(documentConfigure.TextSize) / 1000.0)
 
 	var textRect gopdf.Rect
 
@@ -113,7 +113,7 @@ func drawText(gp *gopdf.GoPdf, pdf types.DocumentConfigure, linerLayout types.Li
 		}
 
 		// PAGE BREAK
-		if gp.GetY()+textRect.H > height && pdf.AutoPageBreak {
+		if gp.GetY()+textRect.H > height && documentConfigure.AutoPageBreak {
 			gp.AddPage()
 			ctx.ClearCurrentHeight()
 		}
@@ -177,7 +177,7 @@ func drawText(gp *gopdf.GoPdf, pdf types.DocumentConfigure, linerLayout types.Li
 		ctx.ClearCurrentHeight()
 
 		// PAGE BREAK
-		if gp.GetY()+textRect.H > height && pdf.AutoPageBreak {
+		if gp.GetY()+textRect.H > height && documentConfigure.AutoPageBreak {
 			gp.AddPage()
 		}
 
@@ -189,11 +189,11 @@ func drawText(gp *gopdf.GoPdf, pdf types.DocumentConfigure, linerLayout types.Li
 		gp.Br(textRect.H)
 	}
 
-	gp.SetTextColor(pdf.TextColor.R, pdf.TextColor.G, pdf.TextColor.B)
+	gp.SetTextColor(documentConfigure.TextColor.R, documentConfigure.TextColor.G, documentConfigure.TextColor.B)
 }
 
-func drawImage(gp *gopdf.GoPdf, pdf types.DocumentConfigure, linerLayout types.LinerLayout, decoded types.ElementImage, ctx *context) {
-	height := pdf.Height - gp.MarginTop() - gp.MarginBottom()
+func drawImage(gp *gopdf.GoPdf, documentConfigure types.DocumentConfigure, linerLayout types.LinerLayout, decoded types.ElementImage, ctx *context) {
+	height := documentConfigure.Height - gp.MarginTop() - gp.MarginBottom()
 
 	file, _ := os.Open(decoded.Path)
 	imgConfig, _, _ := image.DecodeConfig(file)
@@ -218,7 +218,7 @@ func drawImage(gp *gopdf.GoPdf, pdf types.DocumentConfigure, linerLayout types.L
 	}
 
 	// LINE BREAK
-	if gp.GetX()+imageRect.W > pdf.Width {
+	if gp.GetX()+imageRect.W > documentConfigure.Width {
 		if lineHeight := linerLayout.LineHeight; lineHeight != 0 {
 			gp.Br(lineHeight)
 		} else {
@@ -228,7 +228,7 @@ func drawImage(gp *gopdf.GoPdf, pdf types.DocumentConfigure, linerLayout types.L
 	}
 
 	// PAGE BREAK
-	if gp.GetY()+imageRect.H > height && pdf.AutoPageBreak {
+	if gp.GetY()+imageRect.H > height && documentConfigure.AutoPageBreak {
 		gp.AddPage()
 		ctx.ClearCurrentHeight()
 	}
