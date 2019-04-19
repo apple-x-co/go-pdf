@@ -85,7 +85,7 @@ func drawText(gp *gopdf.GoPdf, documentConfigure types.DocumentConfigure, linerL
 	height := documentConfigure.Height - gp.MarginTop() - gp.MarginBottom()
 
 	measureWidth, _ := gp.MeasureTextWidth(decoded.Text)
-	measureHeight := documentConfigure.TextHeight() * (float64(documentConfigure.TextSize) / 1000.0)
+	measureHeight := documentConfigure.FontHeight() * (float64(documentConfigure.TextSize) / 1000.0)
 
 	var textRect gopdf.Rect
 

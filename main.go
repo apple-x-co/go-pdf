@@ -1,12 +1,10 @@
 package main
 
 import (
-	"apple-x-co/go-pdf/drawer"
+	"apple-x-co/go-pdf/pdf"
 	"apple-x-co/go-pdf/types"
 	"encoding/json"
 	"fmt"
-	"github.com/signintech/gopdf"
-	"github.com/signintech/gopdf/fontmaker/core"
 	"io/ioutil"
 	"log"
 	"os"
@@ -48,65 +46,26 @@ func main() {
 		return
 	}
 
-	var configure = types.DocumentConfigure{
+	var documentConfigure = types.DocumentConfigure{
 		TextSize:      14,
 		TextColor:     types.Color{R: 0, G: 0, B: 0},
 		AutoPageBreak: true,
-		CompressLevel: 0}
+		CompressLevel: 0,
+		TTFPath:       *ttfPath,
+	}
 	bytes := []byte(string(b))
-	if err := json.Unmarshal(bytes, &configure); err != nil {
+	if err := json.Unmarshal(bytes, &documentConfigure); err != nil {
 		fmt.Println("error:", err)
 		return
 	}
 	//fmt.Printf("%v\n", configure)
 
-	gp := gopdf.GoPdf{}
-
-	if configure.Password == "" {
-		gp.Start(gopdf.Config{PageSize: gopdf.Rect{W: configure.Width, H: configure.Height}, Unit: gopdf.Unit_PT})
-	} else {
-		gp.Start(
-			gopdf.Config{
-				PageSize: gopdf.Rect{W: configure.Width, H: configure.Height},
-				Unit:     gopdf.Unit_PT,
-				Protection: gopdf.PDFProtectionConfig{
-					UseProtection: true,
-					Permissions:   gopdf.PermissionsPrint | gopdf.PermissionsCopy | gopdf.PermissionsModify,
-					OwnerPass:     []byte(configure.Password),
-					UserPass:      []byte(configure.Password),
-				},
-			})
-	}
-
-	gp.SetCompressLevel(configure.CompressLevel)
-
-	if err := gp.AddTTFFont("default", *ttfPath); err != nil {
+	document := pdf.PDF{}
+	document.Draw(documentConfigure)
+	if err := document.Save(*outputPath); err != nil {
+		document.Destroy()
 		log.Print(err.Error())
 		return
 	}
-	if err := gp.SetFont("default", "", configure.TextSize); err != nil {
-		log.Print(err.Error())
-		return
-	}
-
-	var parser core.TTFParser
-	if err := parser.Parse(*ttfPath); err != nil {
-		log.Print(err.Error())
-		return
-	}
-	configure.SetTextHeight(float64(float64(parser.Ascender()+parser.XHeight()+parser.Descender()) * 1000.00 / float64(parser.UnitsPerEm())))
-
-	gp.SetTextColor(configure.TextColor.R, configure.TextColor.G, configure.TextColor.B)
-
-	for _, page := range configure.Pages {
-		gp.AddPage()
-		drawer.Draw(&gp, configure, page.LinerLayout)
-	}
-
-	if err := gp.WritePdf(*outputPath); err != nil {
-		log.Print(err.Error())
-		return
-	}
-
-	_ = gp.Close()
+	document.Destroy()
 }

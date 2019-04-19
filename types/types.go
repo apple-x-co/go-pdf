@@ -11,14 +11,15 @@ type DocumentConfigure struct {
 	AutoPageBreak bool    `json:"auto_page_break,string"`
 	CompressLevel int     `json:"compress_level"`
 	Password      string  `json:"password"`
-	textHeight    float64 `json:"text_cap_height"`
+	TTFPath       string  `json:"-"`
+	fontHeight    float64 `json:"-"`
 }
 
-func (D *DocumentConfigure) TextHeight() float64 {
-	return D.textHeight
+func (D *DocumentConfigure) FontHeight() float64 {
+	return D.fontHeight
 }
-func (D *DocumentConfigure) SetTextHeight(textHeight float64) {
-	D.textHeight = textHeight
+func (D *DocumentConfigure) SetFontHeight(textHeight float64) {
+	D.fontHeight = textHeight
 }
 
 type Page struct {
