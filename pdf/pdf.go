@@ -142,92 +142,81 @@ func (p *PDF) drawText(documentConfigure types.DocumentConfigure, linerLayout ty
 
 	p.gp.SetTextColor(decoded.Color.R, decoded.Color.G, decoded.Color.B)
 
-	if linerLayout.Orientation.IsHorizontal() {
-		// LINE BREAK
-		if x+textRect.W > width {
-			if lineHeight := linerLayout.LineHeight; lineHeight != 0 {
-				p.gp.Br(lineHeight)
-			} else {
-				p.gp.Br(p.maxHeight())
-			}
-			p.clearCurrentHeight()
-		}
-
-		// PAGE BREAK
-		if p.gp.GetY()+textRect.H > height && documentConfigure.AutoPageBreak {
-			p.gp.AddPage()
-			p.clearCurrentHeight()
-		}
-
-		// BORDER, FILL
-		if decoded.Border.Width != -1 {
-			p.gp.SetLineWidth(decoded.Border.Width)
-			p.gp.SetStrokeColor(decoded.Border.Color.R, decoded.Border.Color.G, decoded.Border.Color.B)
-			if decoded.BackgroundColor.R != 0 || decoded.BackgroundColor.G != 0 || decoded.BackgroundColor.B != 0 {
-				p.gp.SetFillColor(decoded.BackgroundColor.R, decoded.BackgroundColor.G, decoded.BackgroundColor.B)
-				p.gp.RectFromUpperLeftWithStyle(p.gp.GetX(), p.gp.GetY(), textRect.W, textRect.H, "FD")
-			} else {
-				p.gp.RectFromUpperLeft(p.gp.GetX(), p.gp.GetY(), textRect.W, textRect.H)
-			}
-		} else if decoded.BorderTop.Width != -1 {
-			p.gp.SetLineWidth(decoded.BorderTop.Width)
-			p.gp.SetStrokeColor(decoded.BorderTop.Color.R, decoded.BorderTop.Color.G, decoded.BorderTop.Color.B)
-			p.gp.Line(p.gp.GetX(), p.gp.GetY(), p.gp.GetX()+textRect.W, p.gp.GetY())
-		} else if decoded.BorderRight.Width != -1 {
-			p.gp.SetLineWidth(decoded.BorderRight.Width)
-			p.gp.SetStrokeColor(decoded.BorderRight.Color.R, decoded.BorderRight.Color.G, decoded.BorderRight.Color.B)
-			p.gp.Line(p.gp.GetX()+textRect.W, p.gp.GetY(), p.gp.GetX()+textRect.W, p.gp.GetY()+textRect.H)
-		} else if decoded.BorderBottom.Width != -1 {
-			p.gp.SetLineWidth(decoded.BorderBottom.Width)
-			p.gp.SetStrokeColor(decoded.BorderBottom.Color.R, decoded.BorderBottom.Color.G, decoded.BorderBottom.Color.B)
-			p.gp.Line(p.gp.GetX()+textRect.W, p.gp.GetY()+textRect.H, p.gp.GetX(), p.gp.GetY()+textRect.H)
-		} else if decoded.BorderLeft.Width != -1 {
-			p.gp.SetLineWidth(decoded.BorderLeft.Width)
-			p.gp.SetStrokeColor(decoded.BorderLeft.Color.R, decoded.BorderLeft.Color.G, decoded.BorderLeft.Color.B)
-			p.gp.Line(p.gp.GetX(), p.gp.GetY()+textRect.H, p.gp.GetX(), p.gp.GetY())
-		}
-
-		// ALIGN & VALIGN
-		if decoded.Align.IsCenter() {
-			p.gp.SetX(p.gp.GetX() + ((textRect.W / 2) - (measureWidth / 2)))
-		} else if decoded.Align.IsRight() {
-			p.gp.SetX(p.gp.GetX() + textRect.W - measureWidth)
-		}
-		if decoded.Valign.IsMiddle() {
-			p.gp.SetY(p.gp.GetY() + ((textRect.H / 2) - (measureHeight / 2)))
-		} else if decoded.Valign.IsBottom() {
-			p.gp.SetY(p.gp.GetY() + textRect.H - measureHeight)
-		}
-
-		// DRAW TEXT
-		_ = p.gp.Cell(&textRect, decoded.Text)
-
-		// STORE MAX HEIGHT
-		p.setMaxHeight(textRect.H)
-
-		// RESET ALIGN & VALIGN
-		if decoded.Align.IsCenter() {
-			p.gp.SetX(p.gp.GetX() - ((textRect.W / 2) - (measureWidth / 2)))
-		}
-		if decoded.Valign.IsMiddle() {
-			p.gp.SetY(p.gp.GetY() - ((textRect.H / 2) - (measureHeight / 2)))
-		} else if decoded.Valign.IsMiddle() {
-			p.gp.SetY(p.gp.GetY() - textRect.H + measureHeight)
-		}
-	} else if linerLayout.Orientation.IsVertical() {
+	if linerLayout.Orientation.IsVertical() {
+		p.gp.Br(p.maxHeight())
 		p.clearCurrentHeight()
+	}
 
-		// PAGE BREAK
-		if p.gp.GetY()+textRect.H > height && documentConfigure.AutoPageBreak {
-			p.gp.AddPage()
+	// LINE BREAK
+	if x+textRect.W > width {
+		if lineHeight := linerLayout.LineHeight; lineHeight != 0 {
+			p.gp.Br(lineHeight)
+		} else {
+			p.gp.Br(p.maxHeight())
 		}
+		p.clearCurrentHeight()
+	}
 
-		// TODO: horizontal で実装した機能をこちらでも実装
+	// PAGE BREAK
+	if p.gp.GetY()+textRect.H > height && documentConfigure.AutoPageBreak {
+		p.gp.AddPage()
+		p.clearCurrentHeight()
+	}
 
-		// DRAW TEXT
-		_ = p.gp.Cell(&textRect, decoded.Text)
+	// BORDER, FILL
+	if decoded.Border.Width != -1 {
+		p.gp.SetLineWidth(decoded.Border.Width)
+		p.gp.SetStrokeColor(decoded.Border.Color.R, decoded.Border.Color.G, decoded.Border.Color.B)
+		if decoded.BackgroundColor.R != 0 || decoded.BackgroundColor.G != 0 || decoded.BackgroundColor.B != 0 {
+			p.gp.SetFillColor(decoded.BackgroundColor.R, decoded.BackgroundColor.G, decoded.BackgroundColor.B)
+			p.gp.RectFromUpperLeftWithStyle(p.gp.GetX(), p.gp.GetY(), textRect.W, textRect.H, "FD")
+		} else {
+			p.gp.RectFromUpperLeft(p.gp.GetX(), p.gp.GetY(), textRect.W, textRect.H)
+		}
+	} else if decoded.BorderTop.Width != -1 {
+		p.gp.SetLineWidth(decoded.BorderTop.Width)
+		p.gp.SetStrokeColor(decoded.BorderTop.Color.R, decoded.BorderTop.Color.G, decoded.BorderTop.Color.B)
+		p.gp.Line(p.gp.GetX(), p.gp.GetY(), p.gp.GetX()+textRect.W, p.gp.GetY())
+	} else if decoded.BorderRight.Width != -1 {
+		p.gp.SetLineWidth(decoded.BorderRight.Width)
+		p.gp.SetStrokeColor(decoded.BorderRight.Color.R, decoded.BorderRight.Color.G, decoded.BorderRight.Color.B)
+		p.gp.Line(p.gp.GetX()+textRect.W, p.gp.GetY(), p.gp.GetX()+textRect.W, p.gp.GetY()+textRect.H)
+	} else if decoded.BorderBottom.Width != -1 {
+		p.gp.SetLineWidth(decoded.BorderBottom.Width)
+		p.gp.SetStrokeColor(decoded.BorderBottom.Color.R, decoded.BorderBottom.Color.G, decoded.BorderBottom.Color.B)
+		p.gp.Line(p.gp.GetX()+textRect.W, p.gp.GetY()+textRect.H, p.gp.GetX(), p.gp.GetY()+textRect.H)
+	} else if decoded.BorderLeft.Width != -1 {
+		p.gp.SetLineWidth(decoded.BorderLeft.Width)
+		p.gp.SetStrokeColor(decoded.BorderLeft.Color.R, decoded.BorderLeft.Color.G, decoded.BorderLeft.Color.B)
+		p.gp.Line(p.gp.GetX(), p.gp.GetY()+textRect.H, p.gp.GetX(), p.gp.GetY())
+	}
 
-		p.gp.Br(textRect.H)
+	// ALIGN & VALIGN
+	if decoded.Align.IsCenter() {
+		p.gp.SetX(p.gp.GetX() + ((textRect.W / 2) - (measureWidth / 2)))
+	} else if decoded.Align.IsRight() {
+		p.gp.SetX(p.gp.GetX() + textRect.W - measureWidth)
+	}
+	if decoded.Valign.IsMiddle() {
+		p.gp.SetY(p.gp.GetY() + ((textRect.H / 2) - (measureHeight / 2)))
+	} else if decoded.Valign.IsBottom() {
+		p.gp.SetY(p.gp.GetY() + textRect.H - measureHeight)
+	}
+
+	// DRAW TEXT
+	_ = p.gp.Cell(&textRect, decoded.Text)
+
+	// STORE MAX HEIGHT
+	p.setMaxHeight(textRect.H)
+
+	// RESET ALIGN & VALIGN
+	if decoded.Align.IsCenter() {
+		p.gp.SetX(p.gp.GetX() - ((textRect.W / 2) - (measureWidth / 2)))
+	}
+	if decoded.Valign.IsMiddle() {
+		p.gp.SetY(p.gp.GetY() - ((textRect.H / 2) - (measureHeight / 2)))
+	} else if decoded.Valign.IsMiddle() {
+		p.gp.SetY(p.gp.GetY() - textRect.H + measureHeight)
 	}
 
 	p.gp.SetTextColor(documentConfigure.TextColor.R, documentConfigure.TextColor.G, documentConfigure.TextColor.B)
@@ -277,6 +266,8 @@ func (p *PDF) drawImage(documentConfigure types.DocumentConfigure, linerLayout t
 	// STORE MAX HEIGHT
 	p.setMaxHeight(imageRect.H)
 
+	var imageHoloder gopdf.ImageHolder
+
 	// RESIZE
 	if decoded.Resize && ((decoded.Width != -1 && decoded.Width < float64(imgConfig.Width)) || (decoded.Height != -1 && decoded.Height < float64(imgConfig.Height))) {
 		resizedImg := resize.Resize(uint(imageRect.W)*2, uint(imageRect.H)*2, img, resize.Lanczos3)
@@ -293,42 +284,35 @@ func (p *PDF) drawImage(documentConfigure types.DocumentConfigure, linerLayout t
 			}
 		}
 
-		imageHoloder, err := gopdf.ImageHolderByBytes(resizedBuf.Bytes())
+		ih, err := gopdf.ImageHolderByBytes(resizedBuf.Bytes())
 		if err != nil {
 			panic(err)
 		}
 
-		// DRAW IMAGE
-		if decoded.X != -1 || decoded.Y != -1 {
-			_ = p.gp.ImageByHolder(imageHoloder, decoded.X, decoded.Y, &imageRect)
-		} else {
-			_ = p.gp.ImageByHolder(imageHoloder, p.gp.GetX(), p.gp.GetY(), &imageRect)
-
-			// TODO: vertical のときの動きを修正
-
-			if linerLayout.Orientation.IsHorizontal() {
-				p.gp.SetX(p.gp.GetX() + imageRect.W)
-			} else if linerLayout.Orientation.IsVertical() {
-				p.gp.SetY(p.gp.GetY() + imageRect.H)
-			}
+		imageHoloder = ih
+	} else {
+		ih, err := gopdf.ImageHolderByPath(decoded.Path)
+		if err != nil {
+			panic(err)
 		}
 
-		return
+		imageHoloder = ih
 	}
 
 	// DRAW IMAGE
 	if decoded.X != -1 || decoded.Y != -1 {
-		_ = p.gp.Image(decoded.Path, decoded.X, decoded.Y, &imageRect)
-	} else {
+		_ = p.gp.ImageByHolder(imageHoloder, decoded.X, decoded.Y, &imageRect)
+		return
+	}
+	if linerLayout.Orientation.IsHorizontal() {
 		_ = p.gp.Image(decoded.Path, p.gp.GetX(), p.gp.GetY(), &imageRect)
-
-		// TODO: vertical のときの動きを修正
-
-		if linerLayout.Orientation.IsHorizontal() {
-			p.gp.SetX(p.gp.GetX() + imageRect.W)
-		} else if linerLayout.Orientation.IsVertical() {
-			p.gp.SetY(p.gp.GetY() + imageRect.H)
-		}
+		p.gp.SetX(p.gp.GetX() + imageRect.W)
+	} else if linerLayout.Orientation.IsVertical() {
+		// fixme: これだと NG。↓のようなレイアウトが組めない？
+		// ■■■
+		//  ■
+		p.gp.SetY(p.gp.GetY() + imageRect.H)
+		_ = p.gp.Image(decoded.Path, p.gp.GetX(), p.gp.GetY(), &imageRect)
 	}
 }
 

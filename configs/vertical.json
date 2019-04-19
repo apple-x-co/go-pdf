@@ -1,0 +1,39 @@
+{
+  "width": 595,
+  "height": 842,
+  "text_color": {
+    "r": 1,
+    "g": 255,
+    "b": 1
+  },
+  "pages": [
+    {
+      "liner_layout": {
+        "orientation": "vertical",
+        "elements": [
+          {
+            "type": "image",
+            "attributes": {
+              "path": "work/sample1.jpg",
+              "width": 100
+            }
+          },
+          {
+            "type": "image",
+            "attributes": {
+              "path": "work/sample1.jpg",
+              "width": 100,
+              "resize": "true"
+            }
+          },
+          {
+            "type": "text",
+            "attributes": {
+              "text": "vertical text"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
