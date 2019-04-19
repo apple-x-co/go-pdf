@@ -27,23 +27,30 @@ func main() {
 
 	if *showHelp {
 		flag.PrintDefaults()
-		return
+		os.Exit(0)
 	}
 	if *showVersion {
 		fmt.Println("version:", version+"."+revision)
-		return
+		os.Exit(0)
 	}
 
-	f, err := os.Open(*inputPath)
+	execuute(*inputPath, *outputPath, *ttfPath)
+
+	os.Exit(0)
+}
+
+func execuute(inputPath string, outputPath string, ttfPath string) {
+	f, err := os.Open(inputPath)
 	if err != nil {
 		fmt.Println("error:", err)
-		return
+		os.Exit(1)
 	}
 	defer f.Close()
+
 	b, err := ioutil.ReadAll(f)
 	if err != nil {
 		fmt.Println("error:", err)
-		return
+		os.Exit(1)
 	}
 
 	var documentConfigure = types.DocumentConfigure{
@@ -51,21 +58,21 @@ func main() {
 		TextColor:     types.Color{R: 0, G: 0, B: 0},
 		AutoPageBreak: true,
 		CompressLevel: 0,
-		TTFPath:       *ttfPath,
+		TTFPath:       ttfPath,
 	}
 	bytes := []byte(string(b))
 	if err := json.Unmarshal(bytes, &documentConfigure); err != nil {
 		fmt.Println("error:", err)
-		return
+		os.Exit(1)
 	}
 	//fmt.Printf("%v\n", configure)
 
 	document := pdf.PDF{}
 	document.Draw(documentConfigure)
-	if err := document.Save(*outputPath); err != nil {
+	if err := document.Save(outputPath); err != nil {
 		document.Destroy()
 		log.Print(err.Error())
-		return
+		os.Exit(1)
 	}
 	document.Destroy()
 }
