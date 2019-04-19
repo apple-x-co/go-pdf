@@ -2,7 +2,7 @@ package types
 
 import "encoding/json"
 
-type PDF struct {
+type DocumentConfigure struct {
 	Width         float64 `json:"width"`
 	Height        float64 `json:"height"`
 	TextSize      int     `json:"text_size"`
@@ -14,11 +14,11 @@ type PDF struct {
 	textHeight    float64 `json:"text_cap_height"`
 }
 
-func (P *PDF) TextHeight() float64 {
-	return P.textHeight
+func (D *DocumentConfigure) TextHeight() float64 {
+	return D.textHeight
 }
-func (P *PDF) SetTextHeight(textHeight float64) {
-	P.textHeight = textHeight
+func (D *DocumentConfigure) SetTextHeight(textHeight float64) {
+	D.textHeight = textHeight
 }
 
 type Page struct {

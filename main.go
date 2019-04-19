@@ -20,7 +20,7 @@ var revision string
 func main() {
 	var (
 		inputPath   = flag.StringP("in", "i", "layout.json", "file path of input json.")
-		outputPath  = flag.StringP("out", "o", "output.pdf", "file path of output pdf.")
+		outputPath  = flag.StringP("out", "o", "output.configure", "file path of output configure.")
 		ttfPath     = flag.StringP("ttf", "t", "fonts/TakaoPGothic.ttf", "file path of ttf.")
 		showHelp    = flag.BoolP("help", "h", false, "show help message")
 		showVersion = flag.BoolP("version", "v", false, "show version")
@@ -48,43 +48,43 @@ func main() {
 		return
 	}
 
-	var pdf = types.PDF{
+	var configure = types.DocumentConfigure{
 		TextSize:      14,
 		TextColor:     types.Color{R: 0, G: 0, B: 0},
 		AutoPageBreak: true,
 		CompressLevel: 0}
 	bytes := []byte(string(b))
-	if err := json.Unmarshal(bytes, &pdf); err != nil {
+	if err := json.Unmarshal(bytes, &configure); err != nil {
 		fmt.Println("error:", err)
 		return
 	}
-	//fmt.Printf("%v\n", pdf)
+	//fmt.Printf("%v\n", configure)
 
 	gp := gopdf.GoPdf{}
 
-	if pdf.Password == "" {
-		gp.Start(gopdf.Config{PageSize: gopdf.Rect{W: pdf.Width, H: pdf.Height}, Unit: gopdf.Unit_PT})
+	if configure.Password == "" {
+		gp.Start(gopdf.Config{PageSize: gopdf.Rect{W: configure.Width, H: configure.Height}, Unit: gopdf.Unit_PT})
 	} else {
 		gp.Start(
 			gopdf.Config{
-				PageSize: gopdf.Rect{W: pdf.Width, H: pdf.Height},
+				PageSize: gopdf.Rect{W: configure.Width, H: configure.Height},
 				Unit:     gopdf.Unit_PT,
 				Protection: gopdf.PDFProtectionConfig{
 					UseProtection: true,
 					Permissions:   gopdf.PermissionsPrint | gopdf.PermissionsCopy | gopdf.PermissionsModify,
-					OwnerPass:     []byte(pdf.Password),
-					UserPass:      []byte(pdf.Password),
+					OwnerPass:     []byte(configure.Password),
+					UserPass:      []byte(configure.Password),
 				},
 			})
 	}
 
-	gp.SetCompressLevel(pdf.CompressLevel)
+	gp.SetCompressLevel(configure.CompressLevel)
 
 	if err := gp.AddTTFFont("default", *ttfPath); err != nil {
 		log.Print(err.Error())
 		return
 	}
-	if err := gp.SetFont("default", "", pdf.TextSize); err != nil {
+	if err := gp.SetFont("default", "", configure.TextSize); err != nil {
 		log.Print(err.Error())
 		return
 	}
@@ -94,13 +94,13 @@ func main() {
 		log.Print(err.Error())
 		return
 	}
-	pdf.SetTextHeight(float64(float64(parser.Ascender()+parser.XHeight()+parser.Descender()) * 1000.00 / float64(parser.UnitsPerEm())))
+	configure.SetTextHeight(float64(float64(parser.Ascender()+parser.XHeight()+parser.Descender()) * 1000.00 / float64(parser.UnitsPerEm())))
 
-	gp.SetTextColor(pdf.TextColor.R, pdf.TextColor.G, pdf.TextColor.B)
+	gp.SetTextColor(configure.TextColor.R, configure.TextColor.G, configure.TextColor.B)
 
-	for _, page := range pdf.Pages {
+	for _, page := range configure.Pages {
 		gp.AddPage()
-		drawer.Draw(&gp, pdf, page.LinerLayout)
+		drawer.Draw(&gp, configure, page.LinerLayout)
 	}
 
 	if err := gp.WritePdf(*outputPath); err != nil {

@@ -28,7 +28,7 @@ func (c *context) ClearCurrentHeight() {
 	c.currentHeight = 0
 }
 
-func Draw(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout) {
+func Draw(gp *gopdf.GoPdf, pdf types.DocumentConfigure, linerLayout types.LinerLayout) {
 	//fmt.Printf("orientation: %v\n", linerLayout.Orientation)
 
 	ctx := context{currentHeight: 0}
@@ -36,7 +36,7 @@ func Draw(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout) {
 	draw(gp, pdf, linerLayout, &ctx)
 }
 
-func draw(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout, ctx *context) {
+func draw(gp *gopdf.GoPdf, pdf types.DocumentConfigure, linerLayout types.LinerLayout, ctx *context) {
 	for _, element := range linerLayout.Elements {
 		switch element.Type {
 		case "line_break":
@@ -79,7 +79,7 @@ func draw(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout, ctx *co
 
 }
 
-func drawText(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout, decoded types.ElementText, ctx *context) {
+func drawText(gp *gopdf.GoPdf, pdf types.DocumentConfigure, linerLayout types.LinerLayout, decoded types.ElementText, ctx *context) {
 	x := gp.GetX()
 	width := pdf.Width - gp.MarginLeft() - gp.MarginRight()
 	height := pdf.Height - gp.MarginTop() - gp.MarginBottom()
@@ -192,7 +192,7 @@ func drawText(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout, dec
 	gp.SetTextColor(pdf.TextColor.R, pdf.TextColor.G, pdf.TextColor.B)
 }
 
-func drawImage(gp *gopdf.GoPdf, pdf types.PDF, linerLayout types.LinerLayout, decoded types.ElementImage, ctx *context) {
+func drawImage(gp *gopdf.GoPdf, pdf types.DocumentConfigure, linerLayout types.LinerLayout, decoded types.ElementImage, ctx *context) {
 	height := pdf.Height - gp.MarginTop() - gp.MarginBottom()
 
 	file, _ := os.Open(decoded.Path)
