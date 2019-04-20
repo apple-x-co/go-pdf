@@ -21,7 +21,7 @@
           {
             "type": "image",
             "attributes": {
-              "path": "work/sample1.jpg",
+              "path": "work/sample2.jpg",
               "width": 100,
               "resize": "true"
             }
@@ -31,6 +31,88 @@
             "attributes": {
               "text": "vertical text"
             }
+          }
+        ]
+      }
+    },
+    {
+      "liner_layout": {
+        "orientation": "horizontal",
+        "linear_layouts": [
+          {
+            "orientation": "vertical",
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "base horizontal"
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "vertical1"
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "vertical",
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "base horizontal"
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "vertical2"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "liner_layout": {
+        "orientation": "vertical",
+        "linear_layouts": [
+          {
+            "orientation": "horizontal",
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "base vertical - 1"
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "horizontal - 1"
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "base vertical - 2"
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "horizontal - 2"
+                }
+              }
+            ]
           }
         ]
       }

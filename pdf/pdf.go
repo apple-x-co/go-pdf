@@ -15,29 +15,35 @@ import (
 )
 
 type PDF struct {
-	currentHeight float64
-	gp            gopdf.GoPdf
+	currentSize types.Size
+	gp          gopdf.GoPdf
 }
 
-func (p *PDF) maxHeight() float64 {
-	return p.currentHeight
+func (p *PDF) CurrentSize() types.Size {
+	return p.currentSize
 }
-
-func (p *PDF) setMaxHeight(lineHeight float64) {
-	if p.currentHeight < lineHeight {
-		p.currentHeight = lineHeight
+func (p *PDF) setCurrentSize(width float64, height float64) {
+	if p.currentSize.Width < width {
+		p.currentSize.Width = width
+	}
+	if p.currentSize.Height < height {
+		p.currentSize.Height = height
 	}
 }
-
-func (p *PDF) clearCurrentHeight() {
-	p.currentHeight = 0
+func (p *PDF) clearCurrentSize() {
+	p.currentSize.Width = 0
+	p.currentSize.Height = 0
 }
 
 func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 	p.gp = gopdf.GoPdf{}
 
 	if documentConfigure.Password == "" {
-		p.gp.Start(gopdf.Config{PageSize: gopdf.Rect{W: documentConfigure.Width, H: documentConfigure.Height}, Unit: gopdf.Unit_PT})
+		p.gp.Start(
+			gopdf.Config{
+				PageSize: gopdf.Rect{W: documentConfigure.Width, H: documentConfigure.Height},
+				Unit:     gopdf.Unit_PT,
+			})
 	} else {
 		p.gp.Start(
 			gopdf.Config{
@@ -72,19 +78,29 @@ func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 
 	p.gp.SetTextColor(documentConfigure.TextColor.R, documentConfigure.TextColor.G, documentConfigure.TextColor.B)
 
+	width := documentConfigure.Width - p.gp.MarginLeft() - p.gp.MarginRight()
+	height := documentConfigure.Height - p.gp.MarginTop() - p.gp.MarginBottom()
+
 	for _, page := range documentConfigure.Pages {
 		p.gp.AddPage()
-		p.draw(documentConfigure, page.LinerLayout)
+		p.clearCurrentSize()
+		containerRect := types.Rect{
+			Origin: types.Origin{X: p.gp.GetX(), Y: p.gp.GetY()},
+			Size:   types.Size{Width: width, Height: height},
+		}
+		p.gp.SetStrokeColor(255, 0, 0)                                                                                              // debug
+		p.gp.RectFromUpperLeft(containerRect.Origin.X, containerRect.Origin.Y, containerRect.Size.Width, containerRect.Size.Height) // debug
+		p.draw(documentConfigure, page.LinerLayout, containerRect)
 	}
 }
 
-func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.LinerLayout) {
+func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.LinerLayout, containerRect types.Rect) {
 	for _, element := range linerLayout.Elements {
 		if element.Type.IsLineBreak() {
 			var decoded types.ElementLineBreak
 			_ = json.Unmarshal(element.Attributes, &decoded)
 			p.gp.Br(decoded.Height)
-			p.clearCurrentHeight()
+			p.clearCurrentSize()
 
 		} else if element.Type.IsText() {
 			var decoded = types.ElementText{
@@ -99,7 +115,7 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 				BorderLeft:      types.Border{Width: -1, Color: types.Color{R: 0, B: 0, G: 0}},
 			}
 			_ = json.Unmarshal(element.Attributes, &decoded)
-			p.drawText(documentConfigure, linerLayout, decoded)
+			p.drawText(documentConfigure, linerLayout, decoded, containerRect)
 
 		} else if element.Type.IsImage() {
 			var decoded = types.ElementImage{
@@ -110,17 +126,24 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 				Resize: false,
 			}
 			_ = json.Unmarshal(element.Attributes, &decoded)
-			p.drawImage(documentConfigure, linerLayout, decoded)
+			p.drawImage(documentConfigure, linerLayout, decoded, containerRect)
 
 		}
 	}
 
-	for _, linerLayout := range linerLayout.LinearLayouts {
-		p.draw(documentConfigure, linerLayout)
+	for _, _linerLayout := range linerLayout.LinearLayouts {
+		_containerRect := types.Rect{
+			Origin: types.Origin{X: p.gp.GetX(), Y: p.gp.GetY()},
+			Size:   types.Size{Width: containerRect.Size.Width - p.gp.GetX() + p.gp.MarginLeft(), Height: containerRect.Size.Height - p.gp.GetY() + p.gp.MarginTop()},
+		}
+
+		p.gp.SetStrokeColor(255, 255, 0)                                                                                                // debug
+		p.gp.RectFromUpperLeft(_containerRect.Origin.X, _containerRect.Origin.Y, _containerRect.Size.Width, _containerRect.Size.Height) // debug
+		p.draw(documentConfigure, _linerLayout, _containerRect)
 	}
 }
 
-func (p *PDF) drawText(documentConfigure types.DocumentConfigure, linerLayout types.LinerLayout, decoded types.ElementText) {
+func (p *PDF) drawText(documentConfigure types.DocumentConfigure, linerLayout types.LinerLayout, decoded types.ElementText, containerRect types.Rect) {
 	x := p.gp.GetX()
 	width := documentConfigure.Width - p.gp.MarginLeft() - p.gp.MarginRight()
 	height := documentConfigure.Height - p.gp.MarginTop() - p.gp.MarginBottom()
@@ -128,39 +151,41 @@ func (p *PDF) drawText(documentConfigure types.DocumentConfigure, linerLayout ty
 	measureWidth, _ := p.gp.MeasureTextWidth(decoded.Text)
 	measureHeight := documentConfigure.FontHeight() * (float64(documentConfigure.TextSize) / 1000.0)
 
-	var textRect gopdf.Rect
-
+	var textRectSize gopdf.Rect
 	if decoded.Width != -1 && decoded.Height != -1 {
-		textRect = gopdf.Rect{W: decoded.Width, H: decoded.Height}
+		textRectSize = gopdf.Rect{W: decoded.Width, H: decoded.Height}
 	} else if decoded.Width != -1 && decoded.Height == -1 {
-		textRect = gopdf.Rect{W: decoded.Width, H: measureHeight}
+		textRectSize = gopdf.Rect{W: decoded.Width, H: measureHeight}
 	} else if decoded.Width == -1 && decoded.Height != -1 {
-		textRect = gopdf.Rect{W: measureWidth, H: decoded.Height}
+		textRectSize = gopdf.Rect{W: measureWidth, H: decoded.Height}
 	} else {
-		textRect = gopdf.Rect{W: measureWidth, H: measureHeight}
+		textRectSize = gopdf.Rect{W: measureWidth, H: measureHeight}
 	}
 
 	p.gp.SetTextColor(decoded.Color.R, decoded.Color.G, decoded.Color.B)
 
-	if linerLayout.Orientation.IsVertical() {
-		p.gp.Br(p.maxHeight())
-		p.clearCurrentHeight()
+	// VERTICAL
+	if linerLayout.Orientation.IsVertical() && p.CurrentSize().Height != 0 {
+		p.gp.SetY(p.gp.GetY() + p.CurrentSize().Height)
+		p.clearCurrentSize()
 	}
 
 	// LINE BREAK
-	if x+textRect.W > width {
+	if x+textRectSize.W > width {
 		if lineHeight := linerLayout.LineHeight; lineHeight != 0 {
-			p.gp.Br(lineHeight)
+			p.gp.SetX(containerRect.Origin.X)
+			p.gp.SetY(p.gp.GetY() + lineHeight)
 		} else {
-			p.gp.Br(p.maxHeight())
+			p.gp.SetX(containerRect.Origin.X)
+			p.gp.SetY(p.gp.GetY() + p.CurrentSize().Height)
 		}
-		p.clearCurrentHeight()
+		p.clearCurrentSize()
 	}
 
 	// PAGE BREAK
-	if p.gp.GetY()+textRect.H > height && documentConfigure.AutoPageBreak {
+	if p.gp.GetY()+textRectSize.H > height && documentConfigure.AutoPageBreak {
 		p.gp.AddPage()
-		p.clearCurrentHeight()
+		p.clearCurrentSize()
 	}
 
 	// BORDER, FILL
@@ -169,60 +194,65 @@ func (p *PDF) drawText(documentConfigure types.DocumentConfigure, linerLayout ty
 		p.gp.SetStrokeColor(decoded.Border.Color.R, decoded.Border.Color.G, decoded.Border.Color.B)
 		if decoded.BackgroundColor.R != 0 || decoded.BackgroundColor.G != 0 || decoded.BackgroundColor.B != 0 {
 			p.gp.SetFillColor(decoded.BackgroundColor.R, decoded.BackgroundColor.G, decoded.BackgroundColor.B)
-			p.gp.RectFromUpperLeftWithStyle(p.gp.GetX(), p.gp.GetY(), textRect.W, textRect.H, "FD")
+			p.gp.RectFromUpperLeftWithStyle(p.gp.GetX(), p.gp.GetY(), textRectSize.W, textRectSize.H, "FD")
 		} else {
-			p.gp.RectFromUpperLeft(p.gp.GetX(), p.gp.GetY(), textRect.W, textRect.H)
+			p.gp.RectFromUpperLeft(p.gp.GetX(), p.gp.GetY(), textRectSize.W, textRectSize.H)
 		}
 	} else if decoded.BorderTop.Width != -1 {
 		p.gp.SetLineWidth(decoded.BorderTop.Width)
 		p.gp.SetStrokeColor(decoded.BorderTop.Color.R, decoded.BorderTop.Color.G, decoded.BorderTop.Color.B)
-		p.gp.Line(p.gp.GetX(), p.gp.GetY(), p.gp.GetX()+textRect.W, p.gp.GetY())
+		p.gp.Line(p.gp.GetX(), p.gp.GetY(), p.gp.GetX()+textRectSize.W, p.gp.GetY())
 	} else if decoded.BorderRight.Width != -1 {
 		p.gp.SetLineWidth(decoded.BorderRight.Width)
 		p.gp.SetStrokeColor(decoded.BorderRight.Color.R, decoded.BorderRight.Color.G, decoded.BorderRight.Color.B)
-		p.gp.Line(p.gp.GetX()+textRect.W, p.gp.GetY(), p.gp.GetX()+textRect.W, p.gp.GetY()+textRect.H)
+		p.gp.Line(p.gp.GetX()+textRectSize.W, p.gp.GetY(), p.gp.GetX()+textRectSize.W, p.gp.GetY()+textRectSize.H)
 	} else if decoded.BorderBottom.Width != -1 {
 		p.gp.SetLineWidth(decoded.BorderBottom.Width)
 		p.gp.SetStrokeColor(decoded.BorderBottom.Color.R, decoded.BorderBottom.Color.G, decoded.BorderBottom.Color.B)
-		p.gp.Line(p.gp.GetX()+textRect.W, p.gp.GetY()+textRect.H, p.gp.GetX(), p.gp.GetY()+textRect.H)
+		p.gp.Line(p.gp.GetX()+textRectSize.W, p.gp.GetY()+textRectSize.H, p.gp.GetX(), p.gp.GetY()+textRectSize.H)
 	} else if decoded.BorderLeft.Width != -1 {
 		p.gp.SetLineWidth(decoded.BorderLeft.Width)
 		p.gp.SetStrokeColor(decoded.BorderLeft.Color.R, decoded.BorderLeft.Color.G, decoded.BorderLeft.Color.B)
-		p.gp.Line(p.gp.GetX(), p.gp.GetY()+textRect.H, p.gp.GetX(), p.gp.GetY())
+		p.gp.Line(p.gp.GetX(), p.gp.GetY()+textRectSize.H, p.gp.GetX(), p.gp.GetY())
 	}
 
 	// ALIGN & VALIGN
 	if decoded.Align.IsCenter() {
-		p.gp.SetX(p.gp.GetX() + ((textRect.W / 2) - (measureWidth / 2)))
+		p.gp.SetX(p.gp.GetX() + ((textRectSize.W / 2) - (measureWidth / 2)))
 	} else if decoded.Align.IsRight() {
-		p.gp.SetX(p.gp.GetX() + textRect.W - measureWidth)
+		p.gp.SetX(p.gp.GetX() + textRectSize.W - measureWidth)
 	}
 	if decoded.Valign.IsMiddle() {
-		p.gp.SetY(p.gp.GetY() + ((textRect.H / 2) - (measureHeight / 2)))
+		p.gp.SetY(p.gp.GetY() + ((textRectSize.H / 2) - (measureHeight / 2)))
 	} else if decoded.Valign.IsBottom() {
-		p.gp.SetY(p.gp.GetY() + textRect.H - measureHeight)
+		p.gp.SetY(p.gp.GetY() + textRectSize.H - measureHeight)
 	}
 
 	// DRAW TEXT
-	_ = p.gp.Cell(&textRect, decoded.Text)
+	_ = p.gp.Cell(&textRectSize, decoded.Text)
 
-	// STORE MAX HEIGHT
-	p.setMaxHeight(textRect.H)
+	// STORE MAX AXIS
+	p.setCurrentSize(textRectSize.W, textRectSize.H)
 
 	// RESET ALIGN & VALIGN
 	if decoded.Align.IsCenter() {
-		p.gp.SetX(p.gp.GetX() - ((textRect.W / 2) - (measureWidth / 2)))
+		p.gp.SetX(p.gp.GetX() - ((textRectSize.W / 2) - (measureWidth / 2)))
 	}
 	if decoded.Valign.IsMiddle() {
-		p.gp.SetY(p.gp.GetY() - ((textRect.H / 2) - (measureHeight / 2)))
+		p.gp.SetY(p.gp.GetY() - ((textRectSize.H / 2) - (measureHeight / 2)))
 	} else if decoded.Valign.IsMiddle() {
-		p.gp.SetY(p.gp.GetY() - textRect.H + measureHeight)
+		p.gp.SetY(p.gp.GetY() - textRectSize.H + measureHeight)
 	}
 
 	p.gp.SetTextColor(documentConfigure.TextColor.R, documentConfigure.TextColor.G, documentConfigure.TextColor.B)
+
+	// VERTICAL
+	if linerLayout.Orientation.IsVertical() {
+		p.gp.SetX(p.gp.GetX() - textRectSize.W)
+	}
 }
 
-func (p *PDF) drawImage(documentConfigure types.DocumentConfigure, linerLayout types.LinerLayout, decoded types.ElementImage) {
+func (p *PDF) drawImage(documentConfigure types.DocumentConfigure, linerLayout types.LinerLayout, decoded types.ElementImage, containerRect types.Rect) {
 	height := documentConfigure.Height - p.gp.MarginTop() - p.gp.MarginBottom()
 
 	file, _ := os.Open(decoded.Path)
@@ -232,45 +262,53 @@ func (p *PDF) drawImage(documentConfigure types.DocumentConfigure, linerLayout t
 	img, imgType, _ := image.Decode(file)
 	_ = file.Close()
 
-	imageRect := gopdf.Rect{}
+	var imageRectSize gopdf.Rect
 	if decoded.Width != -1 && decoded.Height != -1 {
-		imageRect.W = decoded.Width
-		imageRect.H = decoded.Height
+		imageRectSize.W = decoded.Width
+		imageRectSize.H = decoded.Height
 	} else if decoded.Width == -1 && decoded.Height == -1 {
-		imageRect.W = float64(imgConfig.Width)
-		imageRect.H = float64(imgConfig.Height)
+		imageRectSize.W = float64(imgConfig.Width)
+		imageRectSize.H = float64(imgConfig.Height)
 	} else if decoded.Width == -1 && decoded.Height != -1 {
-		imageRect.H = decoded.Height
-		imageRect.W = float64(imgConfig.Width) * (imageRect.H / float64(imgConfig.Height))
+		imageRectSize.H = decoded.Height
+		imageRectSize.W = float64(imgConfig.Width) * (imageRectSize.H / float64(imgConfig.Height))
 	} else if decoded.Width != -1 && decoded.Height == -1 {
-		imageRect.W = decoded.Width
-		imageRect.H = float64(imgConfig.Height) * (imageRect.W / float64(imgConfig.Width))
+		imageRectSize.W = decoded.Width
+		imageRectSize.H = float64(imgConfig.Height) * (imageRectSize.W / float64(imgConfig.Width))
+	}
+
+	// VERTICAL
+	if linerLayout.Orientation.IsVertical() && p.CurrentSize().Height != 0 {
+		p.gp.SetY(p.gp.GetY() + p.CurrentSize().Height)
+		p.clearCurrentSize()
 	}
 
 	// LINE BREAK
-	if p.gp.GetX()+imageRect.W > documentConfigure.Width {
+	if p.gp.GetX()+imageRectSize.W > documentConfigure.Width {
 		if lineHeight := linerLayout.LineHeight; lineHeight != 0 {
-			p.gp.Br(lineHeight)
+			p.gp.SetX(containerRect.Origin.X)
+			p.gp.SetY(p.gp.GetY() + lineHeight)
 		} else {
-			p.gp.Br(p.maxHeight())
+			p.gp.SetX(containerRect.Origin.X)
+			p.gp.SetY(p.gp.GetY() + p.CurrentSize().Height)
 		}
-		p.clearCurrentHeight()
+		p.clearCurrentSize()
 	}
 
 	// PAGE BREAK
-	if p.gp.GetY()+imageRect.H > height && documentConfigure.AutoPageBreak {
+	if p.gp.GetY()+imageRectSize.H > height && documentConfigure.AutoPageBreak {
 		p.gp.AddPage()
-		p.clearCurrentHeight()
+		p.clearCurrentSize()
 	}
 
-	// STORE MAX HEIGHT
-	p.setMaxHeight(imageRect.H)
+	// STORE MAX AXIS
+	p.setCurrentSize(imageRectSize.W, imageRectSize.H)
 
 	var imageHoloder gopdf.ImageHolder
 
 	// RESIZE
 	if decoded.Resize && ((decoded.Width != -1 && decoded.Width < float64(imgConfig.Width)) || (decoded.Height != -1 && decoded.Height < float64(imgConfig.Height))) {
-		resizedImg := resize.Resize(uint(imageRect.W)*2, uint(imageRect.H)*2, img, resize.Lanczos3)
+		resizedImg := resize.Resize(uint(imageRectSize.W)*2, uint(imageRectSize.H)*2, img, resize.Lanczos3)
 
 		resizedBuf := new(bytes.Buffer)
 		switch imgType {
@@ -301,18 +339,14 @@ func (p *PDF) drawImage(documentConfigure types.DocumentConfigure, linerLayout t
 
 	// DRAW IMAGE
 	if decoded.X != -1 || decoded.Y != -1 {
-		_ = p.gp.ImageByHolder(imageHoloder, decoded.X, decoded.Y, &imageRect)
+		_ = p.gp.ImageByHolder(imageHoloder, decoded.X, decoded.Y, &imageRectSize)
 		return
 	}
 	if linerLayout.Orientation.IsHorizontal() {
-		_ = p.gp.Image(decoded.Path, p.gp.GetX(), p.gp.GetY(), &imageRect)
-		p.gp.SetX(p.gp.GetX() + imageRect.W)
+		_ = p.gp.Image(decoded.Path, p.gp.GetX(), p.gp.GetY(), &imageRectSize)
+		p.gp.SetX(p.gp.GetX() + imageRectSize.W)
 	} else if linerLayout.Orientation.IsVertical() {
-		// fixme: これだと NG。↓のようなレイアウトが組めない？
-		// ■■■
-		//  ■
-		p.gp.SetY(p.gp.GetY() + imageRect.H)
-		_ = p.gp.Image(decoded.Path, p.gp.GetX(), p.gp.GetY(), &imageRect)
+		_ = p.gp.Image(decoded.Path, p.gp.GetX(), p.gp.GetY(), &imageRectSize)
 	}
 }
 
