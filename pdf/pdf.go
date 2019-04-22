@@ -27,6 +27,8 @@ type PDF struct {
 func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 	p.gp = gopdf.GoPdf{}
 
+	//fmt.Printf("%v\n", documentConfigure)
+
 	if documentConfigure.Password == "" {
 		p.gp.Start(
 			gopdf.Config{
@@ -69,12 +71,8 @@ func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 
 	for _, page := range documentConfigure.Pages {
 		p.gp.AddPage()
-		wrapRect := p.draw(documentConfigure, page.LinerLayout)
-
-		// > debug
-		p.gp.SetStrokeColor(255, 0, 0)
-		p.gp.RectFromUpperLeft(wrapRect.Origin.X, wrapRect.Origin.Y, wrapRect.Size.Width, wrapRect.Size.Height)
-		// < debug
+		rect := p.draw(documentConfigure, page.LinerLayout)
+		fmt.Printf("rect: %v\n", rect)
 	}
 }
 
@@ -106,7 +104,7 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 				}
 				_ = json.Unmarshal(element.Attributes, &decoded)
 
-				fmt.Printf("---------------------------\n%v\n", decoded.Text)
+				//fmt.Printf("---------------------------\n%v\n", decoded.Text)
 
 				measureSize := p.measureText(documentConfigure, decoded)
 
@@ -134,8 +132,8 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 				p.gp.SetY(textRect.MinY())
 
 				// DRAW
-				fmt.Printf("textRect: %v\n", textRect)
-				fmt.Printf("lineWrapRect: %v\n", lineWrapRect)
+				//fmt.Printf("textRect: %v\n", textRect)
+				//fmt.Printf("lineWrapRect: %v\n", lineWrapRect)
 				p.drawText(documentConfigure, decoded, textRect)
 
 				lineWrapRect = lineWrapRect.Merge(textRect)
@@ -150,7 +148,7 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 				}
 				_ = json.Unmarshal(element.Attributes, &decoded)
 
-				fmt.Printf("---------------------------\n%v\n", decoded.Path)
+				//fmt.Printf("---------------------------\n%v\n", decoded.Path)
 
 				measureSize := p.measureImage(documentConfigure, decoded)
 
@@ -178,18 +176,25 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 				p.gp.SetY(imageRect.MinY())
 
 				// DRAW
-				fmt.Printf("textRect: %v\n", imageRect)
-				fmt.Printf("lineWrapRect: %v\n", lineWrapRect)
+				//fmt.Printf("textRect: %v\n", imageRect)
+				//fmt.Printf("lineWrapRect: %v\n", lineWrapRect)
 				p.drawImage(documentConfigure, decoded, imageRect)
 
 				lineWrapRect = lineWrapRect.Merge(imageRect)
 			}
+
+			wrapRect = wrapRect.Merge(lineWrapRect)
 		}
+
+		// > debug
+		p.gp.SetStrokeColor(255, 0, 0)
+		p.gp.RectFromUpperLeft(wrapRect.Origin.X, wrapRect.Origin.Y, wrapRect.Width(), wrapRect.Height())
+		// < debug
 
 		return wrapRect
 	}
 
-	for _, _linerLayout := range linerLayout.LinearLayouts {
+	for _, _linerLayout := range linerLayout.LinerLayouts {
 		rect := p.draw(documentConfigure, _linerLayout)
 		wrapRect = wrapRect.Merge(rect)
 
@@ -265,7 +270,7 @@ func (p *PDF) drawText(documentConfigure types.DocumentConfigure, decoded types.
 	// DRAW TEXT
 	var gpRect = gopdf.Rect{W: textRect.Width(), H: textRect.Height()}
 	p.gp.SetTextColor(decoded.Color.R, decoded.Color.G, decoded.Color.B)
-	_ = p.gp.Cell(&gpRect, decoded.Text+fmt.Sprintf("%v", textRect))
+	_ = p.gp.Cell(&gpRect, decoded.Text) // fmt.Sprintf("%v", textRect)
 	p.gp.SetTextColor(documentConfigure.TextColor.R, documentConfigure.TextColor.G, documentConfigure.TextColor.B)
 
 	// FIXME: RESET ALIGN & VALIGN
@@ -358,12 +363,12 @@ func (p *PDF) verticalBreak(lineWrapRect *types.Rect) {
 }
 
 func (p *PDF) lineBreak(lineWrapRect *types.Rect, lineHeight float64) {
-	fmt.Printf("lineWrapRect(before): %v\n", lineWrapRect)
+	//fmt.Printf("lineWrapRect(before): %v\n", lineWrapRect)
 
-	fmt.Printf("y: %v\n", lineWrapRect.Origin.Y)
-	fmt.Printf("h: %v\n", lineWrapRect.Size.Height)
-	fmt.Printf("maxy: %v\n", lineWrapRect.MaxY())
-	fmt.Printf("lineHeight: %v\n", lineHeight)
+	//fmt.Printf("y: %v\n", lineWrapRect.Origin.Y)
+	//fmt.Printf("h: %v\n", lineWrapRect.Size.Height)
+	//fmt.Printf("maxy: %v\n", lineWrapRect.MaxY())
+	//fmt.Printf("lineHeight: %v\n", lineHeight)
 
 	lineWrapRect.Origin.X = lineWrapRect.MinX()
 	if lineHeight == unsetHeight {
@@ -374,7 +379,7 @@ func (p *PDF) lineBreak(lineWrapRect *types.Rect, lineHeight float64) {
 	lineWrapRect.Size.Width = 0
 	lineWrapRect.Size.Height = 0
 
-	fmt.Printf("lineWrapRect(after): %v\n", lineWrapRect)
+	//fmt.Printf("lineWrapRect(after): %v\n", lineWrapRect)
 }
 
 func (p *PDF) pageBreak(lineWrapRect *types.Rect, wrapRect *types.Rect) {
