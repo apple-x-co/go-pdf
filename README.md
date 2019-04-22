@@ -21,18 +21,11 @@ go-pdf --help
 
 ## Notices
 
+## Restriction
+
+* 一つの `liner_layout` に対して `elements` と `liner_layouts` を含めることはできない。
+* PDF生成に利用しているライブラリの関係上、テキスト色を黒色以外から黒色テキストに戻す場合に `rgb(0,0,0)` では正しく判定されないので、黒色テキストは `rgb(1,1,1)` を使う。
+
 ### Fonts
 
 https://github.com/minoryorg/Noto-Sans-CJK-JP
-
-### Color
-
-黒色テキストを使う場合 `rgb(0,0,0)` では正しく判定されないので、 `rgb(1,1,1)` を使う
-
-```json
-"color": {
-    "r": 1,
-    "g": 1,
-    "b": 1
-}
-```
