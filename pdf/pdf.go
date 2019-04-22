@@ -2,20 +2,17 @@ package pdf
 
 import (
 	"apple-x-co/go-pdf/types"
-	"fmt"
-	"image"
-	"os"
-
-	//"bytes"
+	"bytes"
 	"encoding/json"
-	//"github.com/nfnt/resize"
+	"fmt"
+	"github.com/nfnt/resize"
 	"github.com/signintech/gopdf"
 	"github.com/signintech/gopdf/fontmaker/core"
-	//"image"
-	//"image/jpeg"
-	//"image/png"
+	"image"
+	"image/jpeg"
+	"image/png"
 	"log"
-	//"os"
+	"os"
 )
 
 const unsetWidth float64 = 0
@@ -143,17 +140,49 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 
 				lineWrapRect = lineWrapRect.Merge(textRect)
 
-				//} else if element.Type.IsImage() {
-				//	var decoded = types.ElementImage{
-				//		X:      unsetX,
-				//		Y:      unsetY,
-				//		Width:  unset_width,
-				//		Height: unsetHeight,
-				//		Resize: false,
-				//	}
-				//	_ = json.Unmarshal(element.Attributes, &decoded)
-				//	rect := p.drawImage(documentConfigure, linerLayout, decoded, wrapRect)
-				//	wrapRect = wrapRect.Merge(rect)
+			} else if element.Type.IsImage() {
+				var decoded = types.ElementImage{
+					X:      unsetX,
+					Y:      unsetY,
+					Width:  unsetWidth,
+					Height: unsetHeight,
+					Resize: false,
+				}
+				_ = json.Unmarshal(element.Attributes, &decoded)
+
+				fmt.Printf("---------------------------\n%v\n", decoded.Path)
+
+				measureSize := p.measureImage(documentConfigure, decoded)
+
+				// VERTICAL
+				if linerLayout.Orientation.IsVertical() {
+					p.lineBreak(&lineWrapRect, linerLayout.LineHeight)
+				}
+
+				// LINE BREAK
+				if p.needLineBreak(documentConfigure, lineWrapRect, measureSize) {
+					fmt.Print("> line break\n")
+					p.lineBreak(&lineWrapRect, linerLayout.LineHeight)
+				}
+
+				// PAGE BREAK
+				if p.needPageBreak(documentConfigure, lineWrapRect, measureSize) {
+					fmt.Print("> page break\n")
+					p.gp.AddPage()
+					p.pageBreak(&lineWrapRect, &wrapRect)
+				}
+
+				// DRAWABLE RECT
+				imageRect := types.Rect{Origin: types.Origin{X: lineWrapRect.MaxX(), Y: lineWrapRect.MinY()}, Size: measureSize}
+				p.gp.SetX(imageRect.MinX())
+				p.gp.SetY(imageRect.MinY())
+
+				// DRAW
+				fmt.Printf("textRect: %v\n", imageRect)
+				fmt.Printf("lineWrapRect: %v\n", lineWrapRect)
+				p.drawImage(documentConfigure, decoded, imageRect)
+
+				lineWrapRect = lineWrapRect.Merge(imageRect)
 			}
 		}
 
@@ -273,105 +302,52 @@ func (p *PDF) measureImage(documentConfigure types.DocumentConfigure, decoded ty
 	return measureSize
 }
 
-//func (p *PDF) drawImage(documentConfigure types.DocumentConfigure, linerLayout types.LinerLayout, decoded types.ElementImage, elementsRect types.Rect) types.Rect {
-//	height := documentConfigure.Height - p.gp.MarginTop() - p.gp.MarginBottom()
-//
-//	file, _ := os.Open(decoded.Path)
-//	imgConfig, _, _ := image.DecodeConfig(file)
-//
-//	_, _ = file.Seek(0, 0)
-//	img, imgType, _ := image.Decode(file)
-//	_ = file.Close()
-//
-//	var imageRectSize gopdf.Rect
-//	if decoded.Width != unset_width && decoded.Height != unsetHeight {
-//		imageRectSize.W = decoded.Width
-//		imageRectSize.H = decoded.Height
-//	} else if decoded.Width == unset_width && decoded.Height == unsetHeight {
-//		imageRectSize.W = float64(imgConfig.Width)
-//		imageRectSize.H = float64(imgConfig.Height)
-//	} else if decoded.Width == unset_width && decoded.Height != unsetHeight {
-//		imageRectSize.H = decoded.Height
-//		imageRectSize.W = float64(imgConfig.Width) * (imageRectSize.H / float64(imgConfig.Height))
-//	} else if decoded.Width != unset_width && decoded.Height == unsetHeight {
-//		imageRectSize.W = decoded.Width
-//		imageRectSize.H = float64(imgConfig.Height) * (imageRectSize.W / float64(imgConfig.Width))
-//	}
-//
-//	// VERTICAL
-//	if linerLayout.Orientation.IsVertical() && p.CurrentSize().Height != 0 {
-//		p.gp.SetY(p.gp.GetY() + p.CurrentSize().Height)
-//		p.clearCurrentSize()
-//	}
-//
-//	// LINE BREAK
-//	if p.gp.GetX()+imageRectSize.W > documentConfigure.Width {
-//		if lineHeight := linerLayout.LineHeight; lineHeight != 0 {
-//			p.gp.SetX(elementsRect.Origin.X)
-//			p.gp.SetY(p.gp.GetY() + lineHeight)
-//		} else {
-//			p.gp.SetX(elementsRect.Origin.X)
-//			p.gp.SetY(p.gp.GetY() + p.CurrentSize().Height)
-//		}
-//		p.clearCurrentSize()
-//	}
-//
-//	// PAGE BREAK
-//	if p.gp.GetY()+imageRectSize.H > height && documentConfigure.AutoPageBreak {
-//		p.gp.AddPage()
-//		p.clearCurrentSize()
-//	}
-//
-//	// STORE MAX AXIS
-//	p.setCurrentSize(imageRectSize.W, imageRectSize.H)
-//
-//	var imageHoloder gopdf.ImageHolder
-//
-//	// RESIZE
-//	if decoded.Resize && ((decoded.Width != unset_width && decoded.Width < float64(imgConfig.Width)) || (decoded.Height != unsetHeight && decoded.Height < float64(imgConfig.Height))) {
-//		resizedImg := resize.Resize(uint(imageRectSize.W)*2, uint(imageRectSize.H)*2, img, resize.Lanczos3)
-//
-//		resizedBuf := new(bytes.Buffer)
-//		switch imgType {
-//		case "png":
-//			if err := png.Encode(resizedBuf, resizedImg); err != nil {
-//				panic(err)
-//			}
-//		case "jpeg":
-//			if err := jpeg.Encode(resizedBuf, resizedImg, nil); err != nil {
-//				panic(err)
-//			}
-//		}
-//
-//		ih, err := gopdf.ImageHolderByBytes(resizedBuf.Bytes())
-//		if err != nil {
-//			panic(err)
-//		}
-//
-//		imageHoloder = ih
-//	} else {
-//		ih, err := gopdf.ImageHolderByPath(decoded.Path)
-//		if err != nil {
-//			panic(err)
-//		}
-//
-//		imageHoloder = ih
-//	}
-//
-//	// DRAW IMAGE
-//	if decoded.X != unsetX || decoded.Y != unsetY {
-//		_ = p.gp.ImageByHolder(imageHoloder, decoded.X, decoded.Y, &imageRectSize)
-//		return types.Rect{} // dummy
-//	}
-//	if linerLayout.Orientation.IsHorizontal() {
-//		_ = p.gp.Image(decoded.Path, p.gp.GetX(), p.gp.GetY(), &imageRectSize)
-//		p.gp.SetX(p.gp.GetX() + imageRectSize.W)
-//	} else if linerLayout.Orientation.IsVertical() {
-//		_ = p.gp.Image(decoded.Path, p.gp.GetX(), p.gp.GetY(), &imageRectSize)
-//	}
-//
-//	return types.Rect{} // dummy
-//}
+func (p *PDF) drawImage(documentConfigure types.DocumentConfigure, decoded types.ElementImage, imageRect types.Rect) {
+	file, _ := os.Open(decoded.Path)
+	img, imgType, _ := image.Decode(file)
+	_ = file.Close()
+
+	var imageHoloder gopdf.ImageHolder
+
+	// RESIZE
+	if decoded.Resize {
+		resizedImg := resize.Resize(uint(imageRect.Width())*2, uint(imageRect.Height())*2, img, resize.Lanczos3)
+
+		resizedBuf := new(bytes.Buffer)
+		switch imgType {
+		case "png":
+			if err := png.Encode(resizedBuf, resizedImg); err != nil {
+				panic(err)
+			}
+		case "jpeg":
+			if err := jpeg.Encode(resizedBuf, resizedImg, nil); err != nil {
+				panic(err)
+			}
+		}
+
+		_imageHolder, err := gopdf.ImageHolderByBytes(resizedBuf.Bytes())
+		if err != nil {
+			panic(err)
+		}
+
+		imageHoloder = _imageHolder
+	} else {
+		_imageHolder, err := gopdf.ImageHolderByPath(decoded.Path)
+		if err != nil {
+			panic(err)
+		}
+
+		imageHoloder = _imageHolder
+	}
+
+	// DRAW IMAGE
+	var gpRect = gopdf.Rect{W: imageRect.Width(), H: imageRect.Height()}
+	if decoded.X != unsetX || decoded.Y != unsetY {
+		_ = p.gp.ImageByHolder(imageHoloder, decoded.X, decoded.Y, &gpRect)
+	} else {
+		_ = p.gp.ImageByHolder(imageHoloder, imageRect.MinX(), imageRect.MinY(), &gpRect)
+	}
+}
 
 func (p *PDF) verticalBreak(lineWrapRect *types.Rect) {
 	lineWrapRect.Origin.X = p.gp.GetX()
