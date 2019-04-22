@@ -283,20 +283,21 @@ func (p *PDF) drawText(documentConfigure types.DocumentConfigure, decoded types.
 func (p *PDF) measureImage(documentConfigure types.DocumentConfigure, decoded types.ElementImage) types.Size {
 	file, _ := os.Open(decoded.Path)
 	imgConfig, _, _ := image.DecodeConfig(file)
+	_ = file.Close()
 
 	var measureSize types.Size
-	if decoded.Width != unsetWidth && decoded.Height != unsetHeight {
+	if decoded.Width != unsetWidth && decoded.Height != unsetHeight && decoded.Width < float64(imgConfig.Width) && decoded.Height < float64(imgConfig.Height) {
 		measureSize.Width = decoded.Width
 		measureSize.Height = decoded.Height
-	} else if decoded.Width == unsetWidth && decoded.Height == unsetHeight {
-		measureSize.Width = float64(imgConfig.Width)
-		measureSize.Height = float64(imgConfig.Height)
-	} else if decoded.Width == unsetWidth && decoded.Height != unsetHeight {
+	} else if decoded.Width == unsetWidth && decoded.Height != unsetHeight && decoded.Height < float64(imgConfig.Height) {
 		measureSize.Height = decoded.Height
 		measureSize.Width = float64(imgConfig.Width) * (measureSize.Height / float64(imgConfig.Height))
-	} else if decoded.Width != unsetWidth && decoded.Height == unsetHeight {
+	} else if decoded.Width != unsetWidth && decoded.Height == unsetHeight && decoded.Width < float64(imgConfig.Width) {
 		measureSize.Width = decoded.Width
 		measureSize.Height = float64(imgConfig.Height) * (measureSize.Width / float64(imgConfig.Width))
+	} else {
+		measureSize.Width = float64(imgConfig.Width)
+		measureSize.Height = float64(imgConfig.Height)
 	}
 
 	return measureSize
