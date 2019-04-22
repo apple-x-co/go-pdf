@@ -105,6 +105,13 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 
 				//fmt.Printf("---------------------------\n%v\n", decoded.Text)
 
+				if decoded.Align != "" && decoded.Width == unsetWidth {
+					panic("aligns need width.")
+				}
+				if decoded.Valign != "" && decoded.Height == unsetHeight {
+					panic("valigns need height.")
+				}
+
 				measureSize := p.measureText(documentConfigure, decoded)
 
 				// VERTICAL
@@ -186,8 +193,8 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 		}
 
 		// > debug
-		p.gp.SetStrokeColor(255, 0, 0)
-		p.gp.RectFromUpperLeft(wrapRect.Origin.X, wrapRect.Origin.Y, wrapRect.Width(), wrapRect.Height())
+		//p.gp.SetStrokeColor(255, 0, 0)
+		//p.gp.RectFromUpperLeft(wrapRect.Origin.X, wrapRect.Origin.Y, wrapRect.Width(), wrapRect.Height())
 		// < debug
 
 		return wrapRect
@@ -198,8 +205,8 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 		wrapRect = wrapRect.Merge(drawnRect)
 
 		// > debug
-		p.gp.SetStrokeColor(255, 255, 0)
-		p.gp.RectFromUpperLeft(wrapRect.Origin.X, wrapRect.Origin.Y, wrapRect.Size.Width, wrapRect.Size.Height)
+		//p.gp.SetStrokeColor(255, 255, 0)
+		//p.gp.RectFromUpperLeft(wrapRect.Origin.X, wrapRect.Origin.Y, wrapRect.Size.Width, wrapRect.Size.Height)
 		// < debug
 
 		if linerLayout.Orientation.IsHorizontal() {
