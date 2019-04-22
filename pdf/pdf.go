@@ -3,6 +3,8 @@ package pdf
 import (
 	"apple-x-co/go-pdf/types"
 	"fmt"
+	"image"
+	"os"
 
 	//"bytes"
 	"encoding/json"
@@ -247,6 +249,28 @@ func (p *PDF) drawText(documentConfigure types.DocumentConfigure, decoded types.
 	//} else if decoded.Valign.IsMiddle() {
 	//	p.gp.SetY(p.gp.GetY() - gpRect.H + measureHeight)
 	//}
+}
+
+func (p *PDF) measureImage(documentConfigure types.DocumentConfigure, decoded types.ElementImage) types.Size {
+	file, _ := os.Open(decoded.Path)
+	imgConfig, _, _ := image.DecodeConfig(file)
+
+	var measureSize types.Size
+	if decoded.Width != unsetWidth && decoded.Height != unsetHeight {
+		measureSize.Width = decoded.Width
+		measureSize.Height = decoded.Height
+	} else if decoded.Width == unsetWidth && decoded.Height == unsetHeight {
+		measureSize.Width = float64(imgConfig.Width)
+		measureSize.Height = float64(imgConfig.Height)
+	} else if decoded.Width == unsetWidth && decoded.Height != unsetHeight {
+		measureSize.Height = decoded.Height
+		measureSize.Width = float64(imgConfig.Width) * (measureSize.Height / float64(imgConfig.Height))
+	} else if decoded.Width != unsetWidth && decoded.Height == unsetHeight {
+		measureSize.Width = decoded.Width
+		measureSize.Height = float64(imgConfig.Height) * (measureSize.Width / float64(imgConfig.Width))
+	}
+
+	return measureSize
 }
 
 //func (p *PDF) drawImage(documentConfigure types.DocumentConfigure, linerLayout types.LinerLayout, decoded types.ElementImage, elementsRect types.Rect) types.Rect {
