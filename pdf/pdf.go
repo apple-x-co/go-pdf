@@ -4,7 +4,6 @@ import (
 	"apple-x-co/go-pdf/types"
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"github.com/nfnt/resize"
 	"github.com/signintech/gopdf"
 	"github.com/signintech/gopdf/fontmaker/core"
@@ -71,8 +70,8 @@ func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 
 	for _, page := range documentConfigure.Pages {
 		p.gp.AddPage()
-		rect := p.draw(documentConfigure, page.LinerLayout)
-		fmt.Printf("rect: %v\n", rect)
+		p.draw(documentConfigure, page.LinerLayout)
+		//fmt.Printf("rect: %v\n", rect)
 	}
 }
 
@@ -115,13 +114,13 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 
 				// LINE BREAK
 				if p.needLineBreak(documentConfigure, lineWrapRect, measureSize) {
-					fmt.Print("> line break\n")
+					//fmt.Print("> line break\n")
 					p.lineBreak(&lineWrapRect, linerLayout.LineHeight)
 				}
 
 				// PAGE BREAK
 				if p.needPageBreak(documentConfigure, lineWrapRect, measureSize) {
-					fmt.Print("> page break\n")
+					//fmt.Print("> page break\n")
 					p.gp.AddPage()
 					p.pageBreak(&lineWrapRect, &wrapRect)
 				}
@@ -159,13 +158,13 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 
 				// LINE BREAK
 				if p.needLineBreak(documentConfigure, lineWrapRect, measureSize) {
-					fmt.Print("> line break\n")
+					//fmt.Print("> line break\n")
 					p.lineBreak(&lineWrapRect, linerLayout.LineHeight)
 				}
 
 				// PAGE BREAK
 				if p.needPageBreak(documentConfigure, lineWrapRect, measureSize) {
-					fmt.Print("> page break\n")
+					//fmt.Print("> page break\n")
 					p.gp.AddPage()
 					p.pageBreak(&lineWrapRect, &wrapRect)
 				}
@@ -195,13 +194,21 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 	}
 
 	for _, _linerLayout := range linerLayout.LinerLayouts {
-		rect := p.draw(documentConfigure, _linerLayout)
-		wrapRect = wrapRect.Merge(rect)
+		drawnRect := p.draw(documentConfigure, _linerLayout)
+		wrapRect = wrapRect.Merge(drawnRect)
 
 		// > debug
 		p.gp.SetStrokeColor(255, 255, 0)
 		p.gp.RectFromUpperLeft(wrapRect.Origin.X, wrapRect.Origin.Y, wrapRect.Size.Width, wrapRect.Size.Height)
 		// < debug
+
+		if linerLayout.Orientation.IsHorizontal() {
+			p.gp.SetX(wrapRect.MaxX())
+			p.gp.SetY(wrapRect.MinY())
+		} else if linerLayout.Orientation.IsVertical() {
+			p.gp.SetX(wrapRect.MinX())
+			p.gp.SetY(wrapRect.MaxY())
+		}
 	}
 
 	return wrapRect
