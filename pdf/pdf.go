@@ -93,8 +93,7 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 				var decoded = types.ElementText{
 					Color:           types.Color{R: documentConfigure.TextColor.R, G: documentConfigure.TextColor.G, B: documentConfigure.TextColor.B},
 					BackgroundColor: types.Color{R: 0, G: 0, B: 0},
-					Width:           unsetWidth,
-					Height:          unsetHeight,
+					Size:            types.Size{Width: unsetWidth, Height: unsetWidth},
 					Border:          types.Border{Width: unsetWidth, Color: types.Color{R: 0, B: 0, G: 0}},
 					BorderTop:       types.Border{Width: unsetWidth, Color: types.Color{R: 0, B: 0, G: 0}},
 					BorderRight:     types.Border{Width: unsetWidth, Color: types.Color{R: 0, B: 0, G: 0}},
@@ -105,10 +104,10 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 
 				//fmt.Printf("---------------------------\n%v\n", decoded.Text)
 
-				if decoded.Align != "" && decoded.Width == unsetWidth {
+				if decoded.Align != "" && decoded.Size.Width == unsetWidth {
 					panic("aligns need width.")
 				}
-				if decoded.Valign != "" && decoded.Height == unsetHeight {
+				if decoded.Valign != "" && decoded.Size.Height == unsetHeight {
 					panic("valigns need height.")
 				}
 
@@ -146,10 +145,8 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 
 			} else if element.Type.IsImage() {
 				var decoded = types.ElementImage{
-					X:      unsetX,
-					Y:      unsetY,
-					Width:  unsetWidth,
-					Height: unsetHeight,
+					Size:   types.Size{Width: unsetWidth, Height: unsetWidth},
+					Origin: types.Origin{X: unsetWidth, Y: unsetHeight},
 					Resize: false,
 				}
 				_ = json.Unmarshal(element.Attributes, &decoded)
@@ -226,12 +223,12 @@ func (p *PDF) measureText(documentConfigure types.DocumentConfigure, decoded typ
 	measureHeight := documentConfigure.FontHeight() * (float64(documentConfigure.TextSize) / 1000.0)
 
 	var measureSize types.Size
-	if decoded.Width != unsetWidth && decoded.Height != unsetHeight {
-		measureSize = types.Size{Width: decoded.Width, Height: decoded.Height}
-	} else if decoded.Width != unsetWidth && decoded.Height == unsetHeight {
-		measureSize = types.Size{Width: decoded.Width, Height: measureHeight}
-	} else if decoded.Width == unsetWidth && decoded.Height != unsetHeight {
-		measureSize = types.Size{Width: measureWidth, Height: decoded.Height}
+	if decoded.Size.Width != unsetWidth && decoded.Size.Height != unsetHeight {
+		measureSize = types.Size{Width: decoded.Size.Width, Height: decoded.Size.Height}
+	} else if decoded.Size.Width != unsetWidth && decoded.Size.Height == unsetHeight {
+		measureSize = types.Size{Width: decoded.Size.Width, Height: measureHeight}
+	} else if decoded.Size.Width == unsetWidth && decoded.Size.Height != unsetHeight {
+		measureSize = types.Size{Width: measureWidth, Height: decoded.Size.Height}
 	} else {
 		measureSize = types.Size{Width: measureWidth, Height: measureHeight}
 	}
@@ -305,14 +302,14 @@ func (p *PDF) measureImage(documentConfigure types.DocumentConfigure, decoded ty
 	_ = file.Close()
 
 	var measureSize types.Size
-	if decoded.Width != unsetWidth && decoded.Height != unsetHeight && decoded.Width < float64(imgConfig.Width) && decoded.Height < float64(imgConfig.Height) {
-		measureSize.Width = decoded.Width
-		measureSize.Height = decoded.Height
-	} else if decoded.Width == unsetWidth && decoded.Height != unsetHeight && decoded.Height < float64(imgConfig.Height) {
-		measureSize.Height = decoded.Height
+	if decoded.Size.Width != unsetWidth && decoded.Size.Height != unsetHeight && decoded.Size.Width < float64(imgConfig.Width) && decoded.Size.Height < float64(imgConfig.Height) {
+		measureSize.Width = decoded.Size.Width
+		measureSize.Height = decoded.Size.Height
+	} else if decoded.Size.Width == unsetWidth && decoded.Size.Height != unsetHeight && decoded.Size.Height < float64(imgConfig.Height) {
+		measureSize.Height = decoded.Size.Height
 		measureSize.Width = float64(imgConfig.Width) * (measureSize.Height / float64(imgConfig.Height))
-	} else if decoded.Width != unsetWidth && decoded.Height == unsetHeight && decoded.Width < float64(imgConfig.Width) {
-		measureSize.Width = decoded.Width
+	} else if decoded.Size.Width != unsetWidth && decoded.Size.Height == unsetHeight && decoded.Size.Width < float64(imgConfig.Width) {
+		measureSize.Width = decoded.Size.Width
 		measureSize.Height = float64(imgConfig.Height) * (measureSize.Width / float64(imgConfig.Width))
 	} else {
 		measureSize.Width = float64(imgConfig.Width)
@@ -362,8 +359,8 @@ func (p *PDF) drawImage(documentConfigure types.DocumentConfigure, decoded types
 
 	// DRAW IMAGE
 	var gpRect = gopdf.Rect{W: imageRect.Width(), H: imageRect.Height()}
-	if decoded.X != unsetX || decoded.Y != unsetY {
-		_ = p.gp.ImageByHolder(imageHoloder, decoded.X, decoded.Y, &gpRect)
+	if decoded.Origin.X != unsetX || decoded.Origin.Y != unsetY {
+		_ = p.gp.ImageByHolder(imageHoloder, decoded.Origin.X, decoded.Origin.Y, &gpRect)
 	} else {
 		_ = p.gp.ImageByHolder(imageHoloder, imageRect.MinX(), imageRect.MinY(), &gpRect)
 	}
