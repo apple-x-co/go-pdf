@@ -529,49 +529,45 @@ func (p *PDF) drawText(documentConfigure types.DocumentConfigure, decoded types.
 		p.gp.Line(textRect.MinX(), textRect.MinY()+textRect.Height(), textRect.MinX(), textRect.MinY())
 	}
 
-	// FIXME: ALIGN & VALIGN
-	//// ALIGN & VALIGN
-	//if decoded.Align.IsCenter() {
-	//	p.gp.SetX(p.gp.GetX() + ((gpRect.W / 2) - (measureWidth / 2)))
-	//} else if decoded.Align.IsRight() {
-	//	p.gp.SetX(p.gp.GetX() + gpRect.W - measureWidth)
-	//}
-	//if decoded.Valign.IsMiddle() {
-	//	p.gp.SetY(p.gp.GetY() + ((gpRect.H / 2) - (measureHeight / 2)))
-	//} else if decoded.Valign.IsBottom() {
-	//	p.gp.SetY(p.gp.GetY() + gpRect.H - measureHeight)
-	//}
+	// TEXT OPTION
+	var option = gopdf.CellOption{
+		Border: 0,
+		Float:  gopdf.Right,
+	}
+	if decoded.Align.IsCenter() {
+		option.Align = gopdf.Center
+	} else if decoded.Align.IsRight() {
+		option.Align = gopdf.Right
+	} else {
+		option.Align = gopdf.Left
+	}
+	if decoded.Valign.IsMiddle() {
+		option.Align = option.Align | gopdf.Middle
+	} else if decoded.Valign.IsBottom() {
+		option.Align = option.Align | gopdf.Bottom
+	} else {
+		option.Align = option.Align | gopdf.Top
+	}
+
+	// TEXT COLOR
+	p.gp.SetTextColor(decoded.Color.R, decoded.Color.G, decoded.Color.B)
 
 	// DRAW TEXT
 	var gpRect = gopdf.Rect{W: textRect.Width(), H: textRect.Height()}
-	p.gp.SetTextColor(decoded.Color.R, decoded.Color.G, decoded.Color.B)
 
 	if p.isMultiLineText(decoded.Text) {
+		option.Float = gopdf.Bottom
 		texts := strings.Split(decoded.Text, "\n")
 		gpRect = gopdf.Rect{W: textRect.Width(), H: textRect.Height() / float64(len(texts))}
 		for _, text := range texts {
-			_ = p.gp.CellWithOption(&gpRect, text, gopdf.CellOption{
-				Align:  gopdf.Left | gopdf.Top,
-				Border: 0,
-				Float:  gopdf.Bottom,
-			})
+			_ = p.gp.CellWithOption(&gpRect, text, option)
 		}
 	} else {
-		_ = p.gp.Cell(&gpRect, decoded.Text)
+		_ = p.gp.CellWithOption(&gpRect, decoded.Text, option)
 	}
 
+	// RESET TEXT COLOR
 	p.gp.SetTextColor(documentConfigure.TextColor.R, documentConfigure.TextColor.G, documentConfigure.TextColor.B)
-
-	// FIXME: RESET ALIGN & VALIGN
-	//// RESET ALIGN & VALIGN
-	//if decoded.Align.IsCenter() {
-	//	p.gp.SetX(p.gp.GetX() - ((gpRect.W / 2) - (measureWidth / 2)))
-	//}
-	//if decoded.Valign.IsMiddle() {
-	//	p.gp.SetY(p.gp.GetY() - ((gpRect.H / 2) - (measureHeight / 2)))
-	//} else if decoded.Valign.IsMiddle() {
-	//	p.gp.SetY(p.gp.GetY() - gpRect.H + measureHeight)
-	//}
 }
 
 // 描画：画像
