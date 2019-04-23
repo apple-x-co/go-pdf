@@ -158,6 +158,14 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 
 				measureSize := p.measureImage(documentConfigure, decoded)
 
+				if decoded.Origin.X != unsetX && decoded.Origin.Y != unsetY {
+					imageRect := types.Rect{Origin: types.Origin{X: decoded.Origin.X, Y: decoded.Origin.Y}, Size: measureSize}
+					p.gp.SetX(imageRect.MinX())
+					p.gp.SetY(imageRect.MinY())
+					p.drawImage(documentConfigure, decoded, imageRect)
+					continue
+				}
+
 				// VERTICAL
 				if linerLayout.Orientation.IsVertical() {
 					p.lineBreak(&lineWrapRect, linerLayout.LineHeight)
@@ -362,11 +370,7 @@ func (p *PDF) drawImage(documentConfigure types.DocumentConfigure, decoded types
 
 	// DRAW IMAGE
 	var gpRect = gopdf.Rect{W: imageRect.Width(), H: imageRect.Height()}
-	if decoded.Origin.X != unsetX || decoded.Origin.Y != unsetY {
-		_ = p.gp.ImageByHolder(imageHoloder, decoded.Origin.X, decoded.Origin.Y, &gpRect)
-	} else {
-		_ = p.gp.ImageByHolder(imageHoloder, imageRect.MinX(), imageRect.MinY(), &gpRect)
-	}
+	_ = p.gp.ImageByHolder(imageHoloder, imageRect.MinX(), imageRect.MinY(), &gpRect)
 }
 
 func (p *PDF) verticalBreak(lineWrapRect *types.Rect) {
