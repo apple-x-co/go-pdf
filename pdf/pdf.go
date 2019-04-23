@@ -97,6 +97,7 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 					Color:           types.Color{R: documentConfigure.TextColor.R, G: documentConfigure.TextColor.G, B: documentConfigure.TextColor.B},
 					BackgroundColor: types.Color{R: defaultColorR, B: defaultColorG, G: defaultColorB},
 					Size:            types.Size{Width: unsetWidth, Height: unsetWidth},
+					Origin:          types.Origin{X: unsetWidth, Y: unsetHeight},
 					Border:          types.Border{Width: unsetWidth, Color: types.Color{R: defaultColorR, B: defaultColorG, G: defaultColorB}},
 					BorderTop:       types.Border{Width: unsetWidth, Color: types.Color{R: defaultColorR, B: defaultColorG, G: defaultColorB}},
 					BorderRight:     types.Border{Width: unsetWidth, Color: types.Color{R: defaultColorR, B: defaultColorG, G: defaultColorB}},
@@ -115,6 +116,15 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 				}
 
 				measureSize := p.measureText(documentConfigure, decoded)
+
+				// FIX POSITION
+				if decoded.Origin.X != unsetX && decoded.Origin.Y != unsetY {
+					textRect := types.Rect{Origin: types.Origin{X: decoded.Origin.X, Y: decoded.Origin.Y}, Size: measureSize}
+					p.gp.SetX(textRect.MinX())
+					p.gp.SetY(textRect.MinY())
+					p.drawText(documentConfigure, decoded, textRect)
+					continue
+				}
 
 				// VERTICAL
 				if linerLayout.Orientation.IsVertical() {
@@ -158,6 +168,7 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 
 				measureSize := p.measureImage(documentConfigure, decoded)
 
+				// FIX POSITION
 				if decoded.Origin.X != unsetX && decoded.Origin.Y != unsetY {
 					imageRect := types.Rect{Origin: types.Origin{X: decoded.Origin.X, Y: decoded.Origin.Y}, Size: measureSize}
 					p.gp.SetX(imageRect.MinX())

@@ -1,0 +1,52 @@
+{
+  "width": 595,
+  "height": 842,
+  "pages": [
+    {
+      "liner_layout": {
+        "orientation": "horizontal",
+        "elements": [
+          {
+            "type": "text",
+            "attributes": {
+              "text": "fix comment",
+              "border": {
+                "width": 1,
+                "color": {
+                  "r": 255,
+                  "g": 0,
+                  "b": 0
+                }
+              },
+              "size": {
+                "width": 100
+              },
+              "origin": {
+                "x": 500,
+                "y": 1
+              }
+            }
+          },
+          {
+            "type": "text",
+            "attributes": {
+              "text": "text text text text text text text",
+              "border": {
+                "width": 2
+              }
+            }
+          },
+          {
+            "type": "text",
+            "attributes": {
+              "text": "text2 text2 text2 text2 text2 text2 text2",
+              "border": {
+                "width": 2
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

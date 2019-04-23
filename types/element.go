@@ -15,6 +15,7 @@ type ElementText struct {
 	Text            string `json:"text"`
 	Color           Color  `json:"color"`
 	Size            Size   `json:"size"`
+	Origin          Origin `json:"origin"`
 	Border          Border `json:"border"`
 	BorderTop       Border `json:"border_top"`
 	BorderRight     Border `json:"border_right"`
