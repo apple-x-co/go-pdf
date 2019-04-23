@@ -8,11 +8,11 @@ type Rect struct {
 func (R *Rect) Merge(anotherRect Rect) Rect {
 	var newRect = Rect{Origin: Origin{X: R.Origin.X, Y: R.Origin.Y}, Size: Size{Width: R.Size.Width, Height: R.Size.Height}}
 
-	if R.Origin.X+R.Size.Width < anotherRect.Origin.X+anotherRect.Size.Width {
-		newRect.Size.Width = anotherRect.Origin.X + anotherRect.Size.Width - R.Origin.X
+	if R.MaxX() < anotherRect.MaxX() {
+		newRect.Size.Width = anotherRect.MaxX() - R.Origin.X
 	}
-	if R.Origin.Y+R.Size.Height < anotherRect.Origin.Y+anotherRect.Size.Height {
-		newRect.Size.Height = anotherRect.Origin.Y + anotherRect.Size.Height - R.Origin.Y
+	if R.MaxY() < anotherRect.MaxY() {
+		newRect.Size.Height = anotherRect.MaxY() - R.Origin.Y
 	}
 
 	return newRect

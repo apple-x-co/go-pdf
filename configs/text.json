@@ -14,7 +14,6 @@
         "liner_layouts": [
           {
             "orientation": "horizontal",
-            "line_height": 20,
             "elements": [
               {
                 "type": "text",
@@ -28,15 +27,24 @@
                 }
               },
               {
-                "type": "line_break",
+                "type": "line_break"
+              },
+              {
+                "type": "text",
                 "attributes": {
-                  "height": 20
+                  "text": "LINE1 LINE1 LINE1\nLINE2 LINE2 LINE2 LINE2 LINE2 LINE2\nEND...",
+                  "border": {
+                    "width": 1
+                  }
                 }
               },
               {
                 "type": "text",
                 "attributes": {
-                  "text": "abcdefghijklmn02"
+                  "text": "abcdefghijklmn02",
+                  "size": {
+                    "width": 100
+                  }
                 }
               },
               {

@@ -12,6 +12,7 @@ import (
 	"image/png"
 	"log"
 	"os"
+	"strings"
 )
 
 const UnsetWidth float64 = 0
@@ -434,6 +435,29 @@ func (p *PDF) drawHeaderOrFooter(documentConfigure types.DocumentConfigure, line
 
 // 計算：テキストのサイズ
 func (p *PDF) measureText(documentConfigure types.DocumentConfigure, decoded types.ElementText) types.Size {
+	if p.isMultiLineText(decoded.Text) {
+		measureSize := types.Size{}
+		measureHeight := documentConfigure.FontHeight() * (float64(documentConfigure.TextSize) / 1000.0)
+
+		texts := strings.Split(decoded.Text, "\n")
+		for _, text := range texts {
+			measureWidth, _ := p.gp.MeasureTextWidth(text)
+			if measureSize.Width < measureWidth {
+				measureSize.Width = measureWidth
+			}
+			measureSize.Height += measureHeight
+		}
+
+		if decoded.Size.Width != UnsetWidth && decoded.Size.Height == UnsetHeight {
+			measureSize.Width = decoded.Size.Width
+		}
+		if decoded.Size.Width == UnsetWidth && decoded.Size.Height != UnsetHeight {
+			measureSize.Height = decoded.Size.Height
+		}
+
+		return measureSize
+	}
+
 	measureWidth, _ := p.gp.MeasureTextWidth(decoded.Text)
 	measureHeight := documentConfigure.FontHeight() * (float64(documentConfigure.TextSize) / 1000.0)
 
@@ -521,7 +545,21 @@ func (p *PDF) drawText(documentConfigure types.DocumentConfigure, decoded types.
 	// DRAW TEXT
 	var gpRect = gopdf.Rect{W: textRect.Width(), H: textRect.Height()}
 	p.gp.SetTextColor(decoded.Color.R, decoded.Color.G, decoded.Color.B)
-	_ = p.gp.Cell(&gpRect, decoded.Text) // fmt.Sprintf("%v", textRect)
+
+	if p.isMultiLineText(decoded.Text) {
+		texts := strings.Split(decoded.Text, "\n")
+		gpRect = gopdf.Rect{W: textRect.Width(), H: textRect.Height() / float64(len(texts))}
+		for _, text := range texts {
+			_ = p.gp.CellWithOption(&gpRect, text, gopdf.CellOption{
+				Align:  gopdf.Left | gopdf.Top,
+				Border: 0,
+				Float:  gopdf.Bottom,
+			})
+		}
+	} else {
+		_ = p.gp.Cell(&gpRect, decoded.Text)
+	}
+
 	p.gp.SetTextColor(documentConfigure.TextColor.R, documentConfigure.TextColor.G, documentConfigure.TextColor.B)
 
 	// FIXME: RESET ALIGN & VALIGN
@@ -646,6 +684,11 @@ func (p *PDF) breakPage(lineWrapRect *types.Rect, wrapRect *types.Rect) {
 	wrapRect.Origin.Y = p.contentRect.MinY()
 	wrapRect.Size.Width = 0
 	wrapRect.Size.Width = 0
+}
+
+// 判定：複数行
+func (p *PDF) isMultiLineText(text string) bool {
+	return strings.Contains(text, "\n")
 }
 
 // 判定：改行
