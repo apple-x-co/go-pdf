@@ -17,6 +17,49 @@ go-pdf --in layout.json --out output.pdf --ttf fonts/TakaoPGothic.ttf
 go-pdf --help
 ```
 
+## Examples
+
+```json
+{
+  "width": 595,
+  "height": 842,
+  "pages": [
+    {
+      "liner_layout": {
+        "orientation": "horizontal",
+        "elements": [
+          {
+            "type": "text",
+            "attributes": {
+              "text": "text"
+            }
+          },
+          {
+            "type": "text",
+            "attributes": {
+              "text": "text",
+              "size": {
+                "width": 100
+              },
+              "border": {
+                "width": 1,
+                "color": {
+                  "r": 255,
+                  "g": 0,
+                  "b": 0
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
+```
+
+![example1](./example1.png) 
+
 ---
 
 ## Notices
