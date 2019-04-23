@@ -125,6 +125,15 @@ func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 	}
 }
 
+func (p *PDF) Save(outputPath string) error {
+	return p.gp.WritePdf(outputPath)
+}
+
+func (p *PDF) Destroy() {
+	_ = p.gp.Close()
+}
+
+// 描画要素のループ
 func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.LinerLayout) types.Rect {
 	var wrapRect = types.Rect{Origin: types.Origin{X: p.gp.GetX(), Y: p.gp.GetY()}}
 	var lineWrapRect = types.Rect{Origin: types.Origin{X: p.gp.GetX(), Y: p.gp.GetY()}}
@@ -137,7 +146,7 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 					Height: UnsetHeight,
 				}
 				_ = json.Unmarshal(element.Attributes, &decoded)
-				p.lineBreak(&lineWrapRect, decoded.Height)
+				p.breakLine(&lineWrapRect, decoded.Height)
 
 			} else if element.Type.IsText() {
 				var decoded = types.ElementText{
@@ -175,20 +184,20 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 
 				// VERTICAL
 				if linerLayout.Orientation.IsVertical() {
-					p.lineBreak(&lineWrapRect, linerLayout.LineHeight)
+					p.breakLine(&lineWrapRect, linerLayout.LineHeight)
 				}
 
 				// LINE BREAK
 				if p.needLineBreak(documentConfigure, lineWrapRect, measureSize) {
 					//fmt.Print("> line break\n")
-					p.lineBreak(&lineWrapRect, linerLayout.LineHeight)
+					p.breakLine(&lineWrapRect, linerLayout.LineHeight)
 				}
 
 				// PAGE BREAK
 				if p.needPageBreak(documentConfigure, lineWrapRect, measureSize) {
 					//fmt.Print("> page break\n")
 					p.gp.AddPage()
-					p.pageBreak(&lineWrapRect, &wrapRect)
+					p.breakPage(&lineWrapRect, &wrapRect)
 
 					if p.headerRect.Size.IsSet() {
 						p.drawHeader(documentConfigure)
@@ -236,20 +245,20 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 
 				// VERTICAL
 				if linerLayout.Orientation.IsVertical() {
-					p.lineBreak(&lineWrapRect, linerLayout.LineHeight)
+					p.breakLine(&lineWrapRect, linerLayout.LineHeight)
 				}
 
 				// LINE BREAK
 				if p.needLineBreak(documentConfigure, lineWrapRect, measureSize) {
 					//fmt.Print("> line break\n")
-					p.lineBreak(&lineWrapRect, linerLayout.LineHeight)
+					p.breakLine(&lineWrapRect, linerLayout.LineHeight)
 				}
 
 				// PAGE BREAK
 				if p.needPageBreak(documentConfigure, lineWrapRect, measureSize) {
 					//fmt.Print("> page break\n")
 					p.gp.AddPage()
-					p.pageBreak(&lineWrapRect, &wrapRect)
+					p.breakPage(&lineWrapRect, &wrapRect)
 
 					if p.headerRect.Size.IsSet() {
 						p.drawHeader(documentConfigure)
@@ -307,6 +316,123 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 	return wrapRect
 }
 
+// 描画要素のループ（ヘッターフッター）
+func (p *PDF) drawHeaderOrFooter(documentConfigure types.DocumentConfigure, linerLayout types.LinerLayout) types.Rect {
+	var wrapRect = types.Rect{Origin: types.Origin{X: p.gp.GetX(), Y: p.gp.GetY()}}
+	var lineWrapRect = types.Rect{Origin: types.Origin{X: p.gp.GetX(), Y: p.gp.GetY()}}
+
+	if len(linerLayout.Elements) > 0 {
+
+		for _, element := range linerLayout.Elements {
+			if element.Type.IsLineBreak() {
+				var decoded = types.ElementLineBreak{
+					Height: UnsetHeight,
+				}
+				_ = json.Unmarshal(element.Attributes, &decoded)
+				p.breakLine(&lineWrapRect, decoded.Height)
+
+			} else if element.Type.IsText() {
+				var decoded = types.ElementText{
+					Color:           types.Color{R: documentConfigure.TextColor.R, G: documentConfigure.TextColor.G, B: documentConfigure.TextColor.B},
+					BackgroundColor: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB},
+					Size:            types.Size{Width: UnsetWidth, Height: UnsetWidth},
+					Origin:          types.Origin{X: UnsetWidth, Y: UnsetHeight},
+					Border:          types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
+					BorderTop:       types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
+					BorderRight:     types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
+					BorderBottom:    types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
+					BorderLeft:      types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
+				}
+				_ = json.Unmarshal(element.Attributes, &decoded)
+
+				if decoded.Align != "" && decoded.Size.Width == UnsetWidth {
+					panic("aligns need width.")
+				}
+				if decoded.Valign != "" && decoded.Size.Height == UnsetHeight {
+					panic("valigns need height.")
+				}
+
+				measureSize := p.measureText(documentConfigure, decoded)
+
+				// FIX POSITION
+				if decoded.Origin.X != UnsetX && decoded.Origin.Y != UnsetY {
+					textRect := types.Rect{Origin: types.Origin{X: decoded.Origin.X, Y: decoded.Origin.Y}, Size: measureSize}
+					p.gp.SetX(textRect.MinX())
+					p.gp.SetY(textRect.MinY())
+					p.drawText(documentConfigure, decoded, textRect)
+					continue
+				}
+
+				// VERTICAL
+				if linerLayout.Orientation.IsVertical() {
+					p.breakLine(&lineWrapRect, linerLayout.LineHeight)
+				}
+
+				// LINE BREAK
+				if p.needLineBreak(documentConfigure, lineWrapRect, measureSize) {
+					//fmt.Print("> line break\n")
+					p.breakLine(&lineWrapRect, linerLayout.LineHeight)
+				}
+
+				// DRAWABLE RECT
+				textRect := types.Rect{Origin: types.Origin{X: lineWrapRect.MaxX(), Y: lineWrapRect.MinY()}, Size: measureSize}
+				p.gp.SetX(textRect.MinX())
+				p.gp.SetY(textRect.MinY())
+
+				// DRAW
+				p.drawText(documentConfigure, decoded, textRect)
+
+				lineWrapRect = lineWrapRect.Merge(textRect)
+
+			} else if element.Type.IsImage() {
+				var decoded = types.ElementImage{
+					Size:   types.Size{Width: UnsetWidth, Height: UnsetWidth},
+					Origin: types.Origin{X: UnsetWidth, Y: UnsetHeight},
+					Resize: false,
+				}
+				_ = json.Unmarshal(element.Attributes, &decoded)
+
+				measureSize := p.measureImage(documentConfigure, decoded)
+
+				// FIX POSITION
+				if decoded.Origin.X != UnsetX && decoded.Origin.Y != UnsetY {
+					imageRect := types.Rect{Origin: types.Origin{X: decoded.Origin.X, Y: decoded.Origin.Y}, Size: measureSize}
+					p.gp.SetX(imageRect.MinX())
+					p.gp.SetY(imageRect.MinY())
+					p.drawImage(documentConfigure, decoded, imageRect)
+					continue
+				}
+
+				// VERTICAL
+				if linerLayout.Orientation.IsVertical() {
+					p.breakLine(&lineWrapRect, linerLayout.LineHeight)
+				}
+
+				// LINE BREAK
+				if p.needLineBreak(documentConfigure, lineWrapRect, measureSize) {
+					p.breakLine(&lineWrapRect, linerLayout.LineHeight)
+				}
+
+				// DRAWABLE RECT
+				imageRect := types.Rect{Origin: types.Origin{X: lineWrapRect.MaxX(), Y: lineWrapRect.MinY()}, Size: measureSize}
+				p.gp.SetX(imageRect.MinX())
+				p.gp.SetY(imageRect.MinY())
+
+				// DRAW
+				p.drawImage(documentConfigure, decoded, imageRect)
+
+				lineWrapRect = lineWrapRect.Merge(imageRect)
+			}
+
+			wrapRect = wrapRect.Merge(lineWrapRect)
+		}
+
+	}
+
+	return wrapRect
+}
+
+// 計算：テキストのサイズ
 func (p *PDF) measureText(documentConfigure types.DocumentConfigure, decoded types.ElementText) types.Size {
 	measureWidth, _ := p.gp.MeasureTextWidth(decoded.Text)
 	measureHeight := documentConfigure.FontHeight() * (float64(documentConfigure.TextSize) / 1000.0)
@@ -325,6 +451,31 @@ func (p *PDF) measureText(documentConfigure types.DocumentConfigure, decoded typ
 	return measureSize
 }
 
+// 計算：画像のサイズ
+func (p *PDF) measureImage(documentConfigure types.DocumentConfigure, decoded types.ElementImage) types.Size {
+	file, _ := os.Open(decoded.Path)
+	imgConfig, _, _ := image.DecodeConfig(file)
+	_ = file.Close()
+
+	var measureSize types.Size
+	if decoded.Size.Width != UnsetWidth && decoded.Size.Height != UnsetHeight && decoded.Size.Width < float64(imgConfig.Width) && decoded.Size.Height < float64(imgConfig.Height) {
+		measureSize.Width = decoded.Size.Width
+		measureSize.Height = decoded.Size.Height
+	} else if decoded.Size.Width == UnsetWidth && decoded.Size.Height != UnsetHeight && decoded.Size.Height < float64(imgConfig.Height) {
+		measureSize.Height = decoded.Size.Height
+		measureSize.Width = float64(imgConfig.Width) * (measureSize.Height / float64(imgConfig.Height))
+	} else if decoded.Size.Width != UnsetWidth && decoded.Size.Height == UnsetHeight && decoded.Size.Width < float64(imgConfig.Width) {
+		measureSize.Width = decoded.Size.Width
+		measureSize.Height = float64(imgConfig.Height) * (measureSize.Width / float64(imgConfig.Width))
+	} else {
+		measureSize.Width = float64(imgConfig.Width)
+		measureSize.Height = float64(imgConfig.Height)
+	}
+
+	return measureSize
+}
+
+// 描画：テキスト
 func (p *PDF) drawText(documentConfigure types.DocumentConfigure, decoded types.ElementText, textRect types.Rect) {
 	// BORDER, FILL
 	if decoded.Border.Width != UnsetWidth {
@@ -385,29 +536,7 @@ func (p *PDF) drawText(documentConfigure types.DocumentConfigure, decoded types.
 	//}
 }
 
-func (p *PDF) measureImage(documentConfigure types.DocumentConfigure, decoded types.ElementImage) types.Size {
-	file, _ := os.Open(decoded.Path)
-	imgConfig, _, _ := image.DecodeConfig(file)
-	_ = file.Close()
-
-	var measureSize types.Size
-	if decoded.Size.Width != UnsetWidth && decoded.Size.Height != UnsetHeight && decoded.Size.Width < float64(imgConfig.Width) && decoded.Size.Height < float64(imgConfig.Height) {
-		measureSize.Width = decoded.Size.Width
-		measureSize.Height = decoded.Size.Height
-	} else if decoded.Size.Width == UnsetWidth && decoded.Size.Height != UnsetHeight && decoded.Size.Height < float64(imgConfig.Height) {
-		measureSize.Height = decoded.Size.Height
-		measureSize.Width = float64(imgConfig.Width) * (measureSize.Height / float64(imgConfig.Height))
-	} else if decoded.Size.Width != UnsetWidth && decoded.Size.Height == UnsetHeight && decoded.Size.Width < float64(imgConfig.Width) {
-		measureSize.Width = decoded.Size.Width
-		measureSize.Height = float64(imgConfig.Height) * (measureSize.Width / float64(imgConfig.Width))
-	} else {
-		measureSize.Width = float64(imgConfig.Width)
-		measureSize.Height = float64(imgConfig.Height)
-	}
-
-	return measureSize
-}
-
+// 描画：画像
 func (p *PDF) drawImage(documentConfigure types.DocumentConfigure, decoded types.ElementImage, imageRect types.Rect) {
 	file, _ := os.Open(decoded.Path)
 	img, imgType, _ := image.Decode(file)
@@ -451,40 +580,42 @@ func (p *PDF) drawImage(documentConfigure types.DocumentConfigure, decoded types
 	_ = p.gp.ImageByHolder(imageHoloder, imageRect.MinX(), imageRect.MinY(), &gpRect)
 }
 
+// ヘッダー
 func (p *PDF) drawHeader(documentConfigure types.DocumentConfigure) {
 	p.gp.SetX(p.headerRect.MinX())
 	p.gp.SetY(p.headerRect.MinY())
 
 	// > debug
-	p.gp.SetStrokeColor(255, 0, 0)
-	p.gp.RectFromUpperLeft(p.headerRect.Origin.X, p.headerRect.Origin.Y, p.headerRect.Width(), p.headerRect.Height())
+	//p.gp.SetStrokeColor(255, 0, 0)
+	//p.gp.RectFromUpperLeft(p.headerRect.Origin.X, p.headerRect.Origin.Y, p.headerRect.Width(), p.headerRect.Height())
 	// < debug
 
-	// これはNG。無限ループに入ってしまう。
-	//p.draw(documentConfigure, documentConfigure.Header.LinerLayout)
+	p.drawHeaderOrFooter(documentConfigure, documentConfigure.Header.LinerLayout)
 }
 
+// フッター
 func (p *PDF) drawFooter(documentConfigure types.DocumentConfigure) {
 	p.gp.SetX(p.footerRect.MinX())
 	p.gp.SetY(p.footerRect.MinY())
 
 	// > debug
-	p.gp.SetStrokeColor(0, 255, 0)
-	p.gp.RectFromUpperLeft(p.footerRect.Origin.X, p.footerRect.Origin.Y, p.footerRect.Width(), p.footerRect.Height())
+	//p.gp.SetStrokeColor(0, 255, 0)
+	//p.gp.RectFromUpperLeft(p.footerRect.Origin.X, p.footerRect.Origin.Y, p.footerRect.Width(), p.footerRect.Height())
 	// < debug
 
-	// これはNG。無限ループに入ってしまう。
-	//p.draw(documentConfigure, documentConfigure.Footer.LinerLayout)
+	p.drawHeaderOrFooter(documentConfigure, documentConfigure.Footer.LinerLayout)
 }
 
-func (p *PDF) verticalBreak(lineWrapRect *types.Rect) {
+// 縦
+func (p *PDF) breakVertical(lineWrapRect *types.Rect) {
 	lineWrapRect.Origin.X = p.gp.GetX()
 	lineWrapRect.Origin.Y = p.gp.GetY()
 	lineWrapRect.Size.Width = 0
 	lineWrapRect.Size.Height = 0
 }
 
-func (p *PDF) lineBreak(lineWrapRect *types.Rect, lineHeight float64) {
+// 改行
+func (p *PDF) breakLine(lineWrapRect *types.Rect, lineHeight float64) {
 	//fmt.Printf("lineWrapRect(before): %v\n", lineWrapRect)
 
 	//fmt.Printf("y: %v\n", lineWrapRect.Origin.Y)
@@ -504,7 +635,8 @@ func (p *PDF) lineBreak(lineWrapRect *types.Rect, lineHeight float64) {
 	//fmt.Printf("lineWrapRect(after): %v\n", lineWrapRect)
 }
 
-func (p *PDF) pageBreak(lineWrapRect *types.Rect, wrapRect *types.Rect) {
+// 改ページ
+func (p *PDF) breakPage(lineWrapRect *types.Rect, wrapRect *types.Rect) {
 	lineWrapRect.Origin.X = p.contentRect.MinX()
 	lineWrapRect.Origin.Y = p.contentRect.MinY()
 	lineWrapRect.Size.Width = 0
@@ -516,6 +648,7 @@ func (p *PDF) pageBreak(lineWrapRect *types.Rect, wrapRect *types.Rect) {
 	wrapRect.Size.Width = 0
 }
 
+// 判定：改行
 func (p *PDF) needLineBreak(documentConfigure types.DocumentConfigure, lineWrapRect types.Rect, measureSize types.Size) bool {
 	if lineWrapRect.MaxX()+measureSize.Width > p.contentRect.MaxX() {
 		return true
@@ -523,17 +656,10 @@ func (p *PDF) needLineBreak(documentConfigure types.DocumentConfigure, lineWrapR
 	return false
 }
 
+// 判定：ページ
 func (p *PDF) needPageBreak(documentConfigure types.DocumentConfigure, lineWrapRect types.Rect, measureSize types.Size) bool {
 	if lineWrapRect.MinY()+measureSize.Height > p.contentRect.MaxY() {
 		return true
 	}
 	return false
-}
-
-func (p *PDF) Save(outputPath string) error {
-	return p.gp.WritePdf(outputPath)
-}
-
-func (p *PDF) Destroy() {
-	_ = p.gp.Close()
 }
