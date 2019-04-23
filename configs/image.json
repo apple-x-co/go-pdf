@@ -13,44 +13,56 @@
                 "type": "image",
                 "attributes": {
                   "path": "work/sample1.jpg",
-                  "width": 100
+                  "size": {
+                    "width": 200
+                  }
                 }
               },
               {
                 "type": "image",
                 "attributes": {
                   "path": "work/sample2.jpg",
-                  "height": 100
+                  "size": {
+                    "height": 100
+                  }
                 }
               },
               {
                 "type": "image",
                 "attributes": {
                   "path": "work/sample3.jpeg",
-                  "width": 100,
-                  "height": 100
+                  "size": {
+                    "width": 100,
+                    "height": 100
+                  }
                 }
               },
               {
                 "type": "image",
                 "attributes": {
                   "path": "work/sample1.jpg",
-                  "width": 100
+                  "size": {
+                    "width": 100
+                  }
                 }
               },
               {
                 "type": "image",
                 "attributes": {
                   "path": "work/sample2.jpg",
-                  "height": 100
+                  "size": {
+                    "height": 100
+                  }
                 }
               },
               {
                 "type": "image",
                 "attributes": {
                   "path": "work/sample3.jpeg",
-                  "width": 100,
-                  "height": 100
+                  "size": {
+                    "width": 100,
+                    "height": 100
+                  }
                 }
               },
               {
@@ -65,44 +77,56 @@
                 "type": "image",
                 "attributes": {
                   "path": "work/sample1.jpg",
-                  "width": 100
+                  "size": {
+                    "width": 100
+                  }
                 }
               },
               {
                 "type": "image",
                 "attributes": {
                   "path": "work/sample2.jpg",
-                  "height": 100
+                  "size": {
+                    "height": 100
+                  }
                 }
               },
               {
                 "type": "image",
                 "attributes": {
                   "path": "work/sample3.jpeg",
-                  "width": 100,
-                  "height": 100
+                  "size": {
+                    "width": 100,
+                    "height": 100
+                  }
                 }
               },
               {
                 "type": "image",
                 "attributes": {
                   "path": "work/sample1.jpg",
-                  "width": 100
+                  "size": {
+                    "width": 100
+                  }
                 }
               },
               {
                 "type": "image",
                 "attributes": {
                   "path": "work/sample2.jpg",
-                  "height": 100
+                  "size": {
+                    "height": 100
+                  }
                 }
               },
               {
                 "type": "image",
                 "attributes": {
                   "path": "work/sample3.jpeg",
-                  "width": 100,
-                  "height": 100
+                  "size": {
+                    "width": 100,
+                    "height": 100
+                  }
                 }
               },
               {
@@ -117,44 +141,56 @@
                 "type": "image",
                 "attributes": {
                   "path": "work/sample1.jpg",
-                  "width": 100
+                  "size": {
+                    "width": 100
+                  }
                 }
               },
               {
                 "type": "image",
                 "attributes": {
                   "path": "work/sample2.jpg",
-                  "height": 100
+                  "size": {
+                    "height": 100
+                  }
                 }
               },
               {
                 "type": "image",
                 "attributes": {
                   "path": "work/sample3.jpeg",
-                  "width": 100,
-                  "height": 100
+                  "size": {
+                    "width": 100,
+                    "height": 100
+                  }
                 }
               },
               {
                 "type": "image",
                 "attributes": {
                   "path": "work/sample1.jpg",
-                  "width": 100
+                  "size": {
+                    "width": 100
+                  }
                 }
               },
               {
                 "type": "image",
                 "attributes": {
                   "path": "work/sample2.jpg",
-                  "height": 100
+                  "size": {
+                    "height": 100
+                  }
                 }
               },
               {
                 "type": "image",
                 "attributes": {
                   "path": "work/sample3.jpeg",
-                  "width": 100,
-                  "height": 100
+                  "size": {
+                    "width": 100,
+                    "height": 100
+                  }
                 }
               },
               {
@@ -169,44 +205,56 @@
                 "type": "image",
                 "attributes": {
                   "path": "work/sample1.jpg",
-                  "width": 100
+                  "size": {
+                    "width": 100
+                  }
                 }
               },
               {
                 "type": "image",
                 "attributes": {
                   "path": "work/sample2.jpg",
-                  "height": 100
+                  "size": {
+                    "height": 100
+                  }
                 }
               },
               {
                 "type": "image",
                 "attributes": {
                   "path": "work/sample3.jpeg",
-                  "width": 100,
-                  "height": 100
+                  "size": {
+                    "width": 100,
+                    "height": 100
+                  }
                 }
               },
               {
                 "type": "image",
                 "attributes": {
                   "path": "work/sample1.jpg",
-                  "width": 100
+                  "size": {
+                    "width": 100
+                  }
                 }
               },
               {
                 "type": "image",
                 "attributes": {
                   "path": "work/sample2.jpg",
-                  "height": 100
+                  "size": {
+                    "height": 100
+                  }
                 }
               },
               {
                 "type": "image",
                 "attributes": {
                   "path": "work/sample3.jpeg",
-                  "width": 100,
-                  "height": 100
+                  "size": {
+                    "width": 100,
+                    "height": 100
+                  }
                 }
               },
               {
@@ -221,208 +269,46 @@
                 "type": "image",
                 "attributes": {
                   "path": "work/sample1.jpg",
-                  "width": 100
+                  "size": {
+                    "width": 100
+                  }
                 }
               },
               {
                 "type": "image",
                 "attributes": {
                   "path": "work/sample2.jpg",
-                  "height": 100
+                  "size": {
+                    "height": 100
+                  }
                 }
               },
               {
                 "type": "image",
                 "attributes": {
                   "path": "work/sample3.jpeg",
-                  "width": 100,
-                  "height": 100
+                  "size": {
+                    "width": 100,
+                    "height": 100
+                  }
                 }
               },
               {
                 "type": "image",
                 "attributes": {
                   "path": "work/sample1.jpg",
-                  "width": 100
+                  "size": {
+                    "width": 100
+                  }
                 }
               },
               {
                 "type": "image",
                 "attributes": {
                   "path": "work/sample2.jpg",
-                  "height": 100
-                }
-              },
-              {
-                "type": "image",
-                "attributes": {
-                  "path": "work/sample3.jpeg",
-                  "width": 100,
-                  "height": 100
-                }
-              },
-              {
-                "type": "image",
-                "attributes": {
-                  "path": "work/sample4.png",
-                  "x": 500,
-                  "y": 0
-                }
-              },
-              {
-                "type": "image",
-                "attributes": {
-                  "path": "work/sample1.jpg",
-                  "width": 100
-                }
-              },
-              {
-                "type": "image",
-                "attributes": {
-                  "path": "work/sample2.jpg",
-                  "height": 100
-                }
-              },
-              {
-                "type": "image",
-                "attributes": {
-                  "path": "work/sample3.jpeg",
-                  "width": 100,
-                  "height": 100
-                }
-              },
-              {
-                "type": "image",
-                "attributes": {
-                  "path": "work/sample1.jpg",
-                  "width": 100
-                }
-              },
-              {
-                "type": "image",
-                "attributes": {
-                  "path": "work/sample2.jpg",
-                  "height": 100
-                }
-              },
-              {
-                "type": "image",
-                "attributes": {
-                  "path": "work/sample3.jpeg",
-                  "width": 100,
-                  "height": 100
-                }
-              },
-              {
-                "type": "image",
-                "attributes": {
-                  "path": "work/sample4.png",
-                  "x": 500,
-                  "y": 0
-                }
-              },
-              {
-                "type": "image",
-                "attributes": {
-                  "path": "work/sample1.jpg",
-                  "width": 100
-                }
-              },
-              {
-                "type": "image",
-                "attributes": {
-                  "path": "work/sample2.jpg",
-                  "height": 100
-                }
-              },
-              {
-                "type": "image",
-                "attributes": {
-                  "path": "work/sample3.jpeg",
-                  "width": 100,
-                  "height": 100
-                }
-              },
-              {
-                "type": "image",
-                "attributes": {
-                  "path": "work/sample1.jpg",
-                  "width": 100
-                }
-              },
-              {
-                "type": "image",
-                "attributes": {
-                  "path": "work/sample2.jpg",
-                  "height": 100
-                }
-              },
-              {
-                "type": "image",
-                "attributes": {
-                  "path": "work/sample3.jpeg",
-                  "width": 100,
-                  "height": 100
-                }
-              },
-              {
-                "type": "image",
-                "attributes": {
-                  "path": "work/sample4.png",
-                  "x": 500,
-                  "y": 0
-                }
-              },
-              {
-                "type": "image",
-                "attributes": {
-                  "path": "work/sample1.jpg",
-                  "width": 100
-                }
-              },
-              {
-                "type": "image",
-                "attributes": {
-                  "path": "work/sample2.jpg",
-                  "height": 100
-                }
-              },
-              {
-                "type": "image",
-                "attributes": {
-                  "path": "work/sample3.jpeg",
-                  "width": 100,
-                  "height": 100
-                }
-              },
-              {
-                "type": "image",
-                "attributes": {
-                  "path": "work/sample1.jpg",
-                  "width": 100
-                }
-              },
-              {
-                "type": "image",
-                "attributes": {
-                  "path": "work/sample2.jpg",
-                  "height": 100
-                }
-              },
-              {
-                "type": "image",
-                "attributes": {
-                  "path": "work/sample3.jpeg",
-                  "width": 100,
-                  "height": 100
-                }
-              },
-              {
-                "type": "image",
-                "attributes": {
-                  "path": "work/sample4.png",
-                  "x": 500,
-                  "y": 0
+                  "size": {
+                    "height": 50
+                  }
                 }
               }
             ]
