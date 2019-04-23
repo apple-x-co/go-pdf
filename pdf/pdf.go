@@ -137,7 +137,7 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 					Height: UnsetHeight,
 				}
 				_ = json.Unmarshal(element.Attributes, &decoded)
-				p.lineBreak(&wrapRect, decoded.Height)
+				p.lineBreak(&lineWrapRect, decoded.Height)
 
 			} else if element.Type.IsText() {
 				var decoded = types.ElementText{
