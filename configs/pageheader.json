@@ -1,6 +1,40 @@
 {
   "width": 595,
   "height": 842,
+  "header": {
+    "size": {
+      "width": 575,
+      "height": 100
+    },
+    "liner_layout": {
+      "orientation": "horizontal",
+      "elements": [
+        {
+          "type": "text",
+          "attributes": {
+            "text": "HEADER"
+          }
+        }
+      ]
+    }
+  },
+  "footer": {
+    "size": {
+      "width": 575,
+      "height": 50
+    },
+    "liner_layout": {
+      "orientation": "horizontal",
+      "elements": [
+        {
+          "type": "text",
+          "attributes": {
+            "text": "FOOTER"
+          }
+        }
+      ]
+    }
+  },
   "pages": [
     {
       "liner_layout": {

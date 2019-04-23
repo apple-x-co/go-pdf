@@ -14,16 +14,21 @@ import (
 	"os"
 )
 
-const unsetWidth float64 = 0
-const unsetHeight float64 = 0
-const unsetX float64 = 0
-const unsetY float64 = 0
-const defaultColorR uint8 = 0
-const defaultColorG uint8 = 0
-const defaultColorB uint8 = 0
+const UnsetWidth float64 = 0
+const UnsetHeight float64 = 0
+const UnsetX float64 = 0
+const UnsetY float64 = 0
+const DefaultColorR uint8 = 0
+const DefaultColorG uint8 = 0
+const DefaultColorB uint8 = 0
+const DefaultTextSize int = 14
+const DefaultCompressLevel int = 0
 
 type PDF struct {
-	gp gopdf.GoPdf
+	gp          gopdf.GoPdf
+	contentRect types.Rect
+	headerRect  types.Rect
+	footerRect  types.Rect
 }
 
 func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
@@ -62,6 +67,7 @@ func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 		return
 	}
 
+	// FONT
 	var parser core.TTFParser
 	if err := parser.Parse(documentConfigure.TTFPath); err != nil {
 		log.Print(err.Error())
@@ -71,8 +77,49 @@ func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 
 	p.gp.SetTextColor(documentConfigure.TextColor.R, documentConfigure.TextColor.G, documentConfigure.TextColor.B)
 
+	// RECT
+	if documentConfigure.Header.Size.IsSet() {
+		p.headerRect = types.Rect{
+			Origin: types.Origin{
+				X: p.gp.MarginLeft(),
+				Y: p.gp.MarginTop(),
+			},
+			Size: documentConfigure.Header.Size,
+		}
+	}
+	if documentConfigure.Footer.Size.IsSet() {
+		p.footerRect = types.Rect{
+			Origin: types.Origin{
+				X: p.gp.MarginLeft(),
+				Y: documentConfigure.Height - p.gp.MarginBottom() - documentConfigure.Footer.Size.Height,
+			},
+			Size: documentConfigure.Footer.Size,
+		}
+	}
+	p.contentRect = types.Rect{
+		Origin: types.Origin{
+			X: p.gp.MarginLeft(),
+			Y: p.gp.MarginTop() + p.headerRect.Height(),
+		},
+		Size: types.Size{
+			Width:  documentConfigure.Width - p.gp.MarginLeft() - p.gp.MarginRight(),
+			Height: documentConfigure.Height - p.gp.MarginTop() - p.gp.MarginBottom() - p.headerRect.Height() - p.footerRect.Height(),
+		},
+	}
+
+	// DRAW
 	for _, page := range documentConfigure.Pages {
 		p.gp.AddPage()
+
+		if p.headerRect.Size.IsSet() {
+			p.drawHeader(documentConfigure)
+		}
+		if p.footerRect.Size.IsSet() {
+			p.drawFooter(documentConfigure)
+		}
+
+		p.gp.SetX(p.contentRect.MinX())
+		p.gp.SetY(p.contentRect.MinY())
 		p.draw(documentConfigure, page.LinerLayout)
 		//fmt.Printf("rect: %v\n", rect)
 	}
@@ -87,7 +134,7 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 		for _, element := range linerLayout.Elements {
 			if element.Type.IsLineBreak() {
 				var decoded = types.ElementLineBreak{
-					Height: unsetHeight,
+					Height: UnsetHeight,
 				}
 				_ = json.Unmarshal(element.Attributes, &decoded)
 				p.lineBreak(&wrapRect, decoded.Height)
@@ -95,30 +142,30 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 			} else if element.Type.IsText() {
 				var decoded = types.ElementText{
 					Color:           types.Color{R: documentConfigure.TextColor.R, G: documentConfigure.TextColor.G, B: documentConfigure.TextColor.B},
-					BackgroundColor: types.Color{R: defaultColorR, B: defaultColorG, G: defaultColorB},
-					Size:            types.Size{Width: unsetWidth, Height: unsetWidth},
-					Origin:          types.Origin{X: unsetWidth, Y: unsetHeight},
-					Border:          types.Border{Width: unsetWidth, Color: types.Color{R: defaultColorR, B: defaultColorG, G: defaultColorB}},
-					BorderTop:       types.Border{Width: unsetWidth, Color: types.Color{R: defaultColorR, B: defaultColorG, G: defaultColorB}},
-					BorderRight:     types.Border{Width: unsetWidth, Color: types.Color{R: defaultColorR, B: defaultColorG, G: defaultColorB}},
-					BorderBottom:    types.Border{Width: unsetWidth, Color: types.Color{R: defaultColorR, B: defaultColorG, G: defaultColorB}},
-					BorderLeft:      types.Border{Width: unsetWidth, Color: types.Color{R: defaultColorR, B: defaultColorG, G: defaultColorB}},
+					BackgroundColor: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB},
+					Size:            types.Size{Width: UnsetWidth, Height: UnsetWidth},
+					Origin:          types.Origin{X: UnsetWidth, Y: UnsetHeight},
+					Border:          types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
+					BorderTop:       types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
+					BorderRight:     types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
+					BorderBottom:    types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
+					BorderLeft:      types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
 				}
 				_ = json.Unmarshal(element.Attributes, &decoded)
 
 				//fmt.Printf("---------------------------\n%v\n", decoded.Text)
 
-				if decoded.Align != "" && decoded.Size.Width == unsetWidth {
+				if decoded.Align != "" && decoded.Size.Width == UnsetWidth {
 					panic("aligns need width.")
 				}
-				if decoded.Valign != "" && decoded.Size.Height == unsetHeight {
+				if decoded.Valign != "" && decoded.Size.Height == UnsetHeight {
 					panic("valigns need height.")
 				}
 
 				measureSize := p.measureText(documentConfigure, decoded)
 
 				// FIX POSITION
-				if decoded.Origin.X != unsetX && decoded.Origin.Y != unsetY {
+				if decoded.Origin.X != UnsetX && decoded.Origin.Y != UnsetY {
 					textRect := types.Rect{Origin: types.Origin{X: decoded.Origin.X, Y: decoded.Origin.Y}, Size: measureSize}
 					p.gp.SetX(textRect.MinX())
 					p.gp.SetY(textRect.MinY())
@@ -142,6 +189,16 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 					//fmt.Print("> page break\n")
 					p.gp.AddPage()
 					p.pageBreak(&lineWrapRect, &wrapRect)
+
+					if p.headerRect.Size.IsSet() {
+						p.drawHeader(documentConfigure)
+					}
+					if p.footerRect.Size.IsSet() {
+						p.drawFooter(documentConfigure)
+					}
+
+					p.gp.SetX(wrapRect.MinX())
+					p.gp.SetY(wrapRect.MinY())
 				}
 
 				// DRAWABLE RECT
@@ -158,8 +215,8 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 
 			} else if element.Type.IsImage() {
 				var decoded = types.ElementImage{
-					Size:   types.Size{Width: unsetWidth, Height: unsetWidth},
-					Origin: types.Origin{X: unsetWidth, Y: unsetHeight},
+					Size:   types.Size{Width: UnsetWidth, Height: UnsetWidth},
+					Origin: types.Origin{X: UnsetWidth, Y: UnsetHeight},
 					Resize: false,
 				}
 				_ = json.Unmarshal(element.Attributes, &decoded)
@@ -169,7 +226,7 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 				measureSize := p.measureImage(documentConfigure, decoded)
 
 				// FIX POSITION
-				if decoded.Origin.X != unsetX && decoded.Origin.Y != unsetY {
+				if decoded.Origin.X != UnsetX && decoded.Origin.Y != UnsetY {
 					imageRect := types.Rect{Origin: types.Origin{X: decoded.Origin.X, Y: decoded.Origin.Y}, Size: measureSize}
 					p.gp.SetX(imageRect.MinX())
 					p.gp.SetY(imageRect.MinY())
@@ -193,6 +250,16 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 					//fmt.Print("> page break\n")
 					p.gp.AddPage()
 					p.pageBreak(&lineWrapRect, &wrapRect)
+
+					if p.headerRect.Size.IsSet() {
+						p.drawHeader(documentConfigure)
+					}
+					if p.footerRect.Size.IsSet() {
+						p.drawFooter(documentConfigure)
+					}
+
+					p.gp.SetX(wrapRect.MinX())
+					p.gp.SetY(wrapRect.MinY())
 				}
 
 				// DRAWABLE RECT
@@ -245,11 +312,11 @@ func (p *PDF) measureText(documentConfigure types.DocumentConfigure, decoded typ
 	measureHeight := documentConfigure.FontHeight() * (float64(documentConfigure.TextSize) / 1000.0)
 
 	var measureSize types.Size
-	if decoded.Size.Width != unsetWidth && decoded.Size.Height != unsetHeight {
+	if decoded.Size.Width != UnsetWidth && decoded.Size.Height != UnsetHeight {
 		measureSize = types.Size{Width: decoded.Size.Width, Height: decoded.Size.Height}
-	} else if decoded.Size.Width != unsetWidth && decoded.Size.Height == unsetHeight {
+	} else if decoded.Size.Width != UnsetWidth && decoded.Size.Height == UnsetHeight {
 		measureSize = types.Size{Width: decoded.Size.Width, Height: measureHeight}
-	} else if decoded.Size.Width == unsetWidth && decoded.Size.Height != unsetHeight {
+	} else if decoded.Size.Width == UnsetWidth && decoded.Size.Height != UnsetHeight {
 		measureSize = types.Size{Width: measureWidth, Height: decoded.Size.Height}
 	} else {
 		measureSize = types.Size{Width: measureWidth, Height: measureHeight}
@@ -260,28 +327,28 @@ func (p *PDF) measureText(documentConfigure types.DocumentConfigure, decoded typ
 
 func (p *PDF) drawText(documentConfigure types.DocumentConfigure, decoded types.ElementText, textRect types.Rect) {
 	// BORDER, FILL
-	if decoded.Border.Width != unsetWidth {
+	if decoded.Border.Width != UnsetWidth {
 		p.gp.SetLineWidth(decoded.Border.Width)
 		p.gp.SetStrokeColor(decoded.Border.Color.R, decoded.Border.Color.G, decoded.Border.Color.B)
-		if decoded.BackgroundColor.R != defaultColorR || decoded.BackgroundColor.G != defaultColorG || decoded.BackgroundColor.B != defaultColorB {
+		if decoded.BackgroundColor.R != DefaultColorR || decoded.BackgroundColor.G != DefaultColorG || decoded.BackgroundColor.B != DefaultColorB {
 			p.gp.SetFillColor(decoded.BackgroundColor.R, decoded.BackgroundColor.G, decoded.BackgroundColor.B)
 			p.gp.RectFromUpperLeftWithStyle(textRect.MinX(), textRect.MinY(), textRect.Width(), textRect.Height(), "FD")
 		} else {
 			p.gp.RectFromUpperLeft(textRect.MinX(), textRect.MinY(), textRect.Width(), textRect.Height())
 		}
-	} else if decoded.BorderTop.Width != unsetWidth {
+	} else if decoded.BorderTop.Width != UnsetWidth {
 		p.gp.SetLineWidth(decoded.BorderTop.Width)
 		p.gp.SetStrokeColor(decoded.BorderTop.Color.R, decoded.BorderTop.Color.G, decoded.BorderTop.Color.B)
 		p.gp.Line(textRect.MinX(), textRect.MinY(), textRect.MinX()+textRect.Width(), textRect.MinY())
-	} else if decoded.BorderRight.Width != unsetWidth {
+	} else if decoded.BorderRight.Width != UnsetWidth {
 		p.gp.SetLineWidth(decoded.BorderRight.Width)
 		p.gp.SetStrokeColor(decoded.BorderRight.Color.R, decoded.BorderRight.Color.G, decoded.BorderRight.Color.B)
 		p.gp.Line(textRect.MinX()+textRect.Width(), textRect.MinY(), textRect.MinX()+textRect.Width(), textRect.MinY()+textRect.Height())
-	} else if decoded.BorderBottom.Width != unsetWidth {
+	} else if decoded.BorderBottom.Width != UnsetWidth {
 		p.gp.SetLineWidth(decoded.BorderBottom.Width)
 		p.gp.SetStrokeColor(decoded.BorderBottom.Color.R, decoded.BorderBottom.Color.G, decoded.BorderBottom.Color.B)
 		p.gp.Line(textRect.MinX()+textRect.Width(), textRect.MinY()+textRect.Height(), textRect.MinX(), textRect.MinY()+textRect.Height())
-	} else if decoded.BorderLeft.Width != unsetWidth {
+	} else if decoded.BorderLeft.Width != UnsetWidth {
 		p.gp.SetLineWidth(decoded.BorderLeft.Width)
 		p.gp.SetStrokeColor(decoded.BorderLeft.Color.R, decoded.BorderLeft.Color.G, decoded.BorderLeft.Color.B)
 		p.gp.Line(textRect.MinX(), textRect.MinY()+textRect.Height(), textRect.MinX(), textRect.MinY())
@@ -324,13 +391,13 @@ func (p *PDF) measureImage(documentConfigure types.DocumentConfigure, decoded ty
 	_ = file.Close()
 
 	var measureSize types.Size
-	if decoded.Size.Width != unsetWidth && decoded.Size.Height != unsetHeight && decoded.Size.Width < float64(imgConfig.Width) && decoded.Size.Height < float64(imgConfig.Height) {
+	if decoded.Size.Width != UnsetWidth && decoded.Size.Height != UnsetHeight && decoded.Size.Width < float64(imgConfig.Width) && decoded.Size.Height < float64(imgConfig.Height) {
 		measureSize.Width = decoded.Size.Width
 		measureSize.Height = decoded.Size.Height
-	} else if decoded.Size.Width == unsetWidth && decoded.Size.Height != unsetHeight && decoded.Size.Height < float64(imgConfig.Height) {
+	} else if decoded.Size.Width == UnsetWidth && decoded.Size.Height != UnsetHeight && decoded.Size.Height < float64(imgConfig.Height) {
 		measureSize.Height = decoded.Size.Height
 		measureSize.Width = float64(imgConfig.Width) * (measureSize.Height / float64(imgConfig.Height))
-	} else if decoded.Size.Width != unsetWidth && decoded.Size.Height == unsetHeight && decoded.Size.Width < float64(imgConfig.Width) {
+	} else if decoded.Size.Width != UnsetWidth && decoded.Size.Height == UnsetHeight && decoded.Size.Width < float64(imgConfig.Width) {
 		measureSize.Width = decoded.Size.Width
 		measureSize.Height = float64(imgConfig.Height) * (measureSize.Width / float64(imgConfig.Width))
 	} else {
@@ -384,6 +451,32 @@ func (p *PDF) drawImage(documentConfigure types.DocumentConfigure, decoded types
 	_ = p.gp.ImageByHolder(imageHoloder, imageRect.MinX(), imageRect.MinY(), &gpRect)
 }
 
+func (p *PDF) drawHeader(documentConfigure types.DocumentConfigure) {
+	p.gp.SetX(p.headerRect.MinX())
+	p.gp.SetY(p.headerRect.MinY())
+
+	// > debug
+	p.gp.SetStrokeColor(255, 0, 0)
+	p.gp.RectFromUpperLeft(p.headerRect.Origin.X, p.headerRect.Origin.Y, p.headerRect.Width(), p.headerRect.Height())
+	// < debug
+
+	// これはNG。無限ループに入ってしまう。
+	//p.draw(documentConfigure, documentConfigure.Header.LinerLayout)
+}
+
+func (p *PDF) drawFooter(documentConfigure types.DocumentConfigure) {
+	p.gp.SetX(p.footerRect.MinX())
+	p.gp.SetY(p.footerRect.MinY())
+
+	// > debug
+	p.gp.SetStrokeColor(0, 255, 0)
+	p.gp.RectFromUpperLeft(p.footerRect.Origin.X, p.footerRect.Origin.Y, p.footerRect.Width(), p.footerRect.Height())
+	// < debug
+
+	// これはNG。無限ループに入ってしまう。
+	//p.draw(documentConfigure, documentConfigure.Footer.LinerLayout)
+}
+
 func (p *PDF) verticalBreak(lineWrapRect *types.Rect) {
 	lineWrapRect.Origin.X = p.gp.GetX()
 	lineWrapRect.Origin.Y = p.gp.GetY()
@@ -400,7 +493,7 @@ func (p *PDF) lineBreak(lineWrapRect *types.Rect, lineHeight float64) {
 	//fmt.Printf("lineHeight: %v\n", lineHeight)
 
 	lineWrapRect.Origin.X = lineWrapRect.MinX()
-	if lineHeight == unsetHeight {
+	if lineHeight == UnsetHeight {
 		lineWrapRect.Origin.Y = lineWrapRect.MaxY()
 	} else {
 		lineWrapRect.Origin.Y = lineWrapRect.MinY() + lineHeight
@@ -412,26 +505,26 @@ func (p *PDF) lineBreak(lineWrapRect *types.Rect, lineHeight float64) {
 }
 
 func (p *PDF) pageBreak(lineWrapRect *types.Rect, wrapRect *types.Rect) {
-	lineWrapRect.Origin.X = p.gp.MarginLeft()
-	lineWrapRect.Origin.Y = p.gp.MarginTop()
+	lineWrapRect.Origin.X = p.contentRect.MinX()
+	lineWrapRect.Origin.Y = p.contentRect.MinY()
 	lineWrapRect.Size.Width = 0
 	lineWrapRect.Size.Width = 0
 
-	wrapRect.Origin.X = p.gp.MarginLeft()
-	wrapRect.Origin.Y = p.gp.MarginTop()
+	wrapRect.Origin.X = p.contentRect.MinX()
+	wrapRect.Origin.Y = p.contentRect.MinY()
 	wrapRect.Size.Width = 0
 	wrapRect.Size.Width = 0
 }
 
 func (p *PDF) needLineBreak(documentConfigure types.DocumentConfigure, lineWrapRect types.Rect, measureSize types.Size) bool {
-	if lineWrapRect.MaxX()+measureSize.Width > documentConfigure.Width-p.gp.MarginLeft()-p.gp.MarginRight() {
+	if lineWrapRect.MaxX()+measureSize.Width > p.contentRect.MaxX() {
 		return true
 	}
 	return false
 }
 
 func (p *PDF) needPageBreak(documentConfigure types.DocumentConfigure, lineWrapRect types.Rect, measureSize types.Size) bool {
-	if lineWrapRect.MinY()+measureSize.Height > documentConfigure.Height-p.gp.MarginTop()-p.gp.MarginBottom() {
+	if lineWrapRect.MinY()+measureSize.Height > p.contentRect.MaxY() {
 		return true
 	}
 	return false

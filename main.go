@@ -54,11 +54,13 @@ func execuute(inputPath string, outputPath string, ttfPath string) {
 	}
 
 	var documentConfigure = types.DocumentConfigure{
-		TextSize:      14,
-		TextColor:     types.Color{R: 0, G: 0, B: 0},
+		TextSize:      pdf.DefaultTextSize,
+		TextColor:     types.Color{R: pdf.DefaultColorR, G: pdf.DefaultColorG, B: pdf.DefaultColorB},
 		AutoPageBreak: true,
-		CompressLevel: 0,
+		CompressLevel: pdf.DefaultCompressLevel,
 		TTFPath:       ttfPath,
+		Header:        types.PageHeader{Size: types.Size{Width: pdf.UnsetWidth, Height: pdf.UnsetHeight}},
+		Footer:        types.PageFooter{Size: types.Size{Width: pdf.UnsetWidth, Height: pdf.UnsetHeight}},
 	}
 	bytes := []byte(string(b))
 	if err := json.Unmarshal(bytes, &documentConfigure); err != nil {
