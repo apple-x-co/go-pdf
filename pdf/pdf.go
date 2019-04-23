@@ -18,6 +18,9 @@ const unsetWidth float64 = 0
 const unsetHeight float64 = 0
 const unsetX float64 = 0
 const unsetY float64 = 0
+const defaultColorR uint8 = 0
+const defaultColorG uint8 = 0
+const defaultColorB uint8 = 0
 
 type PDF struct {
 	gp gopdf.GoPdf
@@ -92,13 +95,13 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 			} else if element.Type.IsText() {
 				var decoded = types.ElementText{
 					Color:           types.Color{R: documentConfigure.TextColor.R, G: documentConfigure.TextColor.G, B: documentConfigure.TextColor.B},
-					BackgroundColor: types.Color{R: 0, G: 0, B: 0},
+					BackgroundColor: types.Color{R: defaultColorR, B: defaultColorG, G: defaultColorB},
 					Size:            types.Size{Width: unsetWidth, Height: unsetWidth},
-					Border:          types.Border{Width: unsetWidth, Color: types.Color{R: 0, B: 0, G: 0}},
-					BorderTop:       types.Border{Width: unsetWidth, Color: types.Color{R: 0, B: 0, G: 0}},
-					BorderRight:     types.Border{Width: unsetWidth, Color: types.Color{R: 0, B: 0, G: 0}},
-					BorderBottom:    types.Border{Width: unsetWidth, Color: types.Color{R: 0, B: 0, G: 0}},
-					BorderLeft:      types.Border{Width: unsetWidth, Color: types.Color{R: 0, B: 0, G: 0}},
+					Border:          types.Border{Width: unsetWidth, Color: types.Color{R: defaultColorR, B: defaultColorG, G: defaultColorB}},
+					BorderTop:       types.Border{Width: unsetWidth, Color: types.Color{R: defaultColorR, B: defaultColorG, G: defaultColorB}},
+					BorderRight:     types.Border{Width: unsetWidth, Color: types.Color{R: defaultColorR, B: defaultColorG, G: defaultColorB}},
+					BorderBottom:    types.Border{Width: unsetWidth, Color: types.Color{R: defaultColorR, B: defaultColorG, G: defaultColorB}},
+					BorderLeft:      types.Border{Width: unsetWidth, Color: types.Color{R: defaultColorR, B: defaultColorG, G: defaultColorB}},
 				}
 				_ = json.Unmarshal(element.Attributes, &decoded)
 
@@ -241,7 +244,7 @@ func (p *PDF) drawText(documentConfigure types.DocumentConfigure, decoded types.
 	if decoded.Border.Width != unsetWidth {
 		p.gp.SetLineWidth(decoded.Border.Width)
 		p.gp.SetStrokeColor(decoded.Border.Color.R, decoded.Border.Color.G, decoded.Border.Color.B)
-		if decoded.BackgroundColor.R != 0 || decoded.BackgroundColor.G != 0 || decoded.BackgroundColor.B != 0 {
+		if decoded.BackgroundColor.R != defaultColorR || decoded.BackgroundColor.G != defaultColorG || decoded.BackgroundColor.B != defaultColorB {
 			p.gp.SetFillColor(decoded.BackgroundColor.R, decoded.BackgroundColor.G, decoded.BackgroundColor.B)
 			p.gp.RectFromUpperLeftWithStyle(textRect.MinX(), textRect.MinY(), textRect.Width(), textRect.Height(), "FD")
 		} else {
