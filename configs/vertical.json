@@ -38,7 +38,7 @@
     {
       "liner_layout": {
         "orientation": "horizontal",
-        "linear_layouts": [
+        "liner_layouts": [
           {
             "orientation": "vertical",
             "elements": [
@@ -79,7 +79,7 @@
     {
       "liner_layout": {
         "orientation": "vertical",
-        "linear_layouts": [
+        "liner_layouts": [
           {
             "orientation": "horizontal",
             "elements": [

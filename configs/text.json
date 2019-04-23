@@ -11,7 +11,7 @@
     {
       "liner_layout": {
         "orientation": "vertical",
-        "linear_layouts": [
+        "liner_layouts": [
           {
             "orientation": "horizontal",
             "line_height": 20,
@@ -962,7 +962,7 @@
     {
       "liner_layout": {
         "orientation": "vertical",
-        "linear_layouts": [
+        "liner_layouts": [
           {
             "orientation": "horizontal",
             "line_height": 20,
