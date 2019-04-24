@@ -1,0 +1,46 @@
+{
+  "$id": "https://example.com/arrays.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "layout.json for PDF",
+  "type": "object",
+  "properties": {
+    "width": {
+      "description": "PDF幅",
+      "type": "integer"
+    },
+    "height": {
+      "description": "PDF高さ",
+      "type": "integer"
+    },
+    "text_size": {
+      "description": "テキストの大きさ",
+      "type": "integer"
+    },
+    "text_color": {
+      "description": "テキストの色",
+      "type": "object",
+      "$ref": "#/definitions/color"
+    }
+  },
+  "definitions": {
+    "color": {
+      "type": "object",
+      "required": [
+        "r",
+        "g",
+        "b"
+      ],
+      "properties": {
+        "r": {
+          "type": "integer"
+        },
+        "g": {
+          "type": "integer"
+        },
+        "b": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}
