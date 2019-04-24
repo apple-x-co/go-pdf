@@ -23,7 +23,7 @@ const DefaultColorR uint8 = 0
 const DefaultColorG uint8 = 0
 const DefaultColorB uint8 = 0
 const DefaultTextSize int = 14
-const DefaultCompressLevel int = 0
+const DefaultCompressLevel int = -1
 
 type PDF struct {
 	gp          gopdf.GoPdf

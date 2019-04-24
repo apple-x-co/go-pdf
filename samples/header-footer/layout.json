@@ -1,0 +1,90 @@
+{
+  "width": 595,
+  "height": 842,
+  "header": {
+    "size": {
+      "width": 595,
+      "height": 20
+    },
+    "liner_layout": {
+      "orientation": "horizontal",
+      "elements": [
+        {
+          "type": "text",
+          "attributes": {
+            "text": "HEADER",
+            "size": {
+              "width": 575,
+              "height": 20
+            },
+            "border": {
+              "width": 1,
+              "color": {
+                "r": 175,
+                "g": 223,
+                "b": 228
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "footer": {
+    "size": {
+      "width": 595,
+      "height": 20
+    },
+    "liner_layout": {
+      "orientation": "horizontal",
+      "elements": [
+        {
+          "type": "text",
+          "attributes": {
+            "text": "FOOTER",
+            "size": {
+              "width": 575,
+              "height": 20
+            },
+            "border": {
+              "width": 1,
+              "color": {
+                "r": 175,
+                "g": 223,
+                "b": 228
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "pages": [
+    {
+      "liner_layout": {
+        "orientation": "horizontal",
+        "elements": [
+          {
+            "type": "text",
+            "attributes": {
+              "text": "PAGE1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "liner_layout": {
+        "orientation": "horizontal",
+        "elements": [
+          {
+            "type": "text",
+            "attributes": {
+              "text": "PAGE2"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
