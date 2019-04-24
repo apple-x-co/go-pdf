@@ -529,6 +529,16 @@ func (p *PDF) drawText(documentConfigure types.DocumentConfigure, decoded types.
 		p.gp.Line(textRect.MinX(), textRect.MinY()+textRect.Height(), textRect.MinX(), textRect.MinY())
 	}
 
+	var gpRect = gopdf.Rect{W: textRect.Width(), H: textRect.Height()}
+
+	// WRAP TEXT
+	if decoded.Wrap {
+		p.gp.SetTextColor(decoded.Color.R, decoded.Color.G, decoded.Color.B)
+		_ = p.gp.MultiCell(&gpRect, decoded.Text)
+		p.gp.SetTextColor(documentConfigure.TextColor.R, documentConfigure.TextColor.G, documentConfigure.TextColor.B)
+		return
+	}
+
 	// TEXT OPTION
 	var option = gopdf.CellOption{
 		Border: 0,
@@ -551,9 +561,6 @@ func (p *PDF) drawText(documentConfigure types.DocumentConfigure, decoded types.
 
 	// TEXT COLOR
 	p.gp.SetTextColor(decoded.Color.R, decoded.Color.G, decoded.Color.B)
-
-	// DRAW TEXT
-	var gpRect = gopdf.Rect{W: textRect.Width(), H: textRect.Height()}
 
 	if p.isMultiLineText(decoded.Text) {
 		option.Float = gopdf.Bottom

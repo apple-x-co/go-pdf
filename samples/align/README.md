@@ -4,12 +4,20 @@
 
 ### align
 
-type : string
+Horizontal alignment
+
+#### type
+
+string
 
 values : `left` `center` `right`
 
 ### valign
 
-type : string
+Vertical alignment
+
+#### type
+
+string
 
 values : `top` `middle` `bottom`

@@ -1,0 +1,32 @@
+{
+  "width": 595,
+  "height": 842,
+  "pages": [
+    {
+      "liner_layout": {
+        "orientation": "horizontal",
+        "elements": [
+          {
+            "type": "text",
+            "attributes": {
+              "text": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui",
+              "wrap": "true",
+              "size": {
+                "width": 180,
+                "height": 180
+              },
+              "border": {
+                "width": 1,
+                "color": {
+                  "r": 255,
+                  "g": 0,
+                  "b": 0
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

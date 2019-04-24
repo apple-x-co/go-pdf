@@ -24,6 +24,7 @@ type ElementText struct {
 	BackgroundColor Color  `json:"background_color"`
 	Align           Align  `json:"align"`
 	Valign          Valign `json:"valign"`
+	Wrap            bool   `json:"wrap,string"`
 }
 
 type ElementImage struct {
