@@ -28,8 +28,9 @@ type ElementText struct {
 }
 
 type ElementImage struct {
-	Path   string `json:"path"`
-	Size   Size   `json:"size"`
-	Origin Origin `json:"origin"`
-	Resize bool   `json:"resize,string"`
+	Path       string `json:"path"`
+	Size       Size   `json:"size"`
+	Origin     Origin `json:"origin"`
+	Resize     bool   `json:"resize,string"`
+	Resolution uint   `json:"resolution"`
 }

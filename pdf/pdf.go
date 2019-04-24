@@ -225,9 +225,10 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 
 			} else if element.Type.IsImage() {
 				var decoded = types.ElementImage{
-					Size:   types.Size{Width: UnsetWidth, Height: UnsetWidth},
-					Origin: types.Origin{X: UnsetWidth, Y: UnsetHeight},
-					Resize: false,
+					Size:       types.Size{Width: UnsetWidth, Height: UnsetWidth},
+					Origin:     types.Origin{X: UnsetWidth, Y: UnsetHeight},
+					Resize:     false,
+					Resolution: 2,
 				}
 				_ = json.Unmarshal(element.Attributes, &decoded)
 
@@ -595,7 +596,7 @@ func (p *PDF) drawImage(documentConfigure types.DocumentConfigure, decoded types
 
 	// RESIZE
 	if decoded.Resize {
-		resizedImg := resize.Resize(uint(imageRect.Width())*2, uint(imageRect.Height())*2, img, resize.Lanczos3)
+		resizedImg := resize.Resize(uint(imageRect.Width())*decoded.Resolution, uint(imageRect.Height())*decoded.Resolution, img, resize.Lanczos3)
 
 		resizedBuf := new(bytes.Buffer)
 		switch imgType {

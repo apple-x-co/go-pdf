@@ -1,0 +1,24 @@
+{
+  "width": 595,
+  "height": 842,
+  "pages": [
+    {
+      "liner_layout": {
+        "orientation": "horizontal",
+        "elements": [
+          {
+            "type": "image",
+            "attributes": {
+              "path": "work/sample1.jpg",
+              "size": {
+                "width": 180
+              },
+              "resize": "true",
+              "resolution": 2
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
