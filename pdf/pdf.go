@@ -492,8 +492,13 @@ func (p *PDF) measureImage(documentConfigure types.DocumentConfigure, decoded ty
 		measureSize.Width = decoded.Size.Width
 		measureSize.Height = float64(imgConfig.Height) * (measureSize.Width / float64(imgConfig.Width))
 	} else {
-		measureSize.Width = float64(imgConfig.Width)
-		measureSize.Height = float64(imgConfig.Height)
+		if float64(imgConfig.Width) <= documentConfigure.Width-p.gp.MarginLeft()-p.gp.MarginRight() {
+			measureSize.Width = float64(imgConfig.Width)
+			measureSize.Height = float64(imgConfig.Height)
+		} else {
+			measureSize.Width = documentConfigure.Width - p.gp.MarginLeft() - p.gp.MarginRight()
+			measureSize.Height = float64(imgConfig.Height) * (measureSize.Width / float64(imgConfig.Width))
+		}
 	}
 
 	return measureSize
