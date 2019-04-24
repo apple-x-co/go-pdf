@@ -1,0 +1,33 @@
+{
+  "width": 595,
+  "height": 842,
+  "pages": [
+    {
+      "liner_layout": {
+        "orientation": "horizontal",
+        "elements": [
+          {
+            "type": "text",
+            "attributes": {
+              "text": "(100,100)",
+              "origin": {
+                "x": 100,
+                "y": 100
+              }
+            }
+          },
+          {
+            "type": "text",
+            "attributes": {
+              "text": "(200,200)",
+              "origin": {
+                "x": 200,
+                "y": 200
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

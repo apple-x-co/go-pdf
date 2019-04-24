@@ -527,6 +527,9 @@ func (p *PDF) drawText(documentConfigure types.DocumentConfigure, decoded types.
 		p.gp.SetLineWidth(decoded.BorderLeft.Width)
 		p.gp.SetStrokeColor(decoded.BorderLeft.Color.R, decoded.BorderLeft.Color.G, decoded.BorderLeft.Color.B)
 		p.gp.Line(textRect.MinX(), textRect.MinY()+textRect.Height(), textRect.MinX(), textRect.MinY())
+	} else if decoded.BackgroundColor.R != DefaultColorR || decoded.BackgroundColor.G != DefaultColorG || decoded.BackgroundColor.B != DefaultColorB {
+		p.gp.SetFillColor(decoded.BackgroundColor.R, decoded.BackgroundColor.G, decoded.BackgroundColor.B)
+		p.gp.RectFromUpperLeftWithStyle(textRect.MinX(), textRect.MinY(), textRect.Width(), textRect.Height(), "F")
 	}
 
 	var gpRect = gopdf.Rect{W: textRect.Width(), H: textRect.Height()}
