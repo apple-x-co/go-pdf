@@ -1,4 +1,4 @@
-# Text element
+# Image element
 
 ## attributes
 
