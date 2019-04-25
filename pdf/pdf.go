@@ -245,11 +245,11 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 
 				// FIX POSITION
 				if decoded.Origin.X != UnsetX && decoded.Origin.Y != UnsetY {
-					imageRect := types.Rect{Origin: types.Origin{X: decoded.Origin.X, Y: decoded.Origin.Y}, Size: measureSize}
-					imageFrame := imageRect.Inset(decoded.Margin)
-					p.gp.SetX(imageFrame.MinX())
-					p.gp.SetY(imageFrame.MinY())
-					p.drawImage(documentConfigure, decoded, imageFrame)
+					imageFrame := types.Rect{Origin: types.Origin{X: decoded.Origin.X, Y: decoded.Origin.Y}, Size: measureSize}
+					imageRect := imageFrame.Inset(decoded.Margin)
+					p.gp.SetX(imageRect.MinX())
+					p.gp.SetY(imageRect.MinY())
+					p.drawImage(documentConfigure, decoded, imageRect, imageFrame)
 					continue
 				}
 
@@ -282,10 +282,10 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 				}
 
 				// DRAWABLE RECT
-				imageRect := types.Rect{Origin: types.Origin{X: lineWrapRect.MaxX(), Y: lineWrapRect.MinY()}, Size: measureSize}
-				imageFrame := imageRect.Inset(decoded.Margin)
-				p.gp.SetX(imageFrame.MinX())
-				p.gp.SetY(imageFrame.MinY())
+				imageFrame := types.Rect{Origin: types.Origin{X: lineWrapRect.MaxX(), Y: lineWrapRect.MinY()}, Size: measureSize}
+				imageRect := imageFrame.Inset(decoded.Margin)
+				p.gp.SetX(imageRect.MinX())
+				p.gp.SetY(imageRect.MinY())
 
 				// DRAW
 				//fmt.Printf("textRect: %v\n", imageRect)
@@ -294,9 +294,9 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 				//p.gp.SetStrokeColor(255, 255, 0)
 				//p.gp.RectFromUpperLeft(imageRect.Origin.X, imageRect.Origin.Y, imageRect.Size.Width, imageRect.Size.Height)
 				// < debug
-				p.drawImage(documentConfigure, decoded, imageFrame)
+				p.drawImage(documentConfigure, decoded, imageRect, imageFrame)
 
-				lineWrapRect = lineWrapRect.Merge(imageRect)
+				lineWrapRect = lineWrapRect.Merge(imageFrame)
 			}
 
 			wrapRect = wrapRect.Merge(lineWrapRect)
@@ -413,11 +413,11 @@ func (p *PDF) drawHeaderOrFooter(documentConfigure types.DocumentConfigure, line
 
 				// FIX POSITION
 				if decoded.Origin.X != UnsetX && decoded.Origin.Y != UnsetY {
-					imageRect := types.Rect{Origin: types.Origin{X: decoded.Origin.X, Y: decoded.Origin.Y}, Size: measureSize}
-					imageFrame := imageRect.Inset(decoded.Margin)
-					p.gp.SetX(imageFrame.MinX())
-					p.gp.SetY(imageFrame.MinY())
-					p.drawImage(documentConfigure, decoded, imageFrame)
+					imageFrame := types.Rect{Origin: types.Origin{X: decoded.Origin.X, Y: decoded.Origin.Y}, Size: measureSize}
+					imageRect := imageFrame.Inset(decoded.Margin)
+					p.gp.SetX(imageRect.MinX())
+					p.gp.SetY(imageRect.MinY())
+					p.drawImage(documentConfigure, decoded, imageRect, imageFrame)
 					continue
 				}
 
@@ -432,15 +432,15 @@ func (p *PDF) drawHeaderOrFooter(documentConfigure types.DocumentConfigure, line
 				}
 
 				// DRAWABLE RECT
-				imageRect := types.Rect{Origin: types.Origin{X: lineWrapRect.MaxX(), Y: lineWrapRect.MinY()}, Size: measureSize}
-				imageFrame := imageRect.Inset(decoded.Margin)
-				p.gp.SetX(imageFrame.MinX())
-				p.gp.SetY(imageFrame.MinY())
+				imageFrame := types.Rect{Origin: types.Origin{X: lineWrapRect.MaxX(), Y: lineWrapRect.MinY()}, Size: measureSize}
+				imageRect := imageFrame.Inset(decoded.Margin)
+				p.gp.SetX(imageRect.MinX())
+				p.gp.SetY(imageRect.MinY())
 
 				// DRAW
-				p.drawImage(documentConfigure, decoded, imageFrame)
+				p.drawImage(documentConfigure, decoded, imageRect, imageFrame)
 
-				lineWrapRect = lineWrapRect.Merge(imageRect)
+				lineWrapRect = lineWrapRect.Merge(imageFrame)
 			}
 
 			wrapRect = wrapRect.Merge(lineWrapRect)
@@ -613,7 +613,7 @@ func (p *PDF) drawText(documentConfigure types.DocumentConfigure, decoded types.
 }
 
 // 描画：画像
-func (p *PDF) drawImage(documentConfigure types.DocumentConfigure, decoded types.ElementImage, imageRect types.Rect) {
+func (p *PDF) drawImage(documentConfigure types.DocumentConfigure, decoded types.ElementImage, imageRect types.Rect, imageFrame types.Rect) {
 	file, _ := os.Open(decoded.Path)
 	img, imgType, _ := image.Decode(file)
 	_ = file.Close()
@@ -654,6 +654,29 @@ func (p *PDF) drawImage(documentConfigure types.DocumentConfigure, decoded types
 	// DRAW IMAGE
 	var gpRect = gopdf.Rect{W: imageRect.Width(), H: imageRect.Height()}
 	_ = p.gp.ImageByHolder(imageHoloder, imageRect.MinX(), imageRect.MinY(), &gpRect)
+
+	// BORDER
+	if decoded.Border.Width != UnsetWidth {
+		p.gp.SetLineWidth(decoded.Border.Width)
+		p.gp.SetStrokeColor(decoded.Border.Color.R, decoded.Border.Color.G, decoded.Border.Color.B)
+		p.gp.RectFromUpperLeft(imageFrame.MinX(), imageFrame.MinY(), imageFrame.Width(), imageFrame.Height())
+	} else if decoded.BorderTop.Width != UnsetWidth {
+		p.gp.SetLineWidth(decoded.BorderTop.Width)
+		p.gp.SetStrokeColor(decoded.BorderTop.Color.R, decoded.BorderTop.Color.G, decoded.BorderTop.Color.B)
+		p.gp.Line(imageFrame.MinX(), imageFrame.MinY(), imageFrame.MinX()+imageFrame.Width(), imageFrame.MinY())
+	} else if decoded.BorderRight.Width != UnsetWidth {
+		p.gp.SetLineWidth(decoded.BorderRight.Width)
+		p.gp.SetStrokeColor(decoded.BorderRight.Color.R, decoded.BorderRight.Color.G, decoded.BorderRight.Color.B)
+		p.gp.Line(imageFrame.MinX()+imageFrame.Width(), imageFrame.MinY(), imageFrame.MinX()+imageFrame.Width(), imageFrame.MinY()+imageFrame.Height())
+	} else if decoded.BorderBottom.Width != UnsetWidth {
+		p.gp.SetLineWidth(decoded.BorderBottom.Width)
+		p.gp.SetStrokeColor(decoded.BorderBottom.Color.R, decoded.BorderBottom.Color.G, decoded.BorderBottom.Color.B)
+		p.gp.Line(imageFrame.MinX()+imageFrame.Width(), imageFrame.MinY()+imageFrame.Height(), imageFrame.MinX(), imageFrame.MinY()+imageFrame.Height())
+	} else if decoded.BorderLeft.Width != UnsetWidth {
+		p.gp.SetLineWidth(decoded.BorderLeft.Width)
+		p.gp.SetStrokeColor(decoded.BorderLeft.Color.R, decoded.BorderLeft.Color.G, decoded.BorderLeft.Color.B)
+		p.gp.Line(imageFrame.MinX(), imageFrame.MinY()+imageFrame.Height(), imageFrame.MinX(), imageFrame.MinY())
+	}
 }
 
 // ヘッダー

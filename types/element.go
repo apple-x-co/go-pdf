@@ -29,10 +29,15 @@ type ElementText struct {
 }
 
 type ElementImage struct {
-	Path       string    `json:"path"`
-	Size       Size      `json:"size"`
-	Origin     Origin    `json:"origin"`
-	Resize     bool      `json:"resize,string"`
-	Resolution uint      `json:"resolution"`
-	Margin     EdgeInset `json:"margin"`
+	Path         string    `json:"path"`
+	Size         Size      `json:"size"`
+	Origin       Origin    `json:"origin"`
+	Resize       bool      `json:"resize,string"`
+	Resolution   uint      `json:"resolution"`
+	Margin       EdgeInset `json:"margin"`
+	Border       Border    `json:"border"`
+	BorderTop    Border    `json:"border_top"`
+	BorderRight  Border    `json:"border_right"`
+	BorderBottom Border    `json:"border_bottom"`
+	BorderLeft   Border    `json:"border_left"`
 }
