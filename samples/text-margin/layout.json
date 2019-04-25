@@ -1,0 +1,47 @@
+{
+  "width": 595,
+  "height": 842,
+  "pages": [
+    {
+      "liner_layout": {
+        "orientation": "horizontal",
+        "elements": [
+          {
+            "type": "text",
+            "attributes": {
+              "text": "NO MARGIN",
+              "border": {
+                "width": 1,
+                "color": {
+                  "r": 175,
+                  "g": 223,
+                  "b": 228
+                }
+              }
+            }
+          },
+          {
+            "type": "text",
+            "attributes": {
+              "text": "MARGIN",
+              "margin": {
+                "top": 10,
+                "right": 20,
+                "bottom": 10,
+                "left": 20
+              },
+              "border": {
+                "width": 1,
+                "color": {
+                  "r": 175,
+                  "g": 223,
+                  "b": 228
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

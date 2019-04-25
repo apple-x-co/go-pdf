@@ -12,25 +12,27 @@ type ElementLineBreak struct {
 }
 
 type ElementText struct {
-	Text            string `json:"text"`
-	Color           Color  `json:"color"`
-	Size            Size   `json:"size"`
-	Origin          Origin `json:"origin"`
-	Border          Border `json:"border"`
-	BorderTop       Border `json:"border_top"`
-	BorderRight     Border `json:"border_right"`
-	BorderBottom    Border `json:"border_bottom"`
-	BorderLeft      Border `json:"border_left"`
-	BackgroundColor Color  `json:"background_color"`
-	Align           Align  `json:"align"`
-	Valign          Valign `json:"valign"`
-	Wrap            bool   `json:"wrap,string"`
+	Text            string    `json:"text"`
+	Color           Color     `json:"color"`
+	Size            Size      `json:"size"`
+	Origin          Origin    `json:"origin"`
+	Border          Border    `json:"border"`
+	BorderTop       Border    `json:"border_top"`
+	BorderRight     Border    `json:"border_right"`
+	BorderBottom    Border    `json:"border_bottom"`
+	BorderLeft      Border    `json:"border_left"`
+	BackgroundColor Color     `json:"background_color"`
+	Align           Align     `json:"align"`
+	Valign          Valign    `json:"valign"`
+	Wrap            bool      `json:"wrap,string"`
+	Margin          EdgeInset `json:"margin"`
 }
 
 type ElementImage struct {
-	Path       string `json:"path"`
-	Size       Size   `json:"size"`
-	Origin     Origin `json:"origin"`
-	Resize     bool   `json:"resize,string"`
-	Resolution uint   `json:"resolution"`
+	Path       string    `json:"path"`
+	Size       Size      `json:"size"`
+	Origin     Origin    `json:"origin"`
+	Resize     bool      `json:"resize,string"`
+	Resolution uint      `json:"resolution"`
+	Margin     EdgeInset `json:"margin"`
 }

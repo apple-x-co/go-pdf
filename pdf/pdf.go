@@ -176,10 +176,16 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 
 				// FIX POSITION
 				if decoded.Origin.X != UnsetX && decoded.Origin.Y != UnsetY {
-					textRect := types.Rect{Origin: types.Origin{X: decoded.Origin.X, Y: decoded.Origin.Y}, Size: measureSize}
+					textFrame := types.Rect{Origin: types.Origin{X: decoded.Origin.X, Y: decoded.Origin.Y}, Size: measureSize}
+					textRect := textFrame.Inset(types.EdgeInset{
+						Top:    decoded.Margin.Top * -1,
+						Right:  decoded.Margin.Right * -1,
+						Bottom: decoded.Margin.Bottom * -1,
+						Left:   decoded.Margin.Left * -1,
+					})
 					p.gp.SetX(textRect.MinX())
 					p.gp.SetY(textRect.MinY())
-					p.drawText(documentConfigure, decoded, textRect)
+					p.drawText(documentConfigure, decoded, textRect, textFrame)
 					continue
 				}
 
@@ -212,16 +218,17 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 				}
 
 				// DRAWABLE RECT
-				textRect := types.Rect{Origin: types.Origin{X: lineWrapRect.MaxX(), Y: lineWrapRect.MinY()}, Size: measureSize}
+				textFrame := types.Rect{Origin: types.Origin{X: lineWrapRect.MaxX(), Y: lineWrapRect.MinY()}, Size: measureSize}
+				textRect := textFrame.Inset(decoded.Margin)
 				p.gp.SetX(textRect.MinX())
 				p.gp.SetY(textRect.MinY())
 
 				// DRAW
 				//fmt.Printf("textRect: %v\n", textRect)
 				//fmt.Printf("lineWrapRect: %v\n", lineWrapRect)
-				p.drawText(documentConfigure, decoded, textRect)
+				p.drawText(documentConfigure, decoded, textRect, textFrame)
 
-				lineWrapRect = lineWrapRect.Merge(textRect)
+				lineWrapRect = lineWrapRect.Merge(textFrame)
 
 			} else if element.Type.IsImage() {
 				var decoded = types.ElementImage{
@@ -239,9 +246,10 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 				// FIX POSITION
 				if decoded.Origin.X != UnsetX && decoded.Origin.Y != UnsetY {
 					imageRect := types.Rect{Origin: types.Origin{X: decoded.Origin.X, Y: decoded.Origin.Y}, Size: measureSize}
-					p.gp.SetX(imageRect.MinX())
-					p.gp.SetY(imageRect.MinY())
-					p.drawImage(documentConfigure, decoded, imageRect)
+					imageFrame := imageRect.Inset(decoded.Margin)
+					p.gp.SetX(imageFrame.MinX())
+					p.gp.SetY(imageFrame.MinY())
+					p.drawImage(documentConfigure, decoded, imageFrame)
 					continue
 				}
 
@@ -275,13 +283,18 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 
 				// DRAWABLE RECT
 				imageRect := types.Rect{Origin: types.Origin{X: lineWrapRect.MaxX(), Y: lineWrapRect.MinY()}, Size: measureSize}
-				p.gp.SetX(imageRect.MinX())
-				p.gp.SetY(imageRect.MinY())
+				imageFrame := imageRect.Inset(decoded.Margin)
+				p.gp.SetX(imageFrame.MinX())
+				p.gp.SetY(imageFrame.MinY())
 
 				// DRAW
 				//fmt.Printf("textRect: %v\n", imageRect)
 				//fmt.Printf("lineWrapRect: %v\n", lineWrapRect)
-				p.drawImage(documentConfigure, decoded, imageRect)
+				// > debug
+				//p.gp.SetStrokeColor(255, 255, 0)
+				//p.gp.RectFromUpperLeft(imageRect.Origin.X, imageRect.Origin.Y, imageRect.Size.Width, imageRect.Size.Height)
+				// < debug
+				p.drawImage(documentConfigure, decoded, imageFrame)
 
 				lineWrapRect = lineWrapRect.Merge(imageRect)
 			}
@@ -358,10 +371,11 @@ func (p *PDF) drawHeaderOrFooter(documentConfigure types.DocumentConfigure, line
 
 				// FIX POSITION
 				if decoded.Origin.X != UnsetX && decoded.Origin.Y != UnsetY {
-					textRect := types.Rect{Origin: types.Origin{X: decoded.Origin.X, Y: decoded.Origin.Y}, Size: measureSize}
+					textFrame := types.Rect{Origin: types.Origin{X: decoded.Origin.X, Y: decoded.Origin.Y}, Size: measureSize}
+					textRect := textFrame.Inset(decoded.Margin)
 					p.gp.SetX(textRect.MinX())
 					p.gp.SetY(textRect.MinY())
-					p.drawText(documentConfigure, decoded, textRect)
+					p.drawText(documentConfigure, decoded, textRect, textFrame)
 					continue
 				}
 
@@ -377,14 +391,15 @@ func (p *PDF) drawHeaderOrFooter(documentConfigure types.DocumentConfigure, line
 				}
 
 				// DRAWABLE RECT
-				textRect := types.Rect{Origin: types.Origin{X: lineWrapRect.MaxX(), Y: lineWrapRect.MinY()}, Size: measureSize}
+				textFrame := types.Rect{Origin: types.Origin{X: lineWrapRect.MaxX(), Y: lineWrapRect.MinY()}, Size: measureSize}
+				textRect := textFrame.Inset(decoded.Margin)
 				p.gp.SetX(textRect.MinX())
 				p.gp.SetY(textRect.MinY())
 
 				// DRAW
-				p.drawText(documentConfigure, decoded, textRect)
+				p.drawText(documentConfigure, decoded, textRect, textFrame)
 
-				lineWrapRect = lineWrapRect.Merge(textRect)
+				lineWrapRect = lineWrapRect.Merge(textFrame)
 
 			} else if element.Type.IsImage() {
 				var decoded = types.ElementImage{
@@ -399,9 +414,10 @@ func (p *PDF) drawHeaderOrFooter(documentConfigure types.DocumentConfigure, line
 				// FIX POSITION
 				if decoded.Origin.X != UnsetX && decoded.Origin.Y != UnsetY {
 					imageRect := types.Rect{Origin: types.Origin{X: decoded.Origin.X, Y: decoded.Origin.Y}, Size: measureSize}
-					p.gp.SetX(imageRect.MinX())
-					p.gp.SetY(imageRect.MinY())
-					p.drawImage(documentConfigure, decoded, imageRect)
+					imageFrame := imageRect.Inset(decoded.Margin)
+					p.gp.SetX(imageFrame.MinX())
+					p.gp.SetY(imageFrame.MinY())
+					p.drawImage(documentConfigure, decoded, imageFrame)
 					continue
 				}
 
@@ -417,11 +433,12 @@ func (p *PDF) drawHeaderOrFooter(documentConfigure types.DocumentConfigure, line
 
 				// DRAWABLE RECT
 				imageRect := types.Rect{Origin: types.Origin{X: lineWrapRect.MaxX(), Y: lineWrapRect.MinY()}, Size: measureSize}
-				p.gp.SetX(imageRect.MinX())
-				p.gp.SetY(imageRect.MinY())
+				imageFrame := imageRect.Inset(decoded.Margin)
+				p.gp.SetX(imageFrame.MinX())
+				p.gp.SetY(imageFrame.MinY())
 
 				// DRAW
-				p.drawImage(documentConfigure, decoded, imageRect)
+				p.drawImage(documentConfigure, decoded, imageFrame)
 
 				lineWrapRect = lineWrapRect.Merge(imageRect)
 			}
@@ -456,6 +473,9 @@ func (p *PDF) measureText(documentConfigure types.DocumentConfigure, decoded typ
 			measureSize.Height = decoded.Size.Height
 		}
 
+		measureSize.Width += decoded.Margin.Horizontal()
+		measureSize.Height += decoded.Margin.Vertical()
+
 		return measureSize
 	}
 
@@ -472,6 +492,9 @@ func (p *PDF) measureText(documentConfigure types.DocumentConfigure, decoded typ
 	} else {
 		measureSize = types.Size{Width: measureWidth, Height: measureHeight}
 	}
+
+	measureSize.Width += decoded.Margin.Horizontal()
+	measureSize.Height += decoded.Margin.Vertical()
 
 	return measureSize
 }
@@ -502,40 +525,43 @@ func (p *PDF) measureImage(documentConfigure types.DocumentConfigure, decoded ty
 		}
 	}
 
+	measureSize.Width += decoded.Margin.Horizontal()
+	measureSize.Height += decoded.Margin.Vertical()
+
 	return measureSize
 }
 
 // 描画：テキスト
-func (p *PDF) drawText(documentConfigure types.DocumentConfigure, decoded types.ElementText, textRect types.Rect) {
+func (p *PDF) drawText(documentConfigure types.DocumentConfigure, decoded types.ElementText, textRect types.Rect, textFrame types.Rect) {
 	// BORDER, FILL
 	if decoded.Border.Width != UnsetWidth {
 		p.gp.SetLineWidth(decoded.Border.Width)
 		p.gp.SetStrokeColor(decoded.Border.Color.R, decoded.Border.Color.G, decoded.Border.Color.B)
 		if decoded.BackgroundColor.R != DefaultColorR || decoded.BackgroundColor.G != DefaultColorG || decoded.BackgroundColor.B != DefaultColorB {
 			p.gp.SetFillColor(decoded.BackgroundColor.R, decoded.BackgroundColor.G, decoded.BackgroundColor.B)
-			p.gp.RectFromUpperLeftWithStyle(textRect.MinX(), textRect.MinY(), textRect.Width(), textRect.Height(), "FD")
+			p.gp.RectFromUpperLeftWithStyle(textFrame.MinX(), textFrame.MinY(), textFrame.Width(), textFrame.Height(), "FD")
 		} else {
-			p.gp.RectFromUpperLeft(textRect.MinX(), textRect.MinY(), textRect.Width(), textRect.Height())
+			p.gp.RectFromUpperLeft(textFrame.MinX(), textFrame.MinY(), textFrame.Width(), textFrame.Height())
 		}
 	} else if decoded.BorderTop.Width != UnsetWidth {
 		p.gp.SetLineWidth(decoded.BorderTop.Width)
 		p.gp.SetStrokeColor(decoded.BorderTop.Color.R, decoded.BorderTop.Color.G, decoded.BorderTop.Color.B)
-		p.gp.Line(textRect.MinX(), textRect.MinY(), textRect.MinX()+textRect.Width(), textRect.MinY())
+		p.gp.Line(textFrame.MinX(), textFrame.MinY(), textFrame.MinX()+textFrame.Width(), textFrame.MinY())
 	} else if decoded.BorderRight.Width != UnsetWidth {
 		p.gp.SetLineWidth(decoded.BorderRight.Width)
 		p.gp.SetStrokeColor(decoded.BorderRight.Color.R, decoded.BorderRight.Color.G, decoded.BorderRight.Color.B)
-		p.gp.Line(textRect.MinX()+textRect.Width(), textRect.MinY(), textRect.MinX()+textRect.Width(), textRect.MinY()+textRect.Height())
+		p.gp.Line(textFrame.MinX()+textFrame.Width(), textFrame.MinY(), textFrame.MinX()+textFrame.Width(), textFrame.MinY()+textFrame.Height())
 	} else if decoded.BorderBottom.Width != UnsetWidth {
 		p.gp.SetLineWidth(decoded.BorderBottom.Width)
 		p.gp.SetStrokeColor(decoded.BorderBottom.Color.R, decoded.BorderBottom.Color.G, decoded.BorderBottom.Color.B)
-		p.gp.Line(textRect.MinX()+textRect.Width(), textRect.MinY()+textRect.Height(), textRect.MinX(), textRect.MinY()+textRect.Height())
+		p.gp.Line(textFrame.MinX()+textFrame.Width(), textFrame.MinY()+textFrame.Height(), textFrame.MinX(), textFrame.MinY()+textFrame.Height())
 	} else if decoded.BorderLeft.Width != UnsetWidth {
 		p.gp.SetLineWidth(decoded.BorderLeft.Width)
 		p.gp.SetStrokeColor(decoded.BorderLeft.Color.R, decoded.BorderLeft.Color.G, decoded.BorderLeft.Color.B)
-		p.gp.Line(textRect.MinX(), textRect.MinY()+textRect.Height(), textRect.MinX(), textRect.MinY())
+		p.gp.Line(textFrame.MinX(), textFrame.MinY()+textFrame.Height(), textFrame.MinX(), textFrame.MinY())
 	} else if decoded.BackgroundColor.R != DefaultColorR || decoded.BackgroundColor.G != DefaultColorG || decoded.BackgroundColor.B != DefaultColorB {
 		p.gp.SetFillColor(decoded.BackgroundColor.R, decoded.BackgroundColor.G, decoded.BackgroundColor.B)
-		p.gp.RectFromUpperLeftWithStyle(textRect.MinX(), textRect.MinY(), textRect.Width(), textRect.Height(), "F")
+		p.gp.RectFromUpperLeftWithStyle(textFrame.MinX(), textFrame.MinY(), textFrame.Width(), textFrame.Height(), "F")
 	}
 
 	var gpRect = gopdf.Rect{W: textRect.Width(), H: textRect.Height()}
