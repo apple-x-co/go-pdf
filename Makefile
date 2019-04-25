@@ -37,3 +37,25 @@ clean:
 ci-test:
 	if [ ! -d work ]; then mkdir work; fi
 	./bin/$(BIN)-dev-mac --in layout.json --out work/output.pdf --ttf fonts/TakaoPGothic.ttf
+
+.PHONY: samples
+samples:
+	./bin/$(BIN)-dev-mac --in samples/commpress-level/layout.json --out samples/commpress-level/output.pdf --ttf fonts/TakaoPGothic.ttf
+	./bin/$(BIN)-dev-mac --in samples/header-footer/layout.json --out samples/header-footer/output.pdf --ttf fonts/TakaoPGothic.ttf
+	./bin/$(BIN)-dev-mac --in samples/image/layout.json --out samples/image/output.pdf --ttf fonts/TakaoPGothic.ttf
+	./bin/$(BIN)-dev-mac --in samples/image-border/layout.json --out samples/image-border/output.pdf --ttf fonts/TakaoPGothic.ttf
+	./bin/$(BIN)-dev-mac --in samples/image-margin/layout.json --out samples/image-margin/output.pdf --ttf fonts/TakaoPGothic.ttf
+	./bin/$(BIN)-dev-mac --in samples/image-origin/layout.json --out samples/image-origin/output.pdf --ttf fonts/TakaoPGothic.ttf
+	./bin/$(BIN)-dev-mac --in samples/image-resize/layout.json --out samples/image-resize/output.pdf --ttf fonts/TakaoPGothic.ttf
+	./bin/$(BIN)-dev-mac --in samples/image-size/layout.json --out samples/image-size/output.pdf --ttf fonts/TakaoPGothic.ttf
+	./bin/$(BIN)-dev-mac --in samples/layout-orientation/layout.json --out samples/layout-orientation/output.pdf --ttf fonts/TakaoPGothic.ttf
+	./bin/$(BIN)-dev-mac --in samples/password-protect/layout.json --out samples/password-protect/output.pdf --ttf fonts/TakaoPGothic.ttf
+	./bin/$(BIN)-dev-mac --in samples/text/layout.json --out samples/text/output.pdf --ttf fonts/TakaoPGothic.ttf
+	./bin/$(BIN)-dev-mac --in samples/text-align/layout.json --out samples/text-align/output.pdf --ttf fonts/TakaoPGothic.ttf
+	./bin/$(BIN)-dev-mac --in samples/text-backgroundcolor/layout.json --out samples/text-backgroundcolor/output.pdf --ttf fonts/TakaoPGothic.ttf
+	./bin/$(BIN)-dev-mac --in samples/text-border/layout.json --out samples/text-border/output.pdf --ttf fonts/TakaoPGothic.ttf
+	./bin/$(BIN)-dev-mac --in samples/text-color/layout.json --out samples/text-color/output.pdf --ttf fonts/TakaoPGothic.ttf
+	./bin/$(BIN)-dev-mac --in samples/text-margin/layout.json --out samples/text-margin/output.pdf --ttf fonts/TakaoPGothic.ttf
+	./bin/$(BIN)-dev-mac --in samples/text-origin/layout.json --out samples/text-origin/output.pdf --ttf fonts/TakaoPGothic.ttf
+	./bin/$(BIN)-dev-mac --in samples/text-size/layout.json --out samples/text-size/output.pdf --ttf fonts/TakaoPGothic.ttf
+	./bin/$(BIN)-dev-mac --in samples/text-wrap/layout.json --out samples/text-wrap/output.pdf --ttf fonts/TakaoPGothic.ttf
