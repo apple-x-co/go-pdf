@@ -177,12 +177,7 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 				// FIX POSITION
 				if decoded.Origin.X != UnsetX && decoded.Origin.Y != UnsetY {
 					textFrame := types.Rect{Origin: types.Origin{X: decoded.Origin.X, Y: decoded.Origin.Y}, Size: measureSize}
-					textRect := textFrame.Inset(types.EdgeInset{
-						Top:    decoded.Margin.Top * -1,
-						Right:  decoded.Margin.Right * -1,
-						Bottom: decoded.Margin.Bottom * -1,
-						Left:   decoded.Margin.Left * -1,
-					})
+					textRect := textFrame.Inset(decoded.Inset)
 					p.gp.SetX(textRect.MinX())
 					p.gp.SetY(textRect.MinY())
 					p.drawText(documentConfigure, decoded, textRect, textFrame)
@@ -219,7 +214,7 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 
 				// DRAWABLE RECT
 				textFrame := types.Rect{Origin: types.Origin{X: lineWrapRect.MaxX(), Y: lineWrapRect.MinY()}, Size: measureSize}
-				textRect := textFrame.Inset(decoded.Margin)
+				textRect := textFrame.Inset(decoded.Inset)
 				p.gp.SetX(textRect.MinX())
 				p.gp.SetY(textRect.MinY())
 
@@ -246,7 +241,7 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 				// FIX POSITION
 				if decoded.Origin.X != UnsetX && decoded.Origin.Y != UnsetY {
 					imageFrame := types.Rect{Origin: types.Origin{X: decoded.Origin.X, Y: decoded.Origin.Y}, Size: measureSize}
-					imageRect := imageFrame.Inset(decoded.Margin)
+					imageRect := imageFrame.Inset(decoded.Inset)
 					p.gp.SetX(imageRect.MinX())
 					p.gp.SetY(imageRect.MinY())
 					p.drawImage(documentConfigure, decoded, imageRect, imageFrame)
@@ -283,7 +278,7 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 
 				// DRAWABLE RECT
 				imageFrame := types.Rect{Origin: types.Origin{X: lineWrapRect.MaxX(), Y: lineWrapRect.MinY()}, Size: measureSize}
-				imageRect := imageFrame.Inset(decoded.Margin)
+				imageRect := imageFrame.Inset(decoded.Inset)
 				p.gp.SetX(imageRect.MinX())
 				p.gp.SetY(imageRect.MinY())
 
@@ -372,7 +367,7 @@ func (p *PDF) drawHeaderOrFooter(documentConfigure types.DocumentConfigure, line
 				// FIX POSITION
 				if decoded.Origin.X != UnsetX && decoded.Origin.Y != UnsetY {
 					textFrame := types.Rect{Origin: types.Origin{X: decoded.Origin.X, Y: decoded.Origin.Y}, Size: measureSize}
-					textRect := textFrame.Inset(decoded.Margin)
+					textRect := textFrame.Inset(decoded.Inset)
 					p.gp.SetX(textRect.MinX())
 					p.gp.SetY(textRect.MinY())
 					p.drawText(documentConfigure, decoded, textRect, textFrame)
@@ -392,7 +387,7 @@ func (p *PDF) drawHeaderOrFooter(documentConfigure types.DocumentConfigure, line
 
 				// DRAWABLE RECT
 				textFrame := types.Rect{Origin: types.Origin{X: lineWrapRect.MaxX(), Y: lineWrapRect.MinY()}, Size: measureSize}
-				textRect := textFrame.Inset(decoded.Margin)
+				textRect := textFrame.Inset(decoded.Inset)
 				p.gp.SetX(textRect.MinX())
 				p.gp.SetY(textRect.MinY())
 
@@ -414,7 +409,7 @@ func (p *PDF) drawHeaderOrFooter(documentConfigure types.DocumentConfigure, line
 				// FIX POSITION
 				if decoded.Origin.X != UnsetX && decoded.Origin.Y != UnsetY {
 					imageFrame := types.Rect{Origin: types.Origin{X: decoded.Origin.X, Y: decoded.Origin.Y}, Size: measureSize}
-					imageRect := imageFrame.Inset(decoded.Margin)
+					imageRect := imageFrame.Inset(decoded.Inset)
 					p.gp.SetX(imageRect.MinX())
 					p.gp.SetY(imageRect.MinY())
 					p.drawImage(documentConfigure, decoded, imageRect, imageFrame)
@@ -433,7 +428,7 @@ func (p *PDF) drawHeaderOrFooter(documentConfigure types.DocumentConfigure, line
 
 				// DRAWABLE RECT
 				imageFrame := types.Rect{Origin: types.Origin{X: lineWrapRect.MaxX(), Y: lineWrapRect.MinY()}, Size: measureSize}
-				imageRect := imageFrame.Inset(decoded.Margin)
+				imageRect := imageFrame.Inset(decoded.Inset)
 				p.gp.SetX(imageRect.MinX())
 				p.gp.SetY(imageRect.MinY())
 
@@ -473,8 +468,8 @@ func (p *PDF) measureText(documentConfigure types.DocumentConfigure, decoded typ
 			measureSize.Height = decoded.Size.Height
 		}
 
-		measureSize.Width += decoded.Margin.Horizontal()
-		measureSize.Height += decoded.Margin.Vertical()
+		measureSize.Width += decoded.Inset.Horizontal()
+		measureSize.Height += decoded.Inset.Vertical()
 
 		return measureSize
 	}
@@ -493,8 +488,8 @@ func (p *PDF) measureText(documentConfigure types.DocumentConfigure, decoded typ
 		measureSize = types.Size{Width: measureWidth, Height: measureHeight}
 	}
 
-	measureSize.Width += decoded.Margin.Horizontal()
-	measureSize.Height += decoded.Margin.Vertical()
+	measureSize.Width += decoded.Inset.Horizontal()
+	measureSize.Height += decoded.Inset.Vertical()
 
 	return measureSize
 }
@@ -525,8 +520,8 @@ func (p *PDF) measureImage(documentConfigure types.DocumentConfigure, decoded ty
 		}
 	}
 
-	measureSize.Width += decoded.Margin.Horizontal()
-	measureSize.Height += decoded.Margin.Vertical()
+	measureSize.Width += decoded.Inset.Horizontal()
+	measureSize.Height += decoded.Inset.Vertical()
 
 	return measureSize
 }

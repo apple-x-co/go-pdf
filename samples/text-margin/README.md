@@ -2,14 +2,14 @@
 
 ## attributes
 
-### margin
+### inset
 
 #### type
  
 EdgeInset structure
 
 ```
-"margin": {
+"inset": {
     "top": 10,
     "right": 10,
     "bottom": 10,

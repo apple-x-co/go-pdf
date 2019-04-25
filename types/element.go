@@ -25,7 +25,7 @@ type ElementText struct {
 	Align           Align     `json:"align"`
 	Valign          Valign    `json:"valign"`
 	Wrap            bool      `json:"wrap,string"`
-	Margin          EdgeInset `json:"margin"`
+	Inset           EdgeInset `json:"inset"`
 }
 
 type ElementImage struct {
@@ -34,7 +34,7 @@ type ElementImage struct {
 	Origin       Origin    `json:"origin"`
 	Resize       bool      `json:"resize,string"`
 	Resolution   uint      `json:"resolution"`
-	Margin       EdgeInset `json:"margin"`
+	Inset        EdgeInset `json:"margin"`
 	Border       Border    `json:"border"`
 	BorderTop    Border    `json:"border_top"`
 	BorderRight  Border    `json:"border_right"`

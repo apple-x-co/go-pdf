@@ -9,7 +9,7 @@
           {
             "type": "text",
             "attributes": {
-              "text": "NO MARGIN",
+              "text": "NO LAYOUT MARGIN",
               "border": {
                 "width": 1,
                 "color": {
@@ -23,8 +23,8 @@
           {
             "type": "text",
             "attributes": {
-              "text": "MARGIN",
-              "margin": {
+              "text": "LAYOUT MARGIN",
+              "inset": {
                 "top": 10,
                 "right": 20,
                 "bottom": 10,

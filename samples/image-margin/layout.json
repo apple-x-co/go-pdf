@@ -13,7 +13,7 @@
               "size": {
                 "width": 100
               },
-              "margin": {
+              "inset": {
                 "top": 10,
                 "right": 20,
                 "bottom": 10,
@@ -36,7 +36,7 @@
               "size": {
                 "width": 100
               },
-              "margin": {
+              "inset": {
                 "top": 10,
                 "right": 20,
                 "bottom": 10,
