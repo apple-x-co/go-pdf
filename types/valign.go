@@ -1,10 +1,13 @@
 package types
 
+const ValignMiddle = "middle"
+const ValignBottom = "bottom"
+
 type Valign string
 
-func (v Valign) IsMiddle() bool {
-	return v == "middle"
+func (V Valign) IsMiddle() bool {
+	return V == ValignMiddle
 }
-func (v Valign) IsBottom() bool {
-	return v == "bottom"
+func (V Valign) IsBottom() bool {
+	return V == ValignBottom
 }

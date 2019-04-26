@@ -1,10 +1,13 @@
 package types
 
+const AlignCenter = "center"
+const AlignRight = "right"
+
 type Align string
 
-func (a Align) IsCenter() bool {
-	return a == "center"
+func (A Align) IsCenter() bool {
+	return A == AlignCenter
 }
-func (a Align) IsRight() bool {
-	return a == "right"
+func (A Align) IsRight() bool {
+	return A == AlignRight
 }
