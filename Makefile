@@ -42,6 +42,7 @@ ci-test:
 samples:
 	./bin/$(BIN)-dev-mac --in samples/commpress-level/layout.json --out samples/commpress-level/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/header-footer/layout.json --out samples/header-footer/output.pdf --ttf fonts/TakaoPGothic.ttf
+	./bin/$(BIN)-dev-mac --in samples/header-footer-layoutconstant/layout.json --out samples/header-footer-layoutconstant/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/image/layout.json --out samples/image/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/image-border/layout.json --out samples/image-border/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/image-margin/layout.json --out samples/image-margin/output.pdf --ttf fonts/TakaoPGothic.ttf
