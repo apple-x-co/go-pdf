@@ -48,6 +48,7 @@ samples:
 	./bin/$(BIN)-dev-mac --in samples/image-origin/layout.json --out samples/image-origin/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/image-resize/layout.json --out samples/image-resize/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/image-size/layout.json --out samples/image-size/output.pdf --ttf fonts/TakaoPGothic.ttf
+	./bin/$(BIN)-dev-mac --in samples/layout-layoutconstant/layout.json --out samples/layout-layoutconstant/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/layout-orientation/layout.json --out samples/layout-orientation/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/password-protect/layout.json --out samples/password-protect/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/text/layout.json --out samples/text/output.pdf --ttf fonts/TakaoPGothic.ttf
@@ -55,6 +56,7 @@ samples:
 	./bin/$(BIN)-dev-mac --in samples/text-backgroundcolor/layout.json --out samples/text-backgroundcolor/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/text-border/layout.json --out samples/text-border/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/text-color/layout.json --out samples/text-color/output.pdf --ttf fonts/TakaoPGothic.ttf
+	./bin/$(BIN)-dev-mac --in samples/text-linebreak/layout.json --out samples/text-linebreak/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/text-margin/layout.json --out samples/text-margin/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/text-origin/layout.json --out samples/text-origin/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/text-size/layout.json --out samples/text-size/output.pdf --ttf fonts/TakaoPGothic.ttf

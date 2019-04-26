@@ -5,7 +5,5 @@ type LinerLayout struct {
 	LineHeight   float64       `json:"line_height"`
 	LinerLayouts []LinerLayout `json:"liner_layouts"`
 	Elements     []Element     `json:"elements"`
-	LayoutWidth  LayoutSize    `json:"layout_width"`
-	LayoutHeight LayoutSize    `json:"layout_height"`
-	LayoutWeight float64       `json:"layout_weight"`
+	Layout       Layout        `json:"layout"`
 }

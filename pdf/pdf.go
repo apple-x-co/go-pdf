@@ -113,15 +113,15 @@ func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 		p.gp.AddPage()
 
 		if p.headerRect.Size.IsSet() {
-			p.drawHeader(documentConfigure)
+			p.drawHeader(documentConfigure, p.headerRect)
 		}
 		if p.footerRect.Size.IsSet() {
-			p.drawFooter(documentConfigure)
+			p.drawFooter(documentConfigure, p.footerRect)
 		}
 
 		p.gp.SetX(p.contentRect.MinX())
 		p.gp.SetY(p.contentRect.MinY())
-		p.draw(documentConfigure, page.LinerLayout)
+		p.draw(documentConfigure, page.LinerLayout, p.contentRect)
 		//fmt.Printf("rect: %v\n", rect)
 	}
 }
@@ -135,9 +135,11 @@ func (p *PDF) Destroy() {
 }
 
 // 描画要素のループ
-func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.LinerLayout) types.Rect {
+func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.LinerLayout, parentRect types.Rect) types.Rect {
 	var wrapRect = types.Rect{Origin: types.Origin{X: p.gp.GetX(), Y: p.gp.GetY()}}
 	var lineWrapRect = types.Rect{Origin: types.Origin{X: p.gp.GetX(), Y: p.gp.GetY()}}
+	var parentLayoutSize = p.calcLayoutSize(parentRect.Size, linerLayout.Layout)
+	//fmt.Printf("parentLayoutSize: %v\n", parentLayoutSize)
 
 	if len(linerLayout.Elements) > 0 {
 
@@ -175,6 +177,17 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 
 				measureSize := p.measureText(documentConfigure, decoded)
 
+				if decoded.Layout.Width.IsMatchParent() || decoded.Layout.Height.IsMatchParent() {
+					elementLayoutSize := p.calcLayoutSize(parentLayoutSize, decoded.Layout)
+					//fmt.Printf("elementLayoutSize: %v\n", elementLayoutSize)
+					if elementLayoutSize.Width != UnsetWidth {
+						measureSize.Width = elementLayoutSize.Width
+					}
+					if elementLayoutSize.Height != UnsetHeight {
+						measureSize.Height = elementLayoutSize.Height
+					}
+				}
+
 				// FIX POSITION
 				if decoded.Origin.X != UnsetX && decoded.Origin.Y != UnsetY {
 					textFrame := types.Rect{Origin: types.Origin{X: decoded.Origin.X, Y: decoded.Origin.Y}, Size: measureSize}
@@ -203,10 +216,10 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 					p.breakPage(&lineWrapRect, &wrapRect)
 
 					if p.headerRect.Size.IsSet() {
-						p.drawHeader(documentConfigure)
+						p.drawHeader(documentConfigure, p.headerRect)
 					}
 					if p.footerRect.Size.IsSet() {
-						p.drawFooter(documentConfigure)
+						p.drawFooter(documentConfigure, p.footerRect)
 					}
 
 					p.gp.SetX(wrapRect.MinX())
@@ -267,10 +280,10 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 					p.breakPage(&lineWrapRect, &wrapRect)
 
 					if p.headerRect.Size.IsSet() {
-						p.drawHeader(documentConfigure)
+						p.drawHeader(documentConfigure, p.headerRect)
 					}
 					if p.footerRect.Size.IsSet() {
-						p.drawFooter(documentConfigure)
+						p.drawFooter(documentConfigure, p.footerRect)
 					}
 
 					p.gp.SetX(wrapRect.MinX())
@@ -307,7 +320,7 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 	}
 
 	for _, _linerLayout := range linerLayout.LinerLayouts {
-		drawnRect := p.draw(documentConfigure, _linerLayout)
+		drawnRect := p.draw(documentConfigure, _linerLayout, parentRect)
 		wrapRect = wrapRect.Merge(drawnRect)
 
 		// > debug
@@ -328,7 +341,7 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 }
 
 // 描画要素のループ（ヘッターフッター）
-func (p *PDF) drawHeaderOrFooter(documentConfigure types.DocumentConfigure, linerLayout types.LinerLayout) types.Rect {
+func (p *PDF) drawHeaderOrFooter(documentConfigure types.DocumentConfigure, linerLayout types.LinerLayout, parentRect types.Rect) types.Rect {
 	var wrapRect = types.Rect{Origin: types.Origin{X: p.gp.GetX(), Y: p.gp.GetY()}}
 	var lineWrapRect = types.Rect{Origin: types.Origin{X: p.gp.GetX(), Y: p.gp.GetY()}}
 
@@ -532,6 +545,18 @@ func (p *PDF) measureImage(documentConfigure types.DocumentConfigure, decoded ty
 	return measureSize
 }
 
+// 計算：レイアウトサイズ
+func (p *PDF) calcLayoutSize(size types.Size, layout types.Layout) types.Size {
+	var layoutSize = types.Size{Width: UnsetWidth, Height: UnsetHeight}
+	if layout.Width.IsMatchParent() {
+		layoutSize.Width = size.Width * layout.Weight
+	}
+	if layout.Height.IsMatchParent() {
+		layoutSize.Height = size.Height * layout.Weight
+	}
+	return layoutSize
+}
+
 // 描画：テキスト
 func (p *PDF) drawText(documentConfigure types.DocumentConfigure, decoded types.ElementText, textRect types.Rect, textFrame types.Rect) {
 	// BORDER, FILL
@@ -686,29 +711,29 @@ func (p *PDF) drawImage(documentConfigure types.DocumentConfigure, decoded types
 }
 
 // ヘッダー
-func (p *PDF) drawHeader(documentConfigure types.DocumentConfigure) {
-	p.gp.SetX(p.headerRect.MinX())
-	p.gp.SetY(p.headerRect.MinY())
+func (p *PDF) drawHeader(documentConfigure types.DocumentConfigure, parentRect types.Rect) {
+	p.gp.SetX(parentRect.MinX())
+	p.gp.SetY(parentRect.MinY())
 
 	// > debug
 	//p.gp.SetStrokeColor(255, 0, 0)
 	//p.gp.RectFromUpperLeft(p.headerRect.Origin.X, p.headerRect.Origin.Y, p.headerRect.Width(), p.headerRect.Height())
 	// < debug
 
-	p.drawHeaderOrFooter(documentConfigure, documentConfigure.Header.LinerLayout)
+	p.drawHeaderOrFooter(documentConfigure, documentConfigure.Header.LinerLayout, parentRect)
 }
 
 // フッター
-func (p *PDF) drawFooter(documentConfigure types.DocumentConfigure) {
-	p.gp.SetX(p.footerRect.MinX())
-	p.gp.SetY(p.footerRect.MinY())
+func (p *PDF) drawFooter(documentConfigure types.DocumentConfigure, parentRect types.Rect) {
+	p.gp.SetX(parentRect.MinX())
+	p.gp.SetY(parentRect.MinY())
 
 	// > debug
 	//p.gp.SetStrokeColor(0, 255, 0)
 	//p.gp.RectFromUpperLeft(p.footerRect.Origin.X, p.footerRect.Origin.Y, p.footerRect.Width(), p.footerRect.Height())
 	// < debug
 
-	p.drawHeaderOrFooter(documentConfigure, documentConfigure.Footer.LinerLayout)
+	p.drawHeaderOrFooter(documentConfigure, documentConfigure.Footer.LinerLayout, parentRect)
 }
 
 // 縦

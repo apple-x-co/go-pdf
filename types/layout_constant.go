@@ -3,12 +3,12 @@ package types
 const WrapContent = "wrap_content"
 const MatchParent = "match_parent"
 
-type LayoutSize string
+type LayoutConstant string
 
-func (L LayoutSize) IsWrapContent() bool {
+func (L LayoutConstant) IsWrapContent() bool {
 	return L == WrapContent || L == ""
 }
 
-func (L LayoutSize) IsMatchParent() bool {
+func (L LayoutConstant) IsMatchParent() bool {
 	return L == MatchParent
 }
