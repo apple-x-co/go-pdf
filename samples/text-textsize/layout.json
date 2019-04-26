@@ -1,0 +1,40 @@
+{
+  "width": 595,
+  "height": 842,
+  "pages": [
+    {
+      "liner_layout": {
+        "orientation": "horizontal",
+        "elements": [
+          {
+            "type": "text",
+            "attributes": {
+              "text": "size10",
+              "text_size": 10
+            }
+          },
+          {
+            "type": "text",
+            "attributes": {
+              "text": "size20",
+              "text_size": 20
+            }
+          },
+          {
+            "type": "text",
+            "attributes": {
+              "text": "size30",
+              "text_size": 30
+            }
+          },
+          {
+            "type": "text",
+            "attributes": {
+              "text": "default"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

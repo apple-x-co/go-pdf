@@ -151,6 +151,7 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 
 			} else if element.Type.IsText() {
 				var decoded = types.ElementText{
+					TextSize:        documentConfigure.TextSize,
 					Color:           types.Color{R: documentConfigure.TextColor.R, G: documentConfigure.TextColor.G, B: documentConfigure.TextColor.B},
 					BackgroundColor: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB},
 					Size:            types.Size{Width: UnsetWidth, Height: UnsetWidth},
@@ -343,6 +344,7 @@ func (p *PDF) drawHeaderOrFooter(documentConfigure types.DocumentConfigure, line
 
 			} else if element.Type.IsText() {
 				var decoded = types.ElementText{
+					TextSize:        documentConfigure.TextSize,
 					Color:           types.Color{R: documentConfigure.TextColor.R, G: documentConfigure.TextColor.G, B: documentConfigure.TextColor.B},
 					BackgroundColor: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB},
 					Size:            types.Size{Width: UnsetWidth, Height: UnsetWidth},
@@ -448,6 +450,10 @@ func (p *PDF) drawHeaderOrFooter(documentConfigure types.DocumentConfigure, line
 
 // 計算：テキストのサイズ
 func (p *PDF) measureText(documentConfigure types.DocumentConfigure, decoded types.ElementText) types.Size {
+	if err := p.gp.SetFont("default", "", decoded.TextSize); err != nil {
+		log.Print(err.Error())
+	}
+
 	if p.isMultiLineText(decoded.Text) {
 		measureSize := types.Size{}
 		measureHeight := documentConfigure.FontHeight() * (float64(documentConfigure.TextSize) / 1000.0)
@@ -587,6 +593,11 @@ func (p *PDF) drawText(documentConfigure types.DocumentConfigure, decoded types.
 		option.Align = option.Align | gopdf.Bottom
 	} else {
 		option.Align = option.Align | gopdf.Top
+	}
+
+	// TEXT SIZE
+	if err := p.gp.SetFont("default", "", decoded.TextSize); err != nil {
+		log.Print(err.Error())
 	}
 
 	// TEXT COLOR

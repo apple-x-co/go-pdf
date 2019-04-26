@@ -13,6 +13,7 @@ type ElementLineBreak struct {
 
 type ElementText struct {
 	Text            string    `json:"text"`
+	TextSize        int       `json:"text_size"`
 	Color           Color     `json:"color"`
 	Size            Size      `json:"size"`
 	Origin          Origin    `json:"origin"`
@@ -34,7 +35,7 @@ type ElementImage struct {
 	Origin       Origin    `json:"origin"`
 	Resize       bool      `json:"resize,string"`
 	Resolution   uint      `json:"resolution"`
-	Inset        EdgeInset `json:"margin"`
+	Inset        EdgeInset `json:"inset"`
 	Border       Border    `json:"border"`
 	BorderTop    Border    `json:"border_top"`
 	BorderRight  Border    `json:"border_right"`

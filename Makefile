@@ -58,4 +58,5 @@ samples:
 	./bin/$(BIN)-dev-mac --in samples/text-margin/layout.json --out samples/text-margin/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/text-origin/layout.json --out samples/text-origin/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/text-size/layout.json --out samples/text-size/output.pdf --ttf fonts/TakaoPGothic.ttf
+	./bin/$(BIN)-dev-mac --in samples/text-textsize/layout.json --out samples/text-textsize/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/text-wrap/layout.json --out samples/text-wrap/output.pdf --ttf fonts/TakaoPGothic.ttf

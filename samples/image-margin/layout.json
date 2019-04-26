@@ -5,52 +5,169 @@
     {
       "liner_layout": {
         "orientation": "horizontal",
-        "elements": [
+        "liner_layouts": [
           {
-            "type": "image",
-            "attributes": {
-              "path": "work/sample1.jpg",
-              "size": {
-                "width": 100
+            "orientation": "vertical",
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "INSET - TOP",
+                  "text_size": 8
+                }
               },
-              "inset": {
-                "top": 10,
-                "right": 20,
-                "bottom": 10,
-                "left": 20
-              },
-              "border": {
-                "width": 1,
-                "color": {
-                  "r": 175,
-                  "g": 223,
-                  "b": 228
+              {
+                "type": "image",
+                "attributes": {
+                  "path": "work/sample1.jpg",
+                  "size": {
+                    "width": 100
+                  },
+                  "inset": {
+                    "top": 10
+                  },
+                  "border": {
+                    "width": 1,
+                    "color": {
+                      "r": 175,
+                      "g": 223,
+                      "b": 228
+                    }
+                  }
                 }
               }
-            }
+            ]
           },
           {
-            "type": "image",
-            "attributes": {
-              "path": "work/sample2.jpg",
-              "size": {
-                "width": 100
+            "orientation": "vertical",
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "INSET - RIGHT",
+                  "text_size": 8
+                }
               },
-              "inset": {
-                "top": 10,
-                "right": 20,
-                "bottom": 10,
-                "left": 20
-              },
-              "border": {
-                "width": 1,
-                "color": {
-                  "r": 175,
-                  "g": 223,
-                  "b": 228
+              {
+                "type": "image",
+                "attributes": {
+                  "path": "work/sample1.jpg",
+                  "size": {
+                    "width": 100
+                  },
+                  "inset": {
+                    "right": 10
+                  },
+                  "border": {
+                    "width": 1,
+                    "color": {
+                      "r": 175,
+                      "g": 223,
+                      "b": 228
+                    }
+                  }
                 }
               }
-            }
+            ]
+          },
+          {
+            "orientation": "vertical",
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "INSET - BOTTOM",
+                  "text_size": 8
+                }
+              },
+              {
+                "type": "image",
+                "attributes": {
+                  "path": "work/sample1.jpg",
+                  "size": {
+                    "width": 100
+                  },
+                  "inset": {
+                    "bottom": 10
+                  },
+                  "border": {
+                    "width": 1,
+                    "color": {
+                      "r": 175,
+                      "g": 223,
+                      "b": 228
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "vertical",
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "INSET - LEFT",
+                  "text_size": 8
+                }
+              },
+              {
+                "type": "image",
+                "attributes": {
+                  "path": "work/sample1.jpg",
+                  "size": {
+                    "width": 100
+                  },
+                  "inset": {
+                    "left": 10
+                  },
+                  "border": {
+                    "width": 1,
+                    "color": {
+                      "r": 175,
+                      "g": 223,
+                      "b": 228
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "vertical",
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "INSET - ALL",
+                  "text_size": 8
+                }
+              },
+              {
+                "type": "image",
+                "attributes": {
+                  "path": "work/sample1.jpg",
+                  "size": {
+                    "width": 100
+                  },
+                  "inset": {
+                    "top": 10,
+                    "right": 10,
+                    "bottom": 10,
+                    "left": 10
+                  },
+                  "border": {
+                    "width": 1,
+                    "color": {
+                      "r": 175,
+                      "g": 223,
+                      "b": 228
+                    }
+                  }
+                }
+              }
+            ]
           }
         ]
       }
