@@ -1,6 +1,6 @@
-# Page element
+# LinerLayout element
 
-## attributes
+## properties
 
 ### orientation
 
