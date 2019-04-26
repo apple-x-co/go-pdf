@@ -1,10 +1,13 @@
 package types
 
+const OrientationHorizontal = "horizontal"
+const OrientationVertical = "vertical"
+
 type Orientation string
 
-func (O Orientation) IsVertical() bool {
-	return O == "vertical"
-}
 func (O Orientation) IsHorizontal() bool {
-	return O == "horizontal"
+	return O == OrientationHorizontal || O == ""
+}
+func (O Orientation) IsVertical() bool {
+	return O == OrientationVertical
 }
