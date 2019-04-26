@@ -113,6 +113,7 @@ func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 		p.gp.AddPage()
 
 		if p.headerRect.Size.IsSet() {
+			//fmt.Printf("%v\n", p.headerRect)
 			p.drawHeader(documentConfigure, p.headerRect)
 		}
 		if p.footerRect.Size.IsSet() {
@@ -344,6 +345,7 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 func (p *PDF) drawHeaderOrFooter(documentConfigure types.DocumentConfigure, linerLayout types.LinerLayout, parentRect types.Rect) types.Rect {
 	var wrapRect = types.Rect{Origin: types.Origin{X: p.gp.GetX(), Y: p.gp.GetY()}}
 	var lineWrapRect = types.Rect{Origin: types.Origin{X: p.gp.GetX(), Y: p.gp.GetY()}}
+	var parentLayoutSize = p.calcLayoutSize(parentRect.Size, linerLayout.Layout)
 
 	if len(linerLayout.Elements) > 0 {
 
@@ -378,6 +380,17 @@ func (p *PDF) drawHeaderOrFooter(documentConfigure types.DocumentConfigure, line
 				}
 
 				measureSize := p.measureText(documentConfigure, decoded)
+
+				if decoded.Layout.Width.IsMatchParent() || decoded.Layout.Height.IsMatchParent() {
+					elementLayoutSize := p.calcLayoutSize(parentLayoutSize, decoded.Layout)
+					//fmt.Printf("elementLayoutSize: %v\n", elementLayoutSize)
+					if elementLayoutSize.Width != UnsetWidth {
+						measureSize.Width = elementLayoutSize.Width
+					}
+					if elementLayoutSize.Height != UnsetHeight {
+						measureSize.Height = elementLayoutSize.Height
+					}
+				}
 
 				// FIX POSITION
 				if decoded.Origin.X != UnsetX && decoded.Origin.Y != UnsetY {
