@@ -11,6 +11,6 @@ layout structure
 ```
 "layout": {
     "width": "match_parent",
-    "weight": 1
+    "ratio": 1
 }
 ```

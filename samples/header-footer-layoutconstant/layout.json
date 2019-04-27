@@ -11,7 +11,7 @@
       "layout": {
         "width": "match_parent",
         "height": "match_parent",
-        "weight": 1
+        "ratio": 1
       },
       "elements": [
         {
@@ -21,7 +21,7 @@
             "layout": {
               "width": "match_parent",
               "height": "match_parent",
-              "weight": 1
+              "ratio": 1
             },
             "border": {
               "width": 1,
@@ -46,7 +46,7 @@
       "layout": {
         "width": "match_parent",
         "height": "match_parent",
-        "weight": 1
+        "ratio": 1
       },
       "elements": [
         {
@@ -56,7 +56,7 @@
             "layout": {
               "width": "match_parent",
               "height": "match_parent",
-              "weight": 1
+              "ratio": 1
             },
             "border": {
               "width": 1,

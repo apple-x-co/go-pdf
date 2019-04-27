@@ -11,7 +11,7 @@
       "layout": {
         "width": "match_parent",
         "height": "match_parent",
-        "weight": 1
+        "ratio": 1
       },
       "elements": [
         {
@@ -21,7 +21,7 @@
             "text_size": 16,
             "layout": {
               "width": "match_parent",
-              "weight": 0.9
+              "ratio": 0.9
             },
             "align": "center",
             "valign": "middle"
@@ -34,7 +34,7 @@
             "text_size": 10,
             "layout": {
               "width": "match_parent",
-              "weight": 0.1
+              "ratio": 0.1
             },
             "align": "right",
             "valign": "middle"
@@ -53,7 +53,7 @@
       "layout": {
         "width": "match_parent",
         "height": "match_parent",
-        "weight": 1
+        "ratio": 1
       },
       "elements": [
         {
@@ -64,7 +64,7 @@
             "layout": {
               "width": "match_parent",
               "height": "match_parent",
-              "weight": 1
+              "ratio": 1
             },
             "align": "right",
             "valign": "bottom"

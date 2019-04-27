@@ -552,10 +552,10 @@ func (p *PDF) measureImage(documentConfigure types.DocumentConfigure, decoded ty
 func (p *PDF) calcLayoutSize(size types.Size, layout types.Layout) types.Size {
 	var layoutSize = types.Size{Width: UnsetWidth, Height: UnsetHeight}
 	if layout.Width.IsMatchParent() {
-		layoutSize.Width = math.Trunc(size.Width * layout.Weight)
+		layoutSize.Width = math.Trunc(size.Width * layout.Ratio)
 	}
 	if layout.Height.IsMatchParent() {
-		layoutSize.Height = math.Trunc(size.Height * layout.Weight)
+		layoutSize.Height = math.Trunc(size.Height * layout.Ratio)
 	}
 	return layoutSize
 }
