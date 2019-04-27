@@ -1,6 +1,96 @@
 {
   "width": 842,
   "height": 595,
+  "templates": [
+    {
+      "type": "text",
+      "id": "table-header-t1",
+      "attributes": {
+        "text_size": 12,
+        "layout": {
+          "width": "match_parent",
+          "ratio": 0.1
+        },
+        "align": "center",
+        "valign": "middle",
+        "border": {
+          "width": 1
+        },
+        "inset": {
+          "top": 5,
+          "right": 5,
+          "bottom": 5,
+          "left": 5
+        }
+      }
+    },
+    {
+      "type": "text",
+      "id": "table-header-t2",
+      "attributes": {
+        "text_size": 12,
+        "layout": {
+          "width": "match_parent",
+          "ratio": 0.2
+        },
+        "align": "center",
+        "valign": "middle",
+        "border": {
+          "width": 1
+        },
+        "inset": {
+          "top": 5,
+          "right": 5,
+          "bottom": 5,
+          "left": 5
+        }
+      }
+    },
+    {
+      "type": "text",
+      "id": "table-body-t1",
+      "attributes": {
+        "text_size": 12,
+        "layout": {
+          "width": "match_parent",
+          "ratio": 0.1
+        },
+        "align": "left",
+        "valign": "middle",
+        "border": {
+          "width": 1
+        },
+        "inset": {
+          "top": 5,
+          "right": 5,
+          "bottom": 5,
+          "left": 5
+        }
+      }
+    },
+    {
+      "type": "text",
+      "id": "table-body-t2",
+      "attributes": {
+        "text_size": 12,
+        "layout": {
+          "width": "match_parent",
+          "ratio": 0.2
+        },
+        "align": "left",
+        "valign": "middle",
+        "border": {
+          "width": 1
+        },
+        "inset": {
+          "top": 5,
+          "right": 5,
+          "bottom": 5,
+          "left": 5
+        }
+      }
+    }
+  ],
   "header": {
     "size": {
       "width": 822,
@@ -91,178 +181,58 @@
             "elements": [
               {
                 "type": "text",
+                "template_id": "table-header-t1",
                 "attributes": {
-                  "text": "D No",
-                  "text_size": 12,
-                  "layout": {
-                    "width": "match_parent",
-                    "ratio": 0.1
-                  },
-                  "align": "center",
-                  "valign": "middle",
-                  "border": {
-                    "width": 1
-                  },
-                  "inset": {
-                    "top": 5,
-                    "right": 5,
-                    "bottom": 5,
-                    "left": 5
-                  }
+                  "text": "D No"
                 }
               },
               {
                 "type": "text",
+                "template_id": "table-header-t1",
                 "attributes": {
-                  "text": "Dept",
-                  "text_size": 12,
-                  "layout": {
-                    "width": "match_parent",
-                    "ratio": 0.1
-                  },
-                  "align": "center",
-                  "valign": "middle",
-                  "border": {
-                    "width": 1
-                  },
-                  "inset": {
-                    "top": 5,
-                    "right": 5,
-                    "bottom": 5,
-                    "left": 5
-                  }
+                  "text": "Dept"
                 }
               },
               {
                 "type": "text",
+                "template_id": "table-header-t2",
                 "attributes": {
-                  "text": "Order",
-                  "text_size": 12,
-                  "layout": {
-                    "width": "match_parent",
-                    "ratio": 0.2
-                  },
-                  "align": "center",
-                  "valign": "middle",
-                  "border": {
-                    "width": 1
-                  },
-                  "inset": {
-                    "top": 5,
-                    "right": 5,
-                    "bottom": 5,
-                    "left": 5
-                  }
+                  "text": "Order"
                 }
               },
               {
                 "type": "text",
+                "template_id": "table-header-t1",
                 "attributes": {
-                  "text": "Stock",
-                  "text_size": 12,
-                  "layout": {
-                    "width": "match_parent",
-                    "ratio": 0.1
-                  },
-                  "align": "center",
-                  "valign": "middle",
-                  "border": {
-                    "width": 1
-                  },
-                  "inset": {
-                    "top": 5,
-                    "right": 5,
-                    "bottom": 5,
-                    "left": 5
-                  }
+                  "text": "Stock"
                 }
               },
               {
                 "type": "text",
+                "template_id": "table-header-t2",
                 "attributes": {
-                  "text": "Name",
-                  "text_size": 12,
-                  "layout": {
-                    "width": "match_parent",
-                    "ratio": 0.2
-                  },
-                  "align": "center",
-                  "valign": "middle",
-                  "border": {
-                    "width": 1
-                  },
-                  "inset": {
-                    "top": 5,
-                    "right": 5,
-                    "bottom": 5,
-                    "left": 5
-                  }
+                  "text": "Name"
                 }
               },
               {
                 "type": "text",
+                "template_id": "table-header-t1",
                 "attributes": {
-                  "text": "Unit Price",
-                  "text_size": 12,
-                  "layout": {
-                    "width": "match_parent",
-                    "ratio": 0.1
-                  },
-                  "align": "center",
-                  "valign": "middle",
-                  "border": {
-                    "width": 1
-                  },
-                  "inset": {
-                    "top": 5,
-                    "right": 5,
-                    "bottom": 5,
-                    "left": 5
-                  }
+                  "text": "Unit Price"
                 }
               },
               {
                 "type": "text",
+                "template_id": "table-header-t1",
                 "attributes": {
-                  "text": "Qty",
-                  "text_size": 12,
-                  "layout": {
-                    "width": "match_parent",
-                    "ratio": 0.1
-                  },
-                  "align": "center",
-                  "valign": "middle",
-                  "border": {
-                    "width": 1
-                  },
-                  "inset": {
-                    "top": 5,
-                    "right": 5,
-                    "bottom": 5,
-                    "left": 5
-                  }
+                  "text": "Qty"
                 }
               },
               {
                 "type": "text",
+                "template_id": "table-header-t1",
                 "attributes": {
-                  "text": "Amount",
-                  "text_size": 12,
-                  "layout": {
-                    "width": "match_parent",
-                    "ratio": 0.1
-                  },
-                  "align": "center",
-                  "valign": "middle",
-                  "border": {
-                    "width": 1
-                  },
-                  "inset": {
-                    "top": 5,
-                    "right": 5,
-                    "bottom": 5,
-                    "left": 5
-                  }
+                  "text": "Amount"
                 }
               }
             ]
@@ -276,174 +246,58 @@
             "elements": [
               {
                 "type": "text",
+                "template_id": "table-body-t1",
                 "attributes": {
-                  "text": "0003",
-                  "text_size": 12,
-                  "layout": {
-                    "width": "match_parent",
-                    "ratio": 0.1
-                  },
-                  "align": "center",
-                  "valign": "middle",
-                  "border": {
-                    "width": 1
-                  },
-                  "inset": {
-                    "top": 5,
-                    "right": 5,
-                    "bottom": 5,
-                    "left": 5
-                  }
+                  "text": "0003"
                 }
               },
               {
                 "type": "text",
+                "template_id": "table-body-t1",
                 "attributes": {
-                  "text": "Seattle",
-                  "text_size": 12,
-                  "layout": {
-                    "width": "match_parent",
-                    "ratio": 0.1
-                  },
-                  "valign": "middle",
-                  "border": {
-                    "width": 1
-                  },
-                  "inset": {
-                    "top": 5,
-                    "right": 5,
-                    "bottom": 5,
-                    "left": 5
-                  }
+                  "text": "Seattle"
                 }
               },
               {
                 "type": "text",
+                "template_id": "table-body-t2",
                 "attributes": {
-                  "text": "8100021",
-                  "text_size": 12,
-                  "layout": {
-                    "width": "match_parent",
-                    "ratio": 0.2
-                  },
-                  "valign": "middle",
-                  "border": {
-                    "width": 1
-                  },
-                  "inset": {
-                    "top": 5,
-                    "right": 5,
-                    "bottom": 5,
-                    "left": 5
-                  }
+                  "text": "8100021"
                 }
               },
               {
                 "type": "text",
+                "template_id": "table-body-t1",
                 "attributes": {
-                  "text": "125571",
-                  "text_size": 12,
-                  "layout": {
-                    "width": "match_parent",
-                    "ratio": 0.1
-                  },
-                  "valign": "middle",
-                  "border": {
-                    "width": 1
-                  },
-                  "inset": {
-                    "top": 5,
-                    "right": 5,
-                    "bottom": 5,
-                    "left": 5
-                  }
+                  "text": "125571"
                 }
               },
               {
                 "type": "text",
+                "template_id": "table-body-t2",
                 "attributes": {
-                  "text": "Pipe",
-                  "text_size": 12,
-                  "layout": {
-                    "width": "match_parent",
-                    "ratio": 0.2
-                  },
-                  "valign": "middle",
-                  "border": {
-                    "width": 1
-                  },
-                  "inset": {
-                    "top": 5,
-                    "right": 5,
-                    "bottom": 5,
-                    "left": 5
-                  }
+                  "text": "Pipe"
                 }
               },
               {
                 "type": "text",
+                "template_id": "table-body-t1",
                 "attributes": {
-                  "text": "24.45",
-                  "text_size": 12,
-                  "layout": {
-                    "width": "match_parent",
-                    "ratio": 0.1
-                  },
-                  "align": "right",
-                  "valign": "middle",
-                  "border": {
-                    "width": 1
-                  },
-                  "inset": {
-                    "top": 5,
-                    "right": 5,
-                    "bottom": 5,
-                    "left": 5
-                  }
+                  "text": "24.45"
                 }
               },
               {
                 "type": "text",
+                "template_id": "table-body-t1",
                 "attributes": {
-                  "text": "3",
-                  "text_size": 12,
-                  "layout": {
-                    "width": "match_parent",
-                    "ratio": 0.1
-                  },
-                  "align": "right",
-                  "valign": "middle",
-                  "border": {
-                    "width": 1
-                  },
-                  "inset": {
-                    "top": 5,
-                    "right": 5,
-                    "bottom": 5,
-                    "left": 5
-                  }
+                  "text": "3"
                 }
               },
               {
                 "type": "text",
+                "template_id": "table-body-t1",
                 "attributes": {
-                  "text": "73.35",
-                  "text_size": 12,
-                  "layout": {
-                    "width": "match_parent",
-                    "ratio": 0.1
-                  },
-                  "align": "right",
-                  "valign": "middle",
-                  "border": {
-                    "width": 1
-                  },
-                  "inset": {
-                    "top": 5,
-                    "right": 5,
-                    "bottom": 5,
-                    "left": 5
-                  }
+                  "text": "73.35"
                 }
               }
             ]
@@ -457,174 +311,58 @@
             "elements": [
               {
                 "type": "text",
+                "template_id": "table-body-t1",
                 "attributes": {
-                  "text": "0003",
-                  "text_size": 12,
-                  "layout": {
-                    "width": "match_parent",
-                    "ratio": 0.1
-                  },
-                  "align": "center",
-                  "valign": "middle",
-                  "border": {
-                    "width": 1
-                  },
-                  "inset": {
-                    "top": 5,
-                    "right": 5,
-                    "bottom": 5,
-                    "left": 5
-                  }
+                  "text": "0003"
                 }
               },
               {
                 "type": "text",
+                "template_id": "table-body-t1",
                 "attributes": {
-                  "text": "Seattle",
-                  "text_size": 12,
-                  "layout": {
-                    "width": "match_parent",
-                    "ratio": 0.1
-                  },
-                  "valign": "middle",
-                  "border": {
-                    "width": 1
-                  },
-                  "inset": {
-                    "top": 5,
-                    "right": 5,
-                    "bottom": 5,
-                    "left": 5
-                  }
+                  "text": "Seattle"
                 }
               },
               {
                 "type": "text",
+                "template_id": "table-body-t2",
                 "attributes": {
-                  "text": "8100021",
-                  "text_size": 12,
-                  "layout": {
-                    "width": "match_parent",
-                    "ratio": 0.2
-                  },
-                  "valign": "middle",
-                  "border": {
-                    "width": 1
-                  },
-                  "inset": {
-                    "top": 5,
-                    "right": 5,
-                    "bottom": 5,
-                    "left": 5
-                  }
+                  "text": "8100021"
                 }
               },
               {
                 "type": "text",
+                "template_id": "table-body-t1",
                 "attributes": {
-                  "text": "125571",
-                  "text_size": 12,
-                  "layout": {
-                    "width": "match_parent",
-                    "ratio": 0.1
-                  },
-                  "valign": "middle",
-                  "border": {
-                    "width": 1
-                  },
-                  "inset": {
-                    "top": 5,
-                    "right": 5,
-                    "bottom": 5,
-                    "left": 5
-                  }
+                  "text": "125571"
                 }
               },
               {
                 "type": "text",
+                "template_id": "table-body-t2",
                 "attributes": {
-                  "text": "Pipe",
-                  "text_size": 12,
-                  "layout": {
-                    "width": "match_parent",
-                    "ratio": 0.2
-                  },
-                  "valign": "middle",
-                  "border": {
-                    "width": 1
-                  },
-                  "inset": {
-                    "top": 5,
-                    "right": 5,
-                    "bottom": 5,
-                    "left": 5
-                  }
+                  "text": "Pipe"
                 }
               },
               {
                 "type": "text",
+                "template_id": "table-body-t1",
                 "attributes": {
-                  "text": "24.45",
-                  "text_size": 12,
-                  "layout": {
-                    "width": "match_parent",
-                    "ratio": 0.1
-                  },
-                  "align": "right",
-                  "valign": "middle",
-                  "border": {
-                    "width": 1
-                  },
-                  "inset": {
-                    "top": 5,
-                    "right": 5,
-                    "bottom": 5,
-                    "left": 5
-                  }
+                  "text": "24.45"
                 }
               },
               {
                 "type": "text",
+                "template_id": "table-body-t1",
                 "attributes": {
-                  "text": "3",
-                  "text_size": 12,
-                  "layout": {
-                    "width": "match_parent",
-                    "ratio": 0.1
-                  },
-                  "align": "right",
-                  "valign": "middle",
-                  "border": {
-                    "width": 1
-                  },
-                  "inset": {
-                    "top": 5,
-                    "right": 5,
-                    "bottom": 5,
-                    "left": 5
-                  }
+                  "text": "3"
                 }
               },
               {
                 "type": "text",
+                "template_id": "table-body-t1",
                 "attributes": {
-                  "text": "73.35",
-                  "text_size": 12,
-                  "layout": {
-                    "width": "match_parent",
-                    "ratio": 0.1
-                  },
-                  "align": "right",
-                  "valign": "middle",
-                  "border": {
-                    "width": 1
-                  },
-                  "inset": {
-                    "top": 5,
-                    "right": 5,
-                    "bottom": 5,
-                    "left": 5
-                  }
+                  "text": "73.35"
                 }
               }
             ]
@@ -638,174 +376,58 @@
             "elements": [
               {
                 "type": "text",
+                "template_id": "table-body-t1",
                 "attributes": {
-                  "text": "0003",
-                  "text_size": 12,
-                  "layout": {
-                    "width": "match_parent",
-                    "ratio": 0.1
-                  },
-                  "align": "center",
-                  "valign": "middle",
-                  "border": {
-                    "width": 1
-                  },
-                  "inset": {
-                    "top": 5,
-                    "right": 5,
-                    "bottom": 5,
-                    "left": 5
-                  }
+                  "text": "0003"
                 }
               },
               {
                 "type": "text",
+                "template_id": "table-body-t1",
                 "attributes": {
-                  "text": "Seattle",
-                  "text_size": 12,
-                  "layout": {
-                    "width": "match_parent",
-                    "ratio": 0.1
-                  },
-                  "valign": "middle",
-                  "border": {
-                    "width": 1
-                  },
-                  "inset": {
-                    "top": 5,
-                    "right": 5,
-                    "bottom": 5,
-                    "left": 5
-                  }
+                  "text": "Seattle"
                 }
               },
               {
                 "type": "text",
+                "template_id": "table-body-t2",
                 "attributes": {
-                  "text": "8100021",
-                  "text_size": 12,
-                  "layout": {
-                    "width": "match_parent",
-                    "ratio": 0.2
-                  },
-                  "valign": "middle",
-                  "border": {
-                    "width": 1
-                  },
-                  "inset": {
-                    "top": 5,
-                    "right": 5,
-                    "bottom": 5,
-                    "left": 5
-                  }
+                  "text": "8100021"
                 }
               },
               {
                 "type": "text",
+                "template_id": "table-body-t1",
                 "attributes": {
-                  "text": "125571",
-                  "text_size": 12,
-                  "layout": {
-                    "width": "match_parent",
-                    "ratio": 0.1
-                  },
-                  "valign": "middle",
-                  "border": {
-                    "width": 1
-                  },
-                  "inset": {
-                    "top": 5,
-                    "right": 5,
-                    "bottom": 5,
-                    "left": 5
-                  }
+                  "text": "125571"
                 }
               },
               {
                 "type": "text",
+                "template_id": "table-body-t2",
                 "attributes": {
-                  "text": "Pipe",
-                  "text_size": 12,
-                  "layout": {
-                    "width": "match_parent",
-                    "ratio": 0.2
-                  },
-                  "valign": "middle",
-                  "border": {
-                    "width": 1
-                  },
-                  "inset": {
-                    "top": 5,
-                    "right": 5,
-                    "bottom": 5,
-                    "left": 5
-                  }
+                  "text": "Pipe"
                 }
               },
               {
                 "type": "text",
+                "template_id": "table-body-t1",
                 "attributes": {
-                  "text": "24.45",
-                  "text_size": 12,
-                  "layout": {
-                    "width": "match_parent",
-                    "ratio": 0.1
-                  },
-                  "align": "right",
-                  "valign": "middle",
-                  "border": {
-                    "width": 1
-                  },
-                  "inset": {
-                    "top": 5,
-                    "right": 5,
-                    "bottom": 5,
-                    "left": 5
-                  }
+                  "text": "24.45"
                 }
               },
               {
                 "type": "text",
+                "template_id": "table-body-t1",
                 "attributes": {
-                  "text": "3",
-                  "text_size": 12,
-                  "layout": {
-                    "width": "match_parent",
-                    "ratio": 0.1
-                  },
-                  "align": "right",
-                  "valign": "middle",
-                  "border": {
-                    "width": 1
-                  },
-                  "inset": {
-                    "top": 5,
-                    "right": 5,
-                    "bottom": 5,
-                    "left": 5
-                  }
+                  "text": "3"
                 }
               },
               {
                 "type": "text",
+                "template_id": "table-body-t1",
                 "attributes": {
-                  "text": "73.35",
-                  "text_size": 12,
-                  "layout": {
-                    "width": "match_parent",
-                    "ratio": 0.1
-                  },
-                  "align": "right",
-                  "valign": "middle",
-                  "border": {
-                    "width": 1
-                  },
-                  "inset": {
-                    "top": 5,
-                    "right": 5,
-                    "bottom": 5,
-                    "left": 5
-                  }
+                  "text": "73.35"
                 }
               }
             ]
