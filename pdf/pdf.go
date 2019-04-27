@@ -281,11 +281,20 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 				lineWrapRect = lineWrapRect.Merge(textFrame)
 
 			} else if element.Type.IsImage() {
-				var decoded = types.ElementImage{
-					Size:       types.Size{Width: UnsetWidth, Height: UnsetWidth},
-					Origin:     types.Origin{X: UnsetWidth, Y: UnsetHeight},
-					Resize:     false,
-					Resolution: DefaultImageResolution,
+				var decoded types.ElementImage
+				if element.TemplateId != "" {
+					templateImage, ok := p.templates[element.TemplateId].(types.ElementImage)
+					if ok {
+						decoded = templateImage
+					}
+				}
+				if decoded.Resolution == 0 {
+					decoded = types.ElementImage{
+						Size:       types.Size{Width: UnsetWidth, Height: UnsetWidth},
+						Origin:     types.Origin{X: UnsetWidth, Y: UnsetHeight},
+						Resize:     false,
+						Resolution: DefaultImageResolution,
+					}
 				}
 				_ = json.Unmarshal(element.Attributes, &decoded)
 
@@ -484,11 +493,20 @@ func (p *PDF) drawHeaderOrFooter(documentConfigure types.DocumentConfigure, line
 				lineWrapRect = lineWrapRect.Merge(textFrame)
 
 			} else if element.Type.IsImage() {
-				var decoded = types.ElementImage{
-					Size:       types.Size{Width: UnsetWidth, Height: UnsetWidth},
-					Origin:     types.Origin{X: UnsetWidth, Y: UnsetHeight},
-					Resize:     false,
-					Resolution: DefaultImageResolution,
+				var decoded types.ElementImage
+				if element.TemplateId != "" {
+					templateImage, ok := p.templates[element.TemplateId].(types.ElementImage)
+					if ok {
+						decoded = templateImage
+					}
+				}
+				if decoded.Resolution == 0 {
+					decoded = types.ElementImage{
+						Size:       types.Size{Width: UnsetWidth, Height: UnsetWidth},
+						Origin:     types.Origin{X: UnsetWidth, Y: UnsetHeight},
+						Resize:     false,
+						Resolution: DefaultImageResolution,
+					}
 				}
 				_ = json.Unmarshal(element.Attributes, &decoded)
 
