@@ -660,6 +660,7 @@ func (p *PDF) drawText(documentConfigure types.DocumentConfigure, decoded types.
 	}
 
 	// TEXT COLOR
+	p.gp.SetFillColor(decoded.Color.R, decoded.Color.G, decoded.Color.B)
 	p.gp.SetTextColor(decoded.Color.R, decoded.Color.G, decoded.Color.B)
 
 	if p.isMultiLineText(decoded.Text) {
@@ -673,7 +674,9 @@ func (p *PDF) drawText(documentConfigure types.DocumentConfigure, decoded types.
 		_ = p.gp.CellWithOption(&gpRect, decoded.Text, option)
 	}
 
-	// RESET TEXT COLOR
+	// RESET COLOR
+	p.gp.SetStrokeColor(documentConfigure.TextColor.R, documentConfigure.TextColor.G, documentConfigure.TextColor.B)
+	p.gp.SetFillColor(documentConfigure.TextColor.R, documentConfigure.TextColor.G, documentConfigure.TextColor.B)
 	p.gp.SetTextColor(documentConfigure.TextColor.R, documentConfigure.TextColor.G, documentConfigure.TextColor.B)
 }
 

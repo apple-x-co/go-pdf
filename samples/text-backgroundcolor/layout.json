@@ -9,11 +9,29 @@
           {
             "type": "text",
             "attributes": {
-              "text": "TEXT",
+              "size": {
+                "width": 30
+              },
               "background_color": {
                 "r": 175,
                 "g": 223,
                 "b": 228
+              }
+            }
+          },
+          {
+            "type": "text",
+            "attributes": {
+              "text": "WITH TEXT",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255
+              },
+              "background_color": {
+                "r": 1,
+                "g": 1,
+                "b": 1
               }
             }
           }
