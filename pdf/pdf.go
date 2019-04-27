@@ -25,12 +25,14 @@ const DefaultColorG uint8 = 0
 const DefaultColorB uint8 = 0
 const DefaultTextSize int = 14
 const DefaultCompressLevel int = -1
+const DefaultImageResolution uint = 2
 
 type PDF struct {
 	gp          gopdf.GoPdf
 	contentRect types.Rect
 	headerRect  types.Rect
 	footerRect  types.Rect
+	templates   map[string]interface{}
 }
 
 func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
@@ -109,6 +111,39 @@ func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 		},
 	}
 
+	// ELEMENT TEMPLATES
+	p.templates = map[string]interface{}{}
+
+	for _, elementTemplate := range documentConfigure.Templates {
+		//fmt.Printf("%v\n", elementTemplate.Id)
+		if elementTemplate.Type.IsText() {
+			var decoded = types.ElementText{
+				TextSize:        documentConfigure.TextSize,
+				Color:           types.Color{R: documentConfigure.TextColor.R, G: documentConfigure.TextColor.G, B: documentConfigure.TextColor.B},
+				BackgroundColor: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB},
+				Size:            types.Size{Width: UnsetWidth, Height: UnsetWidth},
+				Origin:          types.Origin{X: UnsetWidth, Y: UnsetHeight},
+				Border:          types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
+				BorderTop:       types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
+				BorderRight:     types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
+				BorderBottom:    types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
+				BorderLeft:      types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
+			}
+			_ = json.Unmarshal(elementTemplate.Attributes, &decoded)
+			p.templates[elementTemplate.Id] = decoded
+		} else if elementTemplate.Type.IsImage() {
+			var decoded = types.ElementImage{
+				Size:       types.Size{Width: UnsetWidth, Height: UnsetWidth},
+				Origin:     types.Origin{X: UnsetWidth, Y: UnsetHeight},
+				Resize:     false,
+				Resolution: DefaultImageResolution,
+			}
+			_ = json.Unmarshal(elementTemplate.Attributes, &decoded)
+			p.templates[elementTemplate.Id] = decoded
+		}
+	}
+	//fmt.Printf("templates: %v\n", p.templates)
+
 	// DRAW
 	for _, page := range documentConfigure.Pages {
 		p.gp.AddPage()
@@ -154,17 +189,26 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 				p.breakLine(&lineWrapRect, decoded.Height)
 
 			} else if element.Type.IsText() {
-				var decoded = types.ElementText{
-					TextSize:        documentConfigure.TextSize,
-					Color:           types.Color{R: documentConfigure.TextColor.R, G: documentConfigure.TextColor.G, B: documentConfigure.TextColor.B},
-					BackgroundColor: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB},
-					Size:            types.Size{Width: UnsetWidth, Height: UnsetWidth},
-					Origin:          types.Origin{X: UnsetWidth, Y: UnsetHeight},
-					Border:          types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
-					BorderTop:       types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
-					BorderRight:     types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
-					BorderBottom:    types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
-					BorderLeft:      types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
+				var decoded types.ElementText
+				if element.TemplateId != "" {
+					templateText, ok := p.templates[element.TemplateId].(types.ElementText)
+					if ok {
+						decoded = templateText
+					}
+				}
+				if decoded.TextSize == 0 {
+					decoded = types.ElementText{
+						TextSize:        documentConfigure.TextSize,
+						Color:           types.Color{R: documentConfigure.TextColor.R, G: documentConfigure.TextColor.G, B: documentConfigure.TextColor.B},
+						BackgroundColor: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB},
+						Size:            types.Size{Width: UnsetWidth, Height: UnsetWidth},
+						Origin:          types.Origin{X: UnsetWidth, Y: UnsetHeight},
+						Border:          types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
+						BorderTop:       types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
+						BorderRight:     types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
+						BorderBottom:    types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
+						BorderLeft:      types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
+					}
 				}
 				_ = json.Unmarshal(element.Attributes, &decoded)
 
@@ -241,7 +285,7 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 					Size:       types.Size{Width: UnsetWidth, Height: UnsetWidth},
 					Origin:     types.Origin{X: UnsetWidth, Y: UnsetHeight},
 					Resize:     false,
-					Resolution: 2,
+					Resolution: DefaultImageResolution,
 				}
 				_ = json.Unmarshal(element.Attributes, &decoded)
 
@@ -369,17 +413,26 @@ func (p *PDF) drawHeaderOrFooter(documentConfigure types.DocumentConfigure, line
 				p.breakLine(&lineWrapRect, decoded.Height)
 
 			} else if element.Type.IsText() {
-				var decoded = types.ElementText{
-					TextSize:        documentConfigure.TextSize,
-					Color:           types.Color{R: documentConfigure.TextColor.R, G: documentConfigure.TextColor.G, B: documentConfigure.TextColor.B},
-					BackgroundColor: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB},
-					Size:            types.Size{Width: UnsetWidth, Height: UnsetWidth},
-					Origin:          types.Origin{X: UnsetWidth, Y: UnsetHeight},
-					Border:          types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
-					BorderTop:       types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
-					BorderRight:     types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
-					BorderBottom:    types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
-					BorderLeft:      types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
+				var decoded types.ElementText
+				if element.TemplateId != "" {
+					templateText, ok := p.templates[element.TemplateId].(types.ElementText)
+					if ok {
+						decoded = templateText
+					}
+				}
+				if decoded.TextSize == 0 {
+					decoded = types.ElementText{
+						TextSize:        documentConfigure.TextSize,
+						Color:           types.Color{R: documentConfigure.TextColor.R, G: documentConfigure.TextColor.G, B: documentConfigure.TextColor.B},
+						BackgroundColor: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB},
+						Size:            types.Size{Width: UnsetWidth, Height: UnsetWidth},
+						Origin:          types.Origin{X: UnsetWidth, Y: UnsetHeight},
+						Border:          types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
+						BorderTop:       types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
+						BorderRight:     types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
+						BorderBottom:    types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
+						BorderLeft:      types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
+					}
 				}
 				_ = json.Unmarshal(element.Attributes, &decoded)
 
@@ -435,7 +488,7 @@ func (p *PDF) drawHeaderOrFooter(documentConfigure types.DocumentConfigure, line
 					Size:       types.Size{Width: UnsetWidth, Height: UnsetWidth},
 					Origin:     types.Origin{X: UnsetWidth, Y: UnsetHeight},
 					Resize:     false,
-					Resolution: 2,
+					Resolution: DefaultImageResolution,
 				}
 				_ = json.Unmarshal(element.Attributes, &decoded)
 

@@ -1,0 +1,33 @@
+{
+  "width": 595,
+  "height": 842,
+  "templates": [
+    {
+      "type": "text",
+      "id": "template-t1",
+      "attributes": {
+        "color": {
+          "r": 175,
+          "g": 223,
+          "b": 228
+        }
+      }
+    }
+  ],
+  "pages": [
+    {
+      "liner_layout": {
+        "orientation": "horizontal",
+        "elements": [
+          {
+            "type": "text",
+            "template_id": "template-t1",
+            "attributes": {
+              "text": "style by template"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

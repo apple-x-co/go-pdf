@@ -4,6 +4,7 @@ import "encoding/json"
 
 type Element struct {
 	Type       ElementType     `json:"type"`
+	TemplateId string          `json:"template_id"`
 	Attributes json.RawMessage `json:"attributes"`
 }
 
