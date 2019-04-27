@@ -21,6 +21,12 @@ json to pdf
 
 https://github.com/minoryorg/Noto-Sans-CJK-JP
 
+## Samples
+
+* [Report](./samples/sample-report/output.pdf)
+
+[See Other](./samples/)
+
 ## How to use
 
 ### basic
