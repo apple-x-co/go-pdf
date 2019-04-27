@@ -4,7 +4,6 @@ import (
 	"apple-x-co/go-pdf/types"
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"github.com/nfnt/resize"
 	"github.com/signintech/gopdf"
 	"github.com/signintech/gopdf/fontmaker/core"
@@ -341,7 +340,7 @@ func (p *PDF) drawHeaderOrFooter(documentConfigure types.DocumentConfigure, line
 	var wrapRect = types.Rect{Origin: types.Origin{X: p.gp.GetX(), Y: p.gp.GetY()}}
 	var lineWrapRect = types.Rect{Origin: types.Origin{X: p.gp.GetX(), Y: p.gp.GetY()}}
 	var parentLayoutSize = p.calcLayoutSize(parentRect.Size, linerLayout.Layout)
-	fmt.Printf("parentLayoutSize: %v\n", parentLayoutSize)
+	//fmt.Printf("parentLayoutSize: %v\n", parentLayoutSize)
 
 	if len(linerLayout.Elements) > 0 {
 
@@ -372,7 +371,7 @@ func (p *PDF) drawHeaderOrFooter(documentConfigure types.DocumentConfigure, line
 
 				if decoded.Layout.Width.IsMatchParent() || decoded.Layout.Height.IsMatchParent() {
 					elementLayoutSize := p.calcLayoutSize(parentLayoutSize, decoded.Layout)
-					fmt.Printf("elementLayoutSize: %v\n", elementLayoutSize)
+					//fmt.Printf("elementLayoutSize: %v\n", elementLayoutSize)
 					if elementLayoutSize.Width != UnsetWidth {
 						measureSize.Width = elementLayoutSize.Width
 					}
