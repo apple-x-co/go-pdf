@@ -4,6 +4,7 @@ import (
 	"apple-x-co/go-pdf/types"
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"github.com/nfnt/resize"
 	"github.com/signintech/gopdf"
 	"github.com/signintech/gopdf/fontmaker/core"
@@ -11,6 +12,7 @@ import (
 	"image/jpeg"
 	"image/png"
 	"log"
+	"math"
 	"os"
 	"strings"
 )
@@ -168,13 +170,6 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 				_ = json.Unmarshal(element.Attributes, &decoded)
 
 				//fmt.Printf("---------------------------\n%v\n", decoded.Text)
-
-				if decoded.Align != "" && decoded.Size.Width == UnsetWidth {
-					panic("aligns need width.")
-				}
-				if decoded.Valign != "" && decoded.Size.Height == UnsetHeight {
-					panic("valigns need height.")
-				}
 
 				measureSize := p.measureText(documentConfigure, decoded)
 
@@ -346,6 +341,7 @@ func (p *PDF) drawHeaderOrFooter(documentConfigure types.DocumentConfigure, line
 	var wrapRect = types.Rect{Origin: types.Origin{X: p.gp.GetX(), Y: p.gp.GetY()}}
 	var lineWrapRect = types.Rect{Origin: types.Origin{X: p.gp.GetX(), Y: p.gp.GetY()}}
 	var parentLayoutSize = p.calcLayoutSize(parentRect.Size, linerLayout.Layout)
+	fmt.Printf("parentLayoutSize: %v\n", parentLayoutSize)
 
 	if len(linerLayout.Elements) > 0 {
 
@@ -372,18 +368,11 @@ func (p *PDF) drawHeaderOrFooter(documentConfigure types.DocumentConfigure, line
 				}
 				_ = json.Unmarshal(element.Attributes, &decoded)
 
-				if decoded.Align != "" && decoded.Size.Width == UnsetWidth {
-					panic("aligns need width.")
-				}
-				if decoded.Valign != "" && decoded.Size.Height == UnsetHeight {
-					panic("valigns need height.")
-				}
-
 				measureSize := p.measureText(documentConfigure, decoded)
 
 				if decoded.Layout.Width.IsMatchParent() || decoded.Layout.Height.IsMatchParent() {
 					elementLayoutSize := p.calcLayoutSize(parentLayoutSize, decoded.Layout)
-					//fmt.Printf("elementLayoutSize: %v\n", elementLayoutSize)
+					fmt.Printf("elementLayoutSize: %v\n", elementLayoutSize)
 					if elementLayoutSize.Width != UnsetWidth {
 						measureSize.Width = elementLayoutSize.Width
 					}
@@ -426,9 +415,10 @@ func (p *PDF) drawHeaderOrFooter(documentConfigure types.DocumentConfigure, line
 
 			} else if element.Type.IsImage() {
 				var decoded = types.ElementImage{
-					Size:   types.Size{Width: UnsetWidth, Height: UnsetWidth},
-					Origin: types.Origin{X: UnsetWidth, Y: UnsetHeight},
-					Resize: false,
+					Size:       types.Size{Width: UnsetWidth, Height: UnsetWidth},
+					Origin:     types.Origin{X: UnsetWidth, Y: UnsetHeight},
+					Resize:     false,
+					Resolution: 2,
 				}
 				_ = json.Unmarshal(element.Attributes, &decoded)
 
@@ -562,10 +552,10 @@ func (p *PDF) measureImage(documentConfigure types.DocumentConfigure, decoded ty
 func (p *PDF) calcLayoutSize(size types.Size, layout types.Layout) types.Size {
 	var layoutSize = types.Size{Width: UnsetWidth, Height: UnsetHeight}
 	if layout.Width.IsMatchParent() {
-		layoutSize.Width = size.Width * layout.Weight
+		layoutSize.Width = math.Trunc(size.Width * layout.Weight)
 	}
 	if layout.Height.IsMatchParent() {
-		layoutSize.Height = size.Height * layout.Weight
+		layoutSize.Height = math.Trunc(size.Height * layout.Weight)
 	}
 	return layoutSize
 }

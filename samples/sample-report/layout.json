@@ -1,0 +1,85 @@
+{
+  "width": 842,
+  "height": 595,
+  "header": {
+    "size": {
+      "width": 822,
+      "height": 20
+    },
+    "liner_layout": {
+      "orientation": "horizontal",
+      "layout": {
+        "width": "match_parent",
+        "height": "match_parent",
+        "weight": 1
+      },
+      "elements": [
+        {
+          "type": "text",
+          "attributes": {
+            "text": "Sales Report",
+            "text_size": 16,
+            "layout": {
+              "width": "match_parent",
+              "weight": 0.9
+            },
+            "align": "center",
+            "valign": "middle"
+          }
+        },
+        {
+          "type": "text",
+          "attributes": {
+            "text": "page 1",
+            "text_size": 10,
+            "layout": {
+              "width": "match_parent",
+              "weight": 0.1
+            },
+            "align": "right",
+            "valign": "middle"
+          }
+        }
+      ]
+    }
+  },
+  "footer": {
+    "size": {
+      "width": 822,
+      "height": 20
+    },
+    "liner_layout": {
+      "orientation": "horizontal",
+      "layout": {
+        "width": "match_parent",
+        "height": "match_parent",
+        "weight": 1
+      },
+      "elements": [
+        {
+          "type": "text",
+          "attributes": {
+            "text": "Created 2019-04-26",
+            "text_size": 10,
+            "layout": {
+              "width": "match_parent",
+              "height": "match_parent",
+              "weight": 1
+            },
+            "align": "right",
+            "valign": "bottom"
+          }
+        }
+      ]
+    }
+  },
+  "pages": [
+    {
+      "liner_layout": {
+        "orientation": "horizontal",
+        "elements": [
+        ]
+      }
+    }
+  ]
+}
