@@ -49,6 +49,7 @@ samples:
 	./bin/$(BIN)-dev-mac --in samples/image-origin/layout.json --out samples/image-origin/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/image-resize/layout.json --out samples/image-resize/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/image-size/layout.json --out samples/image-size/output.pdf --ttf fonts/TakaoPGothic.ttf
+	./bin/$(BIN)-dev-mac --in samples/image-template/layout.json --out samples/image-template/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/layout-layoutconstant/layout.json --out samples/layout-layoutconstant/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/layout-orientation/layout.json --out samples/layout-orientation/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/password-protect/layout.json --out samples/password-protect/output.pdf --ttf fonts/TakaoPGothic.ttf
@@ -61,5 +62,6 @@ samples:
 	./bin/$(BIN)-dev-mac --in samples/text-margin/layout.json --out samples/text-margin/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/text-origin/layout.json --out samples/text-origin/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/text-size/layout.json --out samples/text-size/output.pdf --ttf fonts/TakaoPGothic.ttf
+	./bin/$(BIN)-dev-mac --in samples/text-template/layout.json --out samples/text-template/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/text-textsize/layout.json --out samples/text-textsize/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/text-wrap/layout.json --out samples/text-wrap/output.pdf --ttf fonts/TakaoPGothic.ttf
