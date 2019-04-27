@@ -345,6 +345,62 @@
           }
         ]
       }
+    },
+    {
+      "liner_layout": {
+        "orientation": "horizontal",
+        "liner_layouts": [
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "image",
+                "attributes": {
+                  "path": "work/sample1.jpg",
+                  "layout": {
+                    "width": "match_parent",
+                    "ratio": 0.5
+                  }
+                }
+              },
+              {
+                "type": "image",
+                "attributes": {
+                  "path": "work/sample2.jpg",
+                  "layout": {
+                    "width": "match_parent",
+                    "ratio": 0.5
+                  }
+                }
+              },
+              {
+                "type": "image",
+                "attributes": {
+                  "path": "work/sample2.jpg",
+                  "layout": {
+                    "width": "match_parent",
+                    "ratio": 0.5
+                  }
+                }
+              },
+              {
+                "type": "image",
+                "attributes": {
+                  "path": "work/sample1.jpg",
+                  "layout": {
+                    "width": "match_parent",
+                    "ratio": 0.5
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
     }
   ]
 }

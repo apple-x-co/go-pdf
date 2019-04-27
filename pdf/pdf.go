@@ -170,8 +170,10 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 
 				//fmt.Printf("---------------------------\n%v\n", decoded.Text)
 
+				// Actual Size
 				measureSize := p.measureText(documentConfigure, decoded)
 
+				// Layout Size
 				if decoded.Layout.Width.IsMatchParent() || decoded.Layout.Height.IsMatchParent() {
 					elementLayoutSize := p.calcLayoutSize(parentLayoutSize, decoded.Layout)
 					//fmt.Printf("elementLayoutSize: %v\n", elementLayoutSize)
@@ -245,7 +247,21 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 
 				//fmt.Printf("---------------------------\n%v\n", decoded.Path)
 
+				// Actual Size
 				measureSize := p.measureImage(documentConfigure, decoded)
+
+				// Layout Size
+				if decoded.Layout.Width.IsMatchParent() || decoded.Layout.Height.IsMatchParent() {
+					elementLayoutSize := p.calcLayoutSize(parentLayoutSize, decoded.Layout)
+					//fmt.Printf("elementLayoutSize: %v\n", elementLayoutSize)
+					if elementLayoutSize.Width != UnsetWidth && elementLayoutSize.Height == UnsetHeight {
+						measureSize.Height = measureSize.Height * (elementLayoutSize.Width / measureSize.Width)
+						measureSize.Width = elementLayoutSize.Width
+					} else if elementLayoutSize.Width == UnsetWidth && elementLayoutSize.Height != UnsetHeight {
+						measureSize.Width = measureSize.Width * (elementLayoutSize.Height / measureSize.Height)
+						measureSize.Height = elementLayoutSize.Height
+					}
+				}
 
 				// FIX POSITION
 				if decoded.Origin.X != UnsetX && decoded.Origin.Y != UnsetY {
@@ -367,8 +383,10 @@ func (p *PDF) drawHeaderOrFooter(documentConfigure types.DocumentConfigure, line
 				}
 				_ = json.Unmarshal(element.Attributes, &decoded)
 
+				// Actual Size
 				measureSize := p.measureText(documentConfigure, decoded)
 
+				// Layout Size
 				if decoded.Layout.Width.IsMatchParent() || decoded.Layout.Height.IsMatchParent() {
 					elementLayoutSize := p.calcLayoutSize(parentLayoutSize, decoded.Layout)
 					//fmt.Printf("elementLayoutSize: %v\n", elementLayoutSize)
@@ -421,7 +439,20 @@ func (p *PDF) drawHeaderOrFooter(documentConfigure types.DocumentConfigure, line
 				}
 				_ = json.Unmarshal(element.Attributes, &decoded)
 
+				// Actual Size
 				measureSize := p.measureImage(documentConfigure, decoded)
+
+				// Layout Size
+				if decoded.Layout.Width.IsMatchParent() || decoded.Layout.Height.IsMatchParent() {
+					elementLayoutSize := p.calcLayoutSize(parentLayoutSize, decoded.Layout)
+					//fmt.Printf("elementLayoutSize: %v\n", elementLayoutSize)
+					if elementLayoutSize.Width != UnsetWidth {
+						measureSize.Width = elementLayoutSize.Width
+					}
+					if elementLayoutSize.Height != UnsetHeight {
+						measureSize.Height = elementLayoutSize.Height
+					}
+				}
 
 				// FIX POSITION
 				if decoded.Origin.X != UnsetX && decoded.Origin.Y != UnsetY {
