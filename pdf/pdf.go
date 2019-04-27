@@ -446,10 +446,11 @@ func (p *PDF) drawHeaderOrFooter(documentConfigure types.DocumentConfigure, line
 				if decoded.Layout.Width.IsMatchParent() || decoded.Layout.Height.IsMatchParent() {
 					elementLayoutSize := p.calcLayoutSize(parentLayoutSize, decoded.Layout)
 					//fmt.Printf("elementLayoutSize: %v\n", elementLayoutSize)
-					if elementLayoutSize.Width != UnsetWidth {
+					if elementLayoutSize.Width != UnsetWidth && elementLayoutSize.Height == UnsetHeight {
+						measureSize.Height = measureSize.Height * (elementLayoutSize.Width / measureSize.Width)
 						measureSize.Width = elementLayoutSize.Width
-					}
-					if elementLayoutSize.Height != UnsetHeight {
+					} else if elementLayoutSize.Width == UnsetWidth && elementLayoutSize.Height != UnsetHeight {
+						measureSize.Width = measureSize.Width * (elementLayoutSize.Height / measureSize.Height)
 						measureSize.Height = elementLayoutSize.Height
 					}
 				}
