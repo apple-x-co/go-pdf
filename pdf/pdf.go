@@ -28,11 +28,11 @@ const DefaultCompressLevel int = -1
 const DefaultImageResolution uint = 2
 
 type PDF struct {
-	gp          gopdf.GoPdf
-	contentRect types.Rect
-	headerRect  types.Rect
-	footerRect  types.Rect
-	templates   map[string]interface{}
+	gp               gopdf.GoPdf
+	contentRect      types.Rect
+	commonHeaderRect types.Rect
+	commonFooterRect types.Rect
+	templates        map[string]interface{}
 }
 
 func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
@@ -82,32 +82,32 @@ func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 	p.gp.SetTextColor(documentConfigure.TextColor.R, documentConfigure.TextColor.G, documentConfigure.TextColor.B)
 
 	// RECT
-	if !documentConfigure.Header.Size.IsZero() {
-		p.headerRect = types.Rect{
+	if !documentConfigure.CommonHeader.Size.IsZero() {
+		p.commonHeaderRect = types.Rect{
 			Origin: types.Origin{
 				X: p.gp.MarginLeft(),
 				Y: p.gp.MarginTop(),
 			},
-			Size: documentConfigure.Header.Size,
+			Size: documentConfigure.CommonHeader.Size,
 		}
 	}
-	if !documentConfigure.Footer.Size.IsZero() {
-		p.footerRect = types.Rect{
+	if !documentConfigure.CommonFooter.Size.IsZero() {
+		p.commonFooterRect = types.Rect{
 			Origin: types.Origin{
 				X: p.gp.MarginLeft(),
-				Y: documentConfigure.Height - p.gp.MarginBottom() - documentConfigure.Footer.Size.Height,
+				Y: documentConfigure.Height - p.gp.MarginBottom() - documentConfigure.CommonFooter.Size.Height,
 			},
-			Size: documentConfigure.Footer.Size,
+			Size: documentConfigure.CommonFooter.Size,
 		}
 	}
 	p.contentRect = types.Rect{
 		Origin: types.Origin{
 			X: p.gp.MarginLeft(),
-			Y: p.gp.MarginTop() + p.headerRect.Height(),
+			Y: p.gp.MarginTop() + p.commonHeaderRect.Height(),
 		},
 		Size: types.Size{
 			Width:  documentConfigure.Width - p.gp.MarginLeft() - p.gp.MarginRight(),
-			Height: documentConfigure.Height - p.gp.MarginTop() - p.gp.MarginBottom() - p.headerRect.Height() - p.footerRect.Height(),
+			Height: documentConfigure.Height - p.gp.MarginTop() - p.gp.MarginBottom() - p.commonHeaderRect.Height() - p.commonFooterRect.Height(),
 		},
 	}
 
@@ -149,12 +149,12 @@ func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 		p.gp.AddPage()
 
 		// GLOBAL HEADER & FOOTER
-		if !p.headerRect.Size.IsZero() {
-			//fmt.Printf("%v\n", p.headerRect)
-			p.drawHeader(documentConfigure, documentConfigure.Header.LinerLayout, p.headerRect)
+		if !p.commonHeaderRect.Size.IsZero() {
+			//fmt.Printf("%v\n", p.commonHeaderRect)
+			p.drawHeader(documentConfigure, documentConfigure.CommonHeader.LinerLayout, p.commonHeaderRect)
 		}
-		if !p.footerRect.Size.IsZero() {
-			p.drawFooter(documentConfigure, documentConfigure.Footer.LinerLayout, p.footerRect)
+		if !p.commonFooterRect.Size.IsZero() {
+			p.drawFooter(documentConfigure, documentConfigure.CommonFooter.LinerLayout, p.commonFooterRect)
 		}
 
 		pageHeaderRect := types.Rect{}
@@ -288,11 +288,11 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 					p.gp.AddPage()
 					p.breakPage(&lineWrapRect, &wrapRect)
 
-					if !p.headerRect.Size.IsZero() {
-						p.drawHeader(documentConfigure, documentConfigure.Header.LinerLayout, p.headerRect)
+					if !p.commonHeaderRect.Size.IsZero() {
+						p.drawHeader(documentConfigure, documentConfigure.CommonHeader.LinerLayout, p.commonHeaderRect)
 					}
-					if !p.footerRect.Size.IsZero() {
-						p.drawFooter(documentConfigure, documentConfigure.Footer.LinerLayout, p.footerRect)
+					if !p.commonFooterRect.Size.IsZero() {
+						p.drawFooter(documentConfigure, documentConfigure.CommonFooter.LinerLayout, p.commonFooterRect)
 					}
 
 					p.gp.SetX(wrapRect.MinX())
@@ -375,11 +375,11 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 					p.gp.AddPage()
 					p.breakPage(&lineWrapRect, &wrapRect)
 
-					if !p.headerRect.Size.IsZero() {
-						p.drawHeader(documentConfigure, documentConfigure.Header.LinerLayout, p.headerRect)
+					if !p.commonHeaderRect.Size.IsZero() {
+						p.drawHeader(documentConfigure, documentConfigure.CommonHeader.LinerLayout, p.commonHeaderRect)
 					}
-					if !p.footerRect.Size.IsZero() {
-						p.drawFooter(documentConfigure, documentConfigure.Footer.LinerLayout, p.footerRect)
+					if !p.commonFooterRect.Size.IsZero() {
+						p.drawFooter(documentConfigure, documentConfigure.CommonFooter.LinerLayout, p.commonFooterRect)
 					}
 
 					p.gp.SetX(wrapRect.MinX())

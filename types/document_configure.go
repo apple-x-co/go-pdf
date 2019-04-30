@@ -5,8 +5,8 @@ type DocumentConfigure struct {
 	Height        float64           `json:"height"`
 	TextSize      int               `json:"text_size"`
 	TextColor     Color             `json:"text_color"`
-	Header        Header            `json:"header"`
-	Footer        Footer            `json:"footer"`
+	CommonHeader  Header            `json:"header"`
+	CommonFooter  Footer            `json:"footer"`
 	Pages         []Page            `json:"pages"`
 	AutoPageBreak bool              `json:"auto_page_break,string"`
 	CompressLevel int               `json:"compress_level"`
