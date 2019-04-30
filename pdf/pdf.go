@@ -180,6 +180,8 @@ func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 				Size:   page.PageFooter.Size,
 			}
 		}
+
+		// DRAW PAGE HEADER & PAGE FOOTER
 		if !pageHeaderRect.Size.IsZero() {
 			p.drawHeader(documentConfigure, page.PageHeader.LinerLayout, pageHeaderRect)
 		}
@@ -187,7 +189,7 @@ func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 			p.drawFooter(documentConfigure, page.PageFooter.LinerLayout, pageFooterRect)
 		}
 
-		// PAGE CONTENT
+		// DRAW PAGE CONTENT
 		p.gp.SetX(contentRect.MinX())
 		p.gp.SetY(contentRect.MinY())
 		p.draw(documentConfigure, page.LinerLayout, contentRect)
