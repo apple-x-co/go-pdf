@@ -1,6 +1,6 @@
 package types
 
-type PageHeader struct {
+type Footer struct {
 	Size        Size        `json:"size"`
 	LinerLayout LinerLayout `json:"liner_layout"`
 }

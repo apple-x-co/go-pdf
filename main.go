@@ -59,8 +59,8 @@ func execuute(inputPath string, outputPath string, ttfPath string) {
 		AutoPageBreak: true,
 		CompressLevel: pdf.DefaultCompressLevel,
 		TTFPath:       ttfPath,
-		Header:        types.PageHeader{Size: types.Size{Width: pdf.UnsetWidth, Height: pdf.UnsetHeight}},
-		Footer:        types.PageFooter{Size: types.Size{Width: pdf.UnsetWidth, Height: pdf.UnsetHeight}},
+		Header:        types.Header{Size: types.Size{Width: pdf.UnsetWidth, Height: pdf.UnsetHeight}},
+		Footer:        types.Footer{Size: types.Size{Width: pdf.UnsetWidth, Height: pdf.UnsetHeight}},
 	}
 	bytes := []byte(string(b))
 	if err := json.Unmarshal(bytes, &documentConfigure); err != nil {
