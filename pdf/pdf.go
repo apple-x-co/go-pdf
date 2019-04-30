@@ -82,7 +82,7 @@ func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 	p.gp.SetTextColor(documentConfigure.TextColor.R, documentConfigure.TextColor.G, documentConfigure.TextColor.B)
 
 	// RECT
-	if documentConfigure.Header.Size.IsSet() {
+	if !documentConfigure.Header.Size.IsZero() {
 		p.headerRect = types.Rect{
 			Origin: types.Origin{
 				X: p.gp.MarginLeft(),
@@ -91,7 +91,7 @@ func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 			Size: documentConfigure.Header.Size,
 		}
 	}
-	if documentConfigure.Footer.Size.IsSet() {
+	if !documentConfigure.Footer.Size.IsZero() {
 		p.footerRect = types.Rect{
 			Origin: types.Origin{
 				X: p.gp.MarginLeft(),
@@ -148,17 +148,49 @@ func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 	for _, page := range documentConfigure.Pages {
 		p.gp.AddPage()
 
-		if p.headerRect.Size.IsSet() {
+		// GLOBAL HEADER & FOOTER
+		if !p.headerRect.Size.IsZero() {
 			//fmt.Printf("%v\n", p.headerRect)
-			p.drawHeader(documentConfigure, p.headerRect)
+			p.drawHeader(documentConfigure, documentConfigure.Header.LinerLayout, p.headerRect)
 		}
-		if p.footerRect.Size.IsSet() {
-			p.drawFooter(documentConfigure, p.footerRect)
+		if !p.footerRect.Size.IsZero() {
+			p.drawFooter(documentConfigure, documentConfigure.Footer.LinerLayout, p.footerRect)
 		}
 
-		p.gp.SetX(p.contentRect.MinX())
-		p.gp.SetY(p.contentRect.MinY())
-		p.draw(documentConfigure, page.LinerLayout, p.contentRect)
+		pageHeaderRect := types.Rect{}
+		pageFooterRect := types.Rect{}
+		contentRect := p.contentRect
+
+		// PAGE HEADER & PAGE FOOTER
+		if !page.PageHeader.Size.IsZero() {
+			pageHeaderRect = types.Rect{
+				Origin: types.Origin{X: contentRect.MinX(), Y: contentRect.MinY()},
+				Size:   page.PageHeader.Size,
+			}
+			contentRect = contentRect.Inset(types.EdgeInset{
+				Top: page.PageHeader.Size.Height,
+			})
+		}
+		if !page.PageFooter.Size.IsZero() {
+			contentRect = contentRect.Inset(types.EdgeInset{
+				Bottom: page.PageFooter.Size.Height,
+			})
+			pageFooterRect = types.Rect{
+				Origin: types.Origin{X: contentRect.MinX(), Y: contentRect.MaxY()},
+				Size:   page.PageFooter.Size,
+			}
+		}
+		if !pageHeaderRect.Size.IsZero() {
+			p.drawHeader(documentConfigure, page.PageHeader.LinerLayout, pageHeaderRect)
+		}
+		if !pageFooterRect.Size.IsZero() {
+			p.drawFooter(documentConfigure, page.PageFooter.LinerLayout, pageFooterRect)
+		}
+
+		// PAGE CONTENT
+		p.gp.SetX(contentRect.MinX())
+		p.gp.SetY(contentRect.MinY())
+		p.draw(documentConfigure, page.LinerLayout, contentRect)
 		//fmt.Printf("rect: %v\n", rect)
 	}
 }
@@ -256,11 +288,11 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 					p.gp.AddPage()
 					p.breakPage(&lineWrapRect, &wrapRect)
 
-					if p.headerRect.Size.IsSet() {
-						p.drawHeader(documentConfigure, p.headerRect)
+					if !p.headerRect.Size.IsZero() {
+						p.drawHeader(documentConfigure, documentConfigure.Header.LinerLayout, p.headerRect)
 					}
-					if p.footerRect.Size.IsSet() {
-						p.drawFooter(documentConfigure, p.footerRect)
+					if !p.footerRect.Size.IsZero() {
+						p.drawFooter(documentConfigure, documentConfigure.Footer.LinerLayout, p.footerRect)
 					}
 
 					p.gp.SetX(wrapRect.MinX())
@@ -343,11 +375,11 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 					p.gp.AddPage()
 					p.breakPage(&lineWrapRect, &wrapRect)
 
-					if p.headerRect.Size.IsSet() {
-						p.drawHeader(documentConfigure, p.headerRect)
+					if !p.headerRect.Size.IsZero() {
+						p.drawHeader(documentConfigure, documentConfigure.Header.LinerLayout, p.headerRect)
 					}
-					if p.footerRect.Size.IsSet() {
-						p.drawFooter(documentConfigure, p.footerRect)
+					if !p.footerRect.Size.IsZero() {
+						p.drawFooter(documentConfigure, documentConfigure.Footer.LinerLayout, p.footerRect)
 					}
 
 					p.gp.SetX(wrapRect.MinX())
@@ -819,29 +851,29 @@ func (p *PDF) drawImage(documentConfigure types.DocumentConfigure, decoded types
 }
 
 // ヘッダー
-func (p *PDF) drawHeader(documentConfigure types.DocumentConfigure, parentRect types.Rect) {
+func (p *PDF) drawHeader(documentConfigure types.DocumentConfigure, linerLayout types.LinerLayout, parentRect types.Rect) {
 	p.gp.SetX(parentRect.MinX())
 	p.gp.SetY(parentRect.MinY())
 
 	// > debug
 	//p.gp.SetStrokeColor(255, 0, 0)
-	//p.gp.RectFromUpperLeft(p.headerRect.Origin.X, p.headerRect.Origin.Y, p.headerRect.Width(), p.headerRect.Height())
+	//p.gp.RectFromUpperLeft(parentRect.Origin.X, parentRect.Origin.Y, parentRect.Width(), parentRect.Height())
 	// < debug
 
-	p.drawHeaderOrFooter(documentConfigure, documentConfigure.Header.LinerLayout, parentRect)
+	p.drawHeaderOrFooter(documentConfigure, linerLayout, parentRect)
 }
 
 // フッター
-func (p *PDF) drawFooter(documentConfigure types.DocumentConfigure, parentRect types.Rect) {
+func (p *PDF) drawFooter(documentConfigure types.DocumentConfigure, linerLayout types.LinerLayout, parentRect types.Rect) {
 	p.gp.SetX(parentRect.MinX())
 	p.gp.SetY(parentRect.MinY())
 
 	// > debug
 	//p.gp.SetStrokeColor(0, 255, 0)
-	//p.gp.RectFromUpperLeft(p.footerRect.Origin.X, p.footerRect.Origin.Y, p.footerRect.Width(), p.footerRect.Height())
+	//p.gp.RectFromUpperLeft(parentRect.Origin.X, parentRect.Origin.Y, parentRect.Width(), parentRect.Height())
 	// < debug
 
-	p.drawHeaderOrFooter(documentConfigure, documentConfigure.Footer.LinerLayout, parentRect)
+	p.drawHeaderOrFooter(documentConfigure, linerLayout, parentRect)
 }
 
 // 縦

@@ -5,6 +5,6 @@ type Size struct {
 	Height float64
 }
 
-func (S *Size) IsSet() bool {
-	return S.Width != 0 && S.Height != 0
+func (S *Size) IsZero() bool {
+	return S.Width == 0 && S.Height == 0
 }
