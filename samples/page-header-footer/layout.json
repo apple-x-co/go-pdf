@@ -12,7 +12,7 @@
         {
           "type": "text",
           "attributes": {
-            "text": "GLOBAL HEADER",
+            "text": "COMMON HEADER",
             "size": {
               "width": 575,
               "height": 20
@@ -41,7 +41,7 @@
         {
           "type": "text",
           "attributes": {
-            "text": "GLOBAL FOOTER",
+            "text": "COMMON FOOTER",
             "size": {
               "width": 575,
               "height": 20
