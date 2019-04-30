@@ -1,6 +1,6 @@
 # Root element
 
-## attributes
+## properties
 
 ### header
 
