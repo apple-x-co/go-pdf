@@ -158,10 +158,9 @@ func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 		}
 
 		pageHeaderRect := types.Rect{}
-		pageFooterRect := types.Rect{}
 		contentRect := p.contentRect
 
-		// PAGE HEADER & PAGE FOOTER
+		// DRAW PAGE HEADER
 		if !page.PageHeader.Size.IsZero() {
 			pageHeaderRect = types.Rect{
 				Origin: types.Origin{X: contentRect.MinX(), Y: contentRect.MinY()},
@@ -171,29 +170,27 @@ func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 				Top: page.PageHeader.Size.Height,
 			})
 		}
-		if !page.PageFooter.Size.IsZero() {
-			contentRect = contentRect.Inset(types.EdgeInset{
-				Bottom: page.PageFooter.Size.Height,
-			})
-			pageFooterRect = types.Rect{
-				Origin: types.Origin{X: contentRect.MinX(), Y: contentRect.MaxY()},
-				Size:   page.PageFooter.Size,
-			}
-		}
-
-		// DRAW PAGE HEADER & PAGE FOOTER
 		if !pageHeaderRect.Size.IsZero() {
 			p.drawHeader(documentConfigure, page.PageHeader.LinerLayout, pageHeaderRect)
-		}
-		if !pageFooterRect.Size.IsZero() {
-			p.drawFooter(documentConfigure, page.PageFooter.LinerLayout, pageFooterRect)
 		}
 
 		// DRAW PAGE CONTENT
 		p.gp.SetX(contentRect.MinX())
 		p.gp.SetY(contentRect.MinY())
-		p.draw(documentConfigure, page.LinerLayout, contentRect)
+		wrapRect := p.draw(documentConfigure, page.LinerLayout, contentRect)
 		//fmt.Printf("rect: %v\n", rect)
+
+		// DRAW PAGE FOOTER
+		pageFooterRect := types.Rect{}
+		if !page.PageFooter.Size.IsZero() {
+			pageFooterRect = types.Rect{
+				Origin: types.Origin{X: wrapRect.MinX(), Y: wrapRect.MaxY()},
+				Size:   page.PageFooter.Size,
+			}
+		}
+		if !pageFooterRect.Size.IsZero() {
+			p.drawFooter(documentConfigure, page.PageFooter.LinerLayout, pageFooterRect)
+		}
 	}
 }
 
