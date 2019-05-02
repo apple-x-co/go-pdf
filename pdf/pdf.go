@@ -723,12 +723,12 @@ func (p *PDF) breakPage(lineWrapRect *types.Rect, wrapRect *types.Rect) {
 	lineWrapRect.Origin.X = p.contentRect.MinX()
 	lineWrapRect.Origin.Y = p.contentRect.MinY()
 	lineWrapRect.Size.Width = 0
-	lineWrapRect.Size.Width = 0
+	lineWrapRect.Size.Height = 0
 
 	wrapRect.Origin.X = p.contentRect.MinX()
 	wrapRect.Origin.Y = p.contentRect.MinY()
 	wrapRect.Size.Width = 0
-	wrapRect.Size.Width = 0
+	wrapRect.Size.Height = 0
 }
 
 // 判定：複数行
