@@ -150,10 +150,10 @@ func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 
 		// GLOBAL HEADER & FOOTER
 		if !p.commonHeaderRect.Size.IsZero() {
-			p.draw(documentConfigure, documentConfigure.CommonHeader.LinerLayout, p.commonHeaderRect, 0, false)
+			p.draw(documentConfigure, documentConfigure.CommonHeader.LinerLayout, p.commonHeaderRect, true, false)
 		}
 		if !p.commonFooterRect.Size.IsZero() {
-			p.draw(documentConfigure, documentConfigure.CommonFooter.LinerLayout, p.commonFooterRect, 0, true)
+			p.draw(documentConfigure, documentConfigure.CommonFooter.LinerLayout, p.commonFooterRect, true, true)
 		}
 
 		pageHeaderRect := types.Rect{}
@@ -170,11 +170,11 @@ func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 			})
 		}
 		if !pageHeaderRect.Size.IsZero() {
-			p.draw(documentConfigure, page.PageHeader.LinerLayout, pageHeaderRect, 0, false)
+			p.draw(documentConfigure, page.PageHeader.LinerLayout, pageHeaderRect, true, false)
 		}
 
 		// DRAW PAGE CONTENT
-		wrapRect := p.draw(documentConfigure, page.LinerLayout, contentRect, 0, false)
+		wrapRect := p.draw(documentConfigure, page.LinerLayout, contentRect, true, false)
 		//fmt.Printf("rect: %v\n", rect)
 
 		// DRAW PAGE FOOTER
@@ -186,7 +186,7 @@ func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 			}
 		}
 		if !pageFooterRect.Size.IsZero() {
-			p.draw(documentConfigure, page.PageFooter.LinerLayout, pageFooterRect, 0, true)
+			p.draw(documentConfigure, page.PageFooter.LinerLayout, pageFooterRect, true, true)
 		}
 	}
 }
@@ -200,8 +200,8 @@ func (p *PDF) Destroy() {
 }
 
 // 描画要素のループ
-func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.LinerLayout, parentRect types.Rect, recursiveCallLevel uint, isFooter bool) types.Rect {
-	if recursiveCallLevel == 0 {
+func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.LinerLayout, parentRect types.Rect, needMoveAxis bool, isFooter bool) types.Rect {
+	if needMoveAxis {
 		p.gp.SetX(parentRect.MinX())
 		p.gp.SetY(parentRect.MinY())
 	}
@@ -290,10 +290,10 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 					p.breakPage(&lineWrapRect, &wrapRect)
 
 					if !p.commonHeaderRect.Size.IsZero() {
-						p.draw(documentConfigure, documentConfigure.CommonHeader.LinerLayout, p.commonHeaderRect, 0, false)
+						p.draw(documentConfigure, documentConfigure.CommonHeader.LinerLayout, p.commonHeaderRect, true, false)
 					}
 					if !p.commonFooterRect.Size.IsZero() {
-						p.draw(documentConfigure, documentConfigure.CommonFooter.LinerLayout, p.commonFooterRect, 0, true)
+						p.draw(documentConfigure, documentConfigure.CommonFooter.LinerLayout, p.commonFooterRect, true, true)
 					}
 
 					p.gp.SetX(wrapRect.MinX())
@@ -377,10 +377,10 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 					p.breakPage(&lineWrapRect, &wrapRect)
 
 					if !p.commonHeaderRect.Size.IsZero() {
-						p.draw(documentConfigure, documentConfigure.CommonHeader.LinerLayout, p.commonHeaderRect, 0, false)
+						p.draw(documentConfigure, documentConfigure.CommonHeader.LinerLayout, p.commonHeaderRect, true, false)
 					}
 					if !p.commonFooterRect.Size.IsZero() {
-						p.draw(documentConfigure, documentConfigure.CommonFooter.LinerLayout, p.commonFooterRect, 0, true)
+						p.draw(documentConfigure, documentConfigure.CommonFooter.LinerLayout, p.commonFooterRect, true, true)
 					}
 
 					p.gp.SetX(wrapRect.MinX())
@@ -417,7 +417,7 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 	}
 
 	for _, _linerLayout := range linerLayout.LinerLayouts {
-		drawnRect := p.draw(documentConfigure, _linerLayout, parentRect, recursiveCallLevel+1, false)
+		drawnRect := p.draw(documentConfigure, _linerLayout, parentRect, false, false)
 		wrapRect = wrapRect.Merge(drawnRect)
 
 		// > debug
