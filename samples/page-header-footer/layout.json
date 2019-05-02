@@ -3,7 +3,7 @@
   "height": 842,
   "header": {
     "size": {
-      "width": 595,
+      "width": 575,
       "height": 20
     },
     "liner_layout": {
@@ -32,7 +32,7 @@
   },
   "footer": {
     "size": {
-      "width": 595,
+      "width": 575,
       "height": 20
     },
     "liner_layout": {
@@ -127,6 +127,144 @@
             "attributes": {
               "text": "PAGE1"
             }
+          },
+          {
+            "type": "line_break"
+          },
+          {
+            "type": "text",
+            "attributes": {
+              "text": "TEXT"
+            }
+          },
+          {
+            "type": "line_break"
+          },
+          {
+            "type": "text",
+            "attributes": {
+              "text": "TEXT"
+            }
+          },
+          {
+            "type": "line_break"
+          },
+          {
+            "type": "text",
+            "attributes": {
+              "text": "TEXT"
+            }
+          },
+          {
+            "type": "line_break"
+          },
+          {
+            "type": "text",
+            "attributes": {
+              "text": "TEXT"
+            }
+          },
+          {
+            "type": "line_break"
+          },
+          {
+            "type": "text",
+            "attributes": {
+              "text": "TEXT"
+            }
+          },
+          {
+            "type": "line_break"
+          },
+          {
+            "type": "text",
+            "attributes": {
+              "text": "TEXT"
+            }
+          },
+          {
+            "type": "line_break"
+          },
+          {
+            "type": "text",
+            "attributes": {
+              "text": "TEXT"
+            }
+          },
+          {
+            "type": "line_break"
+          },
+          {
+            "type": "text",
+            "attributes": {
+              "text": "TEXT"
+            }
+          },
+          {
+            "type": "line_break"
+          },
+          {
+            "type": "text",
+            "attributes": {
+              "text": "TEXT"
+            }
+          },
+          {
+            "type": "line_break"
+          },
+          {
+            "type": "text",
+            "attributes": {
+              "text": "TEXT"
+            }
+          },
+          {
+            "type": "line_break"
+          },
+          {
+            "type": "text",
+            "attributes": {
+              "text": "TEXT"
+            }
+          },
+          {
+            "type": "line_break"
+          },
+          {
+            "type": "text",
+            "attributes": {
+              "text": "TEXT"
+            }
+          },
+          {
+            "type": "line_break"
+          },
+          {
+            "type": "text",
+            "attributes": {
+              "text": "TEXT"
+            }
+          },
+          {
+            "type": "line_break"
+          },
+          {
+            "type": "text",
+            "attributes": {
+              "text": "TEXT"
+            }
+          },
+          {
+            "type": "line_break"
+          },
+          {
+            "type": "text",
+            "attributes": {
+              "text": "TEXT"
+            }
+          },
+          {
+            "type": "line_break"
           }
         ]
       }

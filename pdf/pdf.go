@@ -150,11 +150,10 @@ func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 
 		// GLOBAL HEADER & FOOTER
 		if !p.commonHeaderRect.Size.IsZero() {
-			//fmt.Printf("%v\n", p.commonHeaderRect)
-			p.drawHeader(documentConfigure, documentConfigure.CommonHeader.LinerLayout, p.commonHeaderRect)
+			p.draw(documentConfigure, documentConfigure.CommonHeader.LinerLayout, p.commonHeaderRect, 0, false)
 		}
 		if !p.commonFooterRect.Size.IsZero() {
-			p.drawFooter(documentConfigure, documentConfigure.CommonFooter.LinerLayout, p.commonFooterRect)
+			p.draw(documentConfigure, documentConfigure.CommonFooter.LinerLayout, p.commonFooterRect, 0, true)
 		}
 
 		pageHeaderRect := types.Rect{}
@@ -171,13 +170,11 @@ func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 			})
 		}
 		if !pageHeaderRect.Size.IsZero() {
-			p.drawHeader(documentConfigure, page.PageHeader.LinerLayout, pageHeaderRect)
+			p.draw(documentConfigure, page.PageHeader.LinerLayout, pageHeaderRect, 0, false)
 		}
 
 		// DRAW PAGE CONTENT
-		p.gp.SetX(contentRect.MinX())
-		p.gp.SetY(contentRect.MinY())
-		wrapRect := p.draw(documentConfigure, page.LinerLayout, contentRect)
+		wrapRect := p.draw(documentConfigure, page.LinerLayout, contentRect, 0, false)
 		//fmt.Printf("rect: %v\n", rect)
 
 		// DRAW PAGE FOOTER
@@ -189,7 +186,7 @@ func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 			}
 		}
 		if !pageFooterRect.Size.IsZero() {
-			p.drawFooter(documentConfigure, page.PageFooter.LinerLayout, pageFooterRect)
+			p.draw(documentConfigure, page.PageFooter.LinerLayout, pageFooterRect, 0, true)
 		}
 	}
 }
@@ -203,7 +200,12 @@ func (p *PDF) Destroy() {
 }
 
 // 描画要素のループ
-func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.LinerLayout, parentRect types.Rect) types.Rect {
+func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.LinerLayout, parentRect types.Rect, recursiveCallLevel uint, isFooter bool) types.Rect {
+	if recursiveCallLevel == 0 {
+		p.gp.SetX(parentRect.MinX())
+		p.gp.SetY(parentRect.MinY())
+	}
+
 	var wrapRect = types.Rect{Origin: types.Origin{X: p.gp.GetX(), Y: p.gp.GetY()}}
 	var lineWrapRect = types.Rect{Origin: types.Origin{X: p.gp.GetX(), Y: p.gp.GetY()}}
 	var parentLayoutSize = p.calcLayoutSize(parentRect.Size, linerLayout.Layout)
@@ -282,16 +284,16 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 				}
 
 				// PAGE BREAK
-				if p.needPageBreak(documentConfigure, lineWrapRect, measureSize) {
+				if p.needPageBreak(documentConfigure, lineWrapRect, measureSize) && !isFooter {
 					//fmt.Print("> page break\n")
 					p.gp.AddPage()
 					p.breakPage(&lineWrapRect, &wrapRect)
 
 					if !p.commonHeaderRect.Size.IsZero() {
-						p.drawHeader(documentConfigure, documentConfigure.CommonHeader.LinerLayout, p.commonHeaderRect)
+						p.draw(documentConfigure, documentConfigure.CommonHeader.LinerLayout, p.commonHeaderRect, 0, false)
 					}
 					if !p.commonFooterRect.Size.IsZero() {
-						p.drawFooter(documentConfigure, documentConfigure.CommonFooter.LinerLayout, p.commonFooterRect)
+						p.draw(documentConfigure, documentConfigure.CommonFooter.LinerLayout, p.commonFooterRect, 0, true)
 					}
 
 					p.gp.SetX(wrapRect.MinX())
@@ -375,10 +377,10 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 					p.breakPage(&lineWrapRect, &wrapRect)
 
 					if !p.commonHeaderRect.Size.IsZero() {
-						p.drawHeader(documentConfigure, documentConfigure.CommonHeader.LinerLayout, p.commonHeaderRect)
+						p.draw(documentConfigure, documentConfigure.CommonHeader.LinerLayout, p.commonHeaderRect, 0, false)
 					}
 					if !p.commonFooterRect.Size.IsZero() {
-						p.drawFooter(documentConfigure, documentConfigure.CommonFooter.LinerLayout, p.commonFooterRect)
+						p.draw(documentConfigure, documentConfigure.CommonFooter.LinerLayout, p.commonFooterRect, 0, true)
 					}
 
 					p.gp.SetX(wrapRect.MinX())
@@ -415,7 +417,7 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 	}
 
 	for _, _linerLayout := range linerLayout.LinerLayouts {
-		drawnRect := p.draw(documentConfigure, _linerLayout, parentRect)
+		drawnRect := p.draw(documentConfigure, _linerLayout, parentRect, recursiveCallLevel+1, false)
 		wrapRect = wrapRect.Merge(drawnRect)
 
 		// > debug
@@ -430,168 +432,6 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, linerLayout types.
 			p.gp.SetX(wrapRect.MinX())
 			p.gp.SetY(wrapRect.MaxY())
 		}
-	}
-
-	return wrapRect
-}
-
-// 描画要素のループ（ヘッターフッター）
-func (p *PDF) drawHeaderOrFooter(documentConfigure types.DocumentConfigure, linerLayout types.LinerLayout, parentRect types.Rect) types.Rect {
-	var wrapRect = types.Rect{Origin: types.Origin{X: p.gp.GetX(), Y: p.gp.GetY()}}
-	var lineWrapRect = types.Rect{Origin: types.Origin{X: p.gp.GetX(), Y: p.gp.GetY()}}
-	var parentLayoutSize = p.calcLayoutSize(parentRect.Size, linerLayout.Layout)
-	//fmt.Printf("parentLayoutSize: %v\n", parentLayoutSize)
-
-	if len(linerLayout.Elements) > 0 {
-
-		for _, element := range linerLayout.Elements {
-			if element.Type.IsLineBreak() {
-				var decoded = types.ElementLineBreak{
-					Height: UnsetHeight,
-				}
-				_ = json.Unmarshal(element.Attributes, &decoded)
-				p.breakLine(&lineWrapRect, decoded.Height)
-
-			} else if element.Type.IsText() {
-				var decoded types.ElementText
-				if element.TemplateId != "" {
-					templateText, ok := p.templates[element.TemplateId].(types.ElementText)
-					if ok {
-						decoded = templateText
-					}
-				}
-				if decoded.TextSize == 0 {
-					decoded = types.ElementText{
-						TextSize:        documentConfigure.TextSize,
-						Color:           types.Color{R: documentConfigure.TextColor.R, G: documentConfigure.TextColor.G, B: documentConfigure.TextColor.B},
-						BackgroundColor: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB},
-						Size:            types.Size{Width: UnsetWidth, Height: UnsetWidth},
-						Origin:          types.Origin{X: UnsetWidth, Y: UnsetHeight},
-						Border:          types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
-						BorderTop:       types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
-						BorderRight:     types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
-						BorderBottom:    types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
-						BorderLeft:      types.Border{Width: UnsetWidth, Color: types.Color{R: DefaultColorR, B: DefaultColorG, G: DefaultColorB}},
-					}
-				}
-				_ = json.Unmarshal(element.Attributes, &decoded)
-
-				// Actual Size
-				measureSize := p.measureText(documentConfigure, decoded)
-
-				// Layout Size
-				if decoded.Layout.Width.IsMatchParent() || decoded.Layout.Height.IsMatchParent() {
-					elementLayoutSize := p.calcLayoutSize(parentLayoutSize, decoded.Layout)
-					//fmt.Printf("elementLayoutSize: %v\n", elementLayoutSize)
-					if elementLayoutSize.Width != UnsetWidth {
-						measureSize.Width = elementLayoutSize.Width
-					}
-					if elementLayoutSize.Height != UnsetHeight {
-						measureSize.Height = elementLayoutSize.Height
-					}
-				}
-
-				// FIX POSITION
-				if decoded.Origin.X != UnsetX && decoded.Origin.Y != UnsetY {
-					textFrame := types.Rect{Origin: types.Origin{X: decoded.Origin.X, Y: decoded.Origin.Y}, Size: measureSize}
-					textRect := textFrame.Inset(decoded.Inset)
-					p.gp.SetX(textRect.MinX())
-					p.gp.SetY(textRect.MinY())
-					p.drawText(documentConfigure, decoded, textRect, textFrame)
-					continue
-				}
-
-				// VERTICAL
-				if linerLayout.Orientation.IsVertical() {
-					p.breakLine(&lineWrapRect, linerLayout.LineHeight)
-				}
-
-				// LINE BREAK
-				if p.needLineBreak(documentConfigure, lineWrapRect, measureSize) {
-					//fmt.Print("> line break\n")
-					p.breakLine(&lineWrapRect, linerLayout.LineHeight)
-				}
-
-				// DRAWABLE RECT
-				textFrame := types.Rect{Origin: types.Origin{X: lineWrapRect.MaxX(), Y: lineWrapRect.MinY()}, Size: measureSize}
-				textRect := textFrame.Inset(decoded.Inset)
-				p.gp.SetX(textRect.MinX())
-				p.gp.SetY(textRect.MinY())
-
-				// DRAW
-				p.drawText(documentConfigure, decoded, textRect, textFrame)
-
-				lineWrapRect = lineWrapRect.Merge(textFrame)
-
-			} else if element.Type.IsImage() {
-				var decoded types.ElementImage
-				if element.TemplateId != "" {
-					templateImage, ok := p.templates[element.TemplateId].(types.ElementImage)
-					if ok {
-						decoded = templateImage
-					}
-				}
-				if decoded.Resolution == 0 {
-					decoded = types.ElementImage{
-						Size:       types.Size{Width: UnsetWidth, Height: UnsetWidth},
-						Origin:     types.Origin{X: UnsetWidth, Y: UnsetHeight},
-						Resize:     false,
-						Resolution: DefaultImageResolution,
-					}
-				}
-				_ = json.Unmarshal(element.Attributes, &decoded)
-
-				// Actual Size
-				measureSize := p.measureImage(documentConfigure, decoded)
-
-				// Layout Size
-				if decoded.Layout.Width.IsMatchParent() || decoded.Layout.Height.IsMatchParent() {
-					elementLayoutSize := p.calcLayoutSize(parentLayoutSize, decoded.Layout)
-					//fmt.Printf("elementLayoutSize: %v\n", elementLayoutSize)
-					if elementLayoutSize.Width != UnsetWidth && elementLayoutSize.Height == UnsetHeight {
-						measureSize.Height = measureSize.Height * (elementLayoutSize.Width / measureSize.Width)
-						measureSize.Width = elementLayoutSize.Width
-					} else if elementLayoutSize.Width == UnsetWidth && elementLayoutSize.Height != UnsetHeight {
-						measureSize.Width = measureSize.Width * (elementLayoutSize.Height / measureSize.Height)
-						measureSize.Height = elementLayoutSize.Height
-					}
-				}
-
-				// FIX POSITION
-				if decoded.Origin.X != UnsetX && decoded.Origin.Y != UnsetY {
-					imageFrame := types.Rect{Origin: types.Origin{X: decoded.Origin.X, Y: decoded.Origin.Y}, Size: measureSize}
-					imageRect := imageFrame.Inset(decoded.Inset)
-					p.gp.SetX(imageRect.MinX())
-					p.gp.SetY(imageRect.MinY())
-					p.drawImage(documentConfigure, decoded, imageRect, imageFrame)
-					continue
-				}
-
-				// VERTICAL
-				if linerLayout.Orientation.IsVertical() {
-					p.breakLine(&lineWrapRect, linerLayout.LineHeight)
-				}
-
-				// LINE BREAK
-				if p.needLineBreak(documentConfigure, lineWrapRect, measureSize) {
-					p.breakLine(&lineWrapRect, linerLayout.LineHeight)
-				}
-
-				// DRAWABLE RECT
-				imageFrame := types.Rect{Origin: types.Origin{X: lineWrapRect.MaxX(), Y: lineWrapRect.MinY()}, Size: measureSize}
-				imageRect := imageFrame.Inset(decoded.Inset)
-				p.gp.SetX(imageRect.MinX())
-				p.gp.SetY(imageRect.MinY())
-
-				// DRAW
-				p.drawImage(documentConfigure, decoded, imageRect, imageFrame)
-
-				lineWrapRect = lineWrapRect.Merge(imageFrame)
-			}
-
-			wrapRect = wrapRect.Merge(lineWrapRect)
-		}
-
 	}
 
 	return wrapRect
@@ -847,32 +687,6 @@ func (p *PDF) drawImage(documentConfigure types.DocumentConfigure, decoded types
 		p.gp.SetStrokeColor(decoded.BorderLeft.Color.R, decoded.BorderLeft.Color.G, decoded.BorderLeft.Color.B)
 		p.gp.Line(imageFrame.MinX(), imageFrame.MinY()+imageFrame.Height(), imageFrame.MinX(), imageFrame.MinY())
 	}
-}
-
-// ヘッダー
-func (p *PDF) drawHeader(documentConfigure types.DocumentConfigure, linerLayout types.LinerLayout, parentRect types.Rect) {
-	p.gp.SetX(parentRect.MinX())
-	p.gp.SetY(parentRect.MinY())
-
-	// > debug
-	//p.gp.SetStrokeColor(255, 0, 0)
-	//p.gp.RectFromUpperLeft(parentRect.Origin.X, parentRect.Origin.Y, parentRect.Width(), parentRect.Height())
-	// < debug
-
-	p.drawHeaderOrFooter(documentConfigure, linerLayout, parentRect)
-}
-
-// フッター
-func (p *PDF) drawFooter(documentConfigure types.DocumentConfigure, linerLayout types.LinerLayout, parentRect types.Rect) {
-	p.gp.SetX(parentRect.MinX())
-	p.gp.SetY(parentRect.MinY())
-
-	// > debug
-	//p.gp.SetStrokeColor(0, 255, 0)
-	//p.gp.RectFromUpperLeft(parentRect.Origin.X, parentRect.Origin.Y, parentRect.Width(), parentRect.Height())
-	// < debug
-
-	p.drawHeaderOrFooter(documentConfigure, linerLayout, parentRect)
 }
 
 // 縦
