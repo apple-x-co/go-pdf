@@ -409,6 +409,21 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, page types.Page, l
 						p.draw(documentConfigure, page, documentConfigure.CommonFooter.LinerLayout, p.commonFooterRect, true, true)
 					}
 
+					// DRAW FIXED TITLE
+					if !page.FixedTitle.Size.IsZero() {
+						titleRect := types.Rect{
+							Origin: types.Origin{X: wrapRect.MinX(), Y: wrapRect.MinY()},
+							Size:   page.FixedTitle.Size,
+						}
+						p.draw(documentConfigure, page, page.FixedTitle.LinerLayout, titleRect, true, false)
+						lineWrapRect = lineWrapRect.Inset(types.EdgeInset{
+							Top: titleRect.Size.Height,
+						})
+						wrapRect = wrapRect.Inset(types.EdgeInset{
+							Top: titleRect.Size.Height,
+						})
+					}
+
 					p.gp.SetX(wrapRect.MinX())
 					p.gp.SetY(wrapRect.MinY())
 				}
