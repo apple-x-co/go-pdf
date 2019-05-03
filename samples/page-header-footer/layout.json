@@ -119,6 +119,35 @@
           ]
         }
       },
+      "fixed_title": {
+        "size": {
+          "width": 575,
+          "height": 20
+        },
+        "liner_layout": {
+          "orientation": "horizontal",
+          "elements": [
+            {
+              "type": "text",
+              "attributes": {
+                "text": "FIXED TITLE",
+                "size": {
+                  "width": 575,
+                  "height": 20
+                },
+                "border": {
+                  "width": 1,
+                  "color": {
+                    "r": 255,
+                    "g": 253,
+                    "b": 140
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
       "liner_layout": {
         "orientation": "horizontal",
         "elements": [
