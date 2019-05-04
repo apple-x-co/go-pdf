@@ -54,7 +54,8 @@ samples:
 	./bin/$(BIN)-dev-mac --in samples/layout-orientation/layout.json --out samples/layout-orientation/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/page-header-footer/layout.json --out samples/page-header-footer/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/password-protect/layout.json --out samples/password-protect/output.pdf --ttf fonts/TakaoPGothic.ttf
-	./bin/$(BIN)-dev-mac --in samples/sample-report/layout.json --out samples/sample-report/output.pdf --ttf fonts/TakaoPGothic.ttf
+	./bin/$(BIN)-dev-mac --in samples/sample-report1/layout.json --out samples/sample-report1/output.pdf --ttf fonts/TakaoPGothic.ttf
+	./bin/$(BIN)-dev-mac --in samples/sample-report2/layout.json --out samples/sample-report2/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/text/layout.json --out samples/text/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/text-align/layout.json --out samples/text-align/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/text-backgroundcolor/layout.json --out samples/text-backgroundcolor/output.pdf --ttf fonts/TakaoPGothic.ttf
