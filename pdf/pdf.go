@@ -289,13 +289,13 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, page types.Page, l
 				}
 
 				// LINE BREAK
-				if p.needLineBreak(documentConfigure, lineWrapRect, measureSize) {
+				if p.needLineBreak(lineWrapRect, measureSize) {
 					//fmt.Print("> line break\n")
 					p.breakLine(&lineWrapRect, linerLayout.LineHeight)
 				}
 
 				// PAGE BREAK
-				if p.needPageBreak(documentConfigure, lineWrapRect, measureSize) && !isFooter {
+				if p.needPageBreak(lineWrapRect, measureSize) && !isFooter {
 					//fmt.Print("> page break\n")
 					p.gp.AddPage()
 					p.breakPage(&lineWrapRect, &wrapRect)
@@ -391,13 +391,13 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, page types.Page, l
 				}
 
 				// LINE BREAK
-				if p.needLineBreak(documentConfigure, lineWrapRect, measureSize) {
+				if p.needLineBreak(lineWrapRect, measureSize) {
 					//fmt.Print("> line break\n")
 					p.breakLine(&lineWrapRect, linerLayout.LineHeight)
 				}
 
 				// PAGE BREAK
-				if p.needPageBreak(documentConfigure, lineWrapRect, measureSize) {
+				if p.needPageBreak(lineWrapRect, measureSize) {
 					//fmt.Print("> page break\n")
 					p.gp.AddPage()
 					p.breakPage(&lineWrapRect, &wrapRect)
@@ -467,11 +467,11 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, page types.Page, l
 		// < debug
 
 		if linerLayout.Orientation.IsHorizontal() {
-			p.gp.SetX(wrapRect.MaxX())
-			p.gp.SetY(wrapRect.MinY())
+			p.gp.SetX(drawnRect.MaxX())
+			p.gp.SetY(drawnRect.MinY())
 		} else if linerLayout.Orientation.IsVertical() {
-			p.gp.SetX(wrapRect.MinX())
-			p.gp.SetY(wrapRect.MaxY())
+			p.gp.SetX(drawnRect.MinX())
+			p.gp.SetY(drawnRect.MaxY())
 		}
 	}
 
@@ -778,7 +778,7 @@ func (p *PDF) isMultiLineText(text string) bool {
 }
 
 // 判定：改行
-func (p *PDF) needLineBreak(documentConfigure types.DocumentConfigure, lineWrapRect types.Rect, measureSize types.Size) bool {
+func (p *PDF) needLineBreak(lineWrapRect types.Rect, measureSize types.Size) bool {
 	if lineWrapRect.MaxX()+measureSize.Width > p.contentRect.MaxX() {
 		return true
 	}
@@ -786,7 +786,7 @@ func (p *PDF) needLineBreak(documentConfigure types.DocumentConfigure, lineWrapR
 }
 
 // 判定：ページ
-func (p *PDF) needPageBreak(documentConfigure types.DocumentConfigure, lineWrapRect types.Rect, measureSize types.Size) bool {
+func (p *PDF) needPageBreak(lineWrapRect types.Rect, measureSize types.Size) bool {
 	if lineWrapRect.MinY()+measureSize.Height > p.contentRect.MaxY() {
 		return true
 	}
