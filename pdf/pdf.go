@@ -14,6 +14,8 @@ import (
 	"math"
 	"os"
 	"strings"
+	"text/template"
+	"time"
 )
 
 const UnsetWidth float64 = 0
@@ -33,6 +35,7 @@ type PDF struct {
 	commonHeaderRect types.Rect
 	commonFooterRect types.Rect
 	templates        map[string]interface{}
+	pageNumber       uint
 }
 
 func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
@@ -147,6 +150,7 @@ func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 	// DRAW
 	for _, page := range documentConfigure.Pages {
 		p.gp.AddPage()
+		p.pageNumber += 1
 
 		// GLOBAL HEADER & FOOTER
 		if !p.commonHeaderRect.Size.IsZero() {
@@ -258,10 +262,29 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, page types.Page, l
 
 				//fmt.Printf("---------------------------\n%v\n", decoded.Text)
 
-				// Actual Size
+				// BUILD TEXT
+				vars := struct {
+					PageNumber uint
+					Now        string
+				}{
+					p.pageNumber,
+					time.Now().Format("2006-01-02 15:04:05"),
+				}
+				tmpl, err := template.New("text").Parse(decoded.Text)
+				if err != nil {
+					panic(err)
+				}
+				var buf bytes.Buffer
+				err = tmpl.Execute(&buf, vars)
+				if err != nil {
+					panic(err)
+				}
+				decoded.Text = buf.String()
+
+				// ACTUAL SIZE
 				measureSize := p.measureText(documentConfigure, decoded)
 
-				// Layout Size
+				// LAYOUT SIZE
 				if decoded.Layout.Width.IsMatchParent() || decoded.Layout.Height.IsMatchParent() {
 					elementLayoutSize := p.calcLayoutSize(parentLayoutSize, decoded.Layout)
 					//fmt.Printf("elementLayoutSize: %v\n", elementLayoutSize)
@@ -298,6 +321,7 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, page types.Page, l
 				if p.needPageBreak(lineWrapRect, measureSize) && !isFooter {
 					//fmt.Print("> page break\n")
 					p.gp.AddPage()
+					p.pageNumber += 1
 					p.breakPage(&lineWrapRect, &wrapRect)
 
 					if !p.commonHeaderRect.Size.IsZero() {
@@ -400,6 +424,7 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, page types.Page, l
 				if p.needPageBreak(lineWrapRect, measureSize) {
 					//fmt.Print("> page break\n")
 					p.gp.AddPage()
+					p.pageNumber += 1
 					p.breakPage(&lineWrapRect, &wrapRect)
 
 					if !p.commonHeaderRect.Size.IsZero() {

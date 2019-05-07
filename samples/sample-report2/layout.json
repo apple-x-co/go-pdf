@@ -120,7 +120,7 @@
         {
           "type": "text",
           "attributes": {
-            "text": "page 1",
+            "text": "page {{.PageNumber}}",
             "text_size": 10,
             "layout": {
               "width": "match_parent",
@@ -149,7 +149,7 @@
         {
           "type": "text",
           "attributes": {
-            "text": "Created 2019-04-26",
+            "text": "Created {{.Now}}",
             "text_size": 10,
             "layout": {
               "width": "match_parent",
