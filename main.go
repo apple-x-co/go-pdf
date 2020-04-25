@@ -34,12 +34,12 @@ func main() {
 		os.Exit(0)
 	}
 
-	execuute(*inputPath, *outputPath, *ttfPath)
+	execute(*inputPath, *outputPath, *ttfPath)
 
 	os.Exit(0)
 }
 
-func execuute(inputPath string, outputPath string, ttfPath string) {
+func execute(inputPath string, outputPath string, ttfPath string) {
 	f, err := os.Open(inputPath)
 	if err != nil {
 		fmt.Println("error:", err)
