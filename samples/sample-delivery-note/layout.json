@@ -1,0 +1,2782 @@
+{
+  "width": 595,
+  "height": 842,
+  "header": {
+    "size": {
+      "width": 575,
+      "height": 200
+    },
+    "liner_layout": {
+      "orientation": "vertical",
+      "layout": {
+        "width": "match_parent",
+        "height": "wrap_content",
+        "ratio": 1
+      },
+      "liner_layouts": [
+        {
+          "orientation": "vertical",
+          "layout": {
+            "width": "match_parent",
+            "height": "wrap_content",
+            "ratio": 1
+          },
+          "elements": [
+            {
+              "type": "text",
+              "attributes": {
+                "text": "Buddying inc.",
+                "text_size": 15,
+                "valign": "middle",
+                "inset": {
+                  "top": 20,
+                  "right": 20,
+                  "bottom": 20,
+                  "left": 20
+                },
+                "layout": {
+                  "width": "match_parent",
+                  "height": "wrap_content",
+                  "ratio": 1
+                }
+              }
+            },
+            {
+              "type": "text",
+              "attributes": {
+                "text": "〒248-0006",
+                "text_size": 10,
+                "inset": {
+                  "left": 20
+                },
+                "layout": {
+                  "width": "match_parent",
+                  "height": "wrap_content",
+                  "ratio": 1
+                }
+              }
+            },
+            {
+              "type": "text",
+              "attributes": {
+                "text": "神奈川県鎌倉市小町1-3-7 大石ビル2F",
+                "text_size": 10,
+                "inset": {
+                  "left": 20
+                },
+                "layout": {
+                  "width": "match_parent",
+                  "height": "wrap_content",
+                  "ratio": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "orientation": "horizontal",
+          "layout": {
+            "width": "match_parent",
+            "height": "wrap_content",
+            "ratio": 1
+          },
+          "liner_layouts": [
+            {
+              "orientation": "vertical",
+              "layout": {
+                "width": "match_parent",
+                "height": "wrap_content",
+                "ratio": 0.5
+              },
+              "elements": [
+                {
+                  "type": "text",
+                  "attributes": {
+                    "text": "お届け先",
+                    "text_size": 11,
+                    "valign": "middle",
+                    "inset": {
+                      "top": 30,
+                      "left": 20
+                    },
+                    "layout": {
+                      "width": "match_parent",
+                      "height": "wrap_content",
+                      "ratio": 1
+                    }
+                  }
+                },
+                {
+                  "type": "text",
+                  "attributes": {
+                    "text": "〒248-0006",
+                    "text_size": 8,
+                    "valign": "middle",
+                    "inset": {
+                      "left": 20,
+                      "top": 5
+                    },
+                    "layout": {
+                      "width": "match_parent",
+                      "height": "wrap_content",
+                      "ratio": 1
+                    }
+                  }
+                },
+                {
+                  "type": "text",
+                  "attributes": {
+                    "text": "神奈川県鎌倉市小町1-3-7 大石ビル2F",
+                    "text_size": 8,
+                    "valign": "middle",
+                    "inset": {
+                      "left": 20
+                    },
+                    "layout": {
+                      "width": "match_parent",
+                      "height": "wrap_content",
+                      "ratio": 1
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "orientation": "vertical",
+              "layout": {
+                "width": "match_parent",
+                "height": "wrap_content",
+                "ratio": 0.5
+              },
+              "elements": [
+                {
+                  "type": "text",
+                  "attributes": {
+                    "text": "注文者",
+                    "text_size": 11,
+                    "valign": "middle",
+                    "inset": {
+                      "top": 30
+                    },
+                    "layout": {
+                      "width": "match_parent",
+                      "height": "wrap_content",
+                      "ratio": 1
+                    }
+                  }
+                },
+                {
+                  "type": "text",
+                  "attributes": {
+                    "text": "〒248-0006",
+                    "text_size": 8,
+                    "valign": "middle",
+                    "inset": {
+                      "top": 5
+                    },
+                    "layout": {
+                      "width": "match_parent",
+                      "height": "wrap_content",
+                      "ratio": 1
+                    }
+                  }
+                },
+                {
+                  "type": "text",
+                  "attributes": {
+                    "text": "神奈川県鎌倉市小町1-3-7 大石ビル2F",
+                    "text_size": 8,
+                    "valign": "middle",
+                    "layout": {
+                      "width": "match_parent",
+                      "height": "wrap_content",
+                      "ratio": 1
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "footer": {
+    "size": {
+      "width": 575,
+      "height": 20
+    },
+    "liner_layout": {
+      "orientation": "horizontal",
+      "layout": {
+        "width": "match_parent",
+        "height": "wrap_content",
+        "ratio": 1
+      },
+      "elements": [
+        {
+          "type": "text",
+          "attributes": {
+            "text": "page {{.PageNumber}}",
+            "text_size": 10,
+            "layout": {
+              "width": "match_parent",
+              "height": "wrap_content",
+              "ratio": 1
+            },
+            "align": "right",
+            "valign": "bottom"
+          }
+        }
+      ]
+    }
+  },
+  "pages": [
+    {
+      "page_header": {
+        "size": {
+          "width": 575,
+          "height": 150
+        },
+        "liner_layout": {
+          "orientation": "vertical",
+          "layout": {
+            "width": "match_parent",
+            "height": "wrap_content",
+            "ratio": 1
+          },
+          "liner_layouts": [
+            {
+              "orientation": "horizontal",
+              "layout": {
+                "width": "match_parent",
+                "height": "wrap_content",
+                "ratio": 1
+              },
+              "elements": [
+                {
+                  "type": "text",
+                  "attributes": {
+                    "size": {
+                      "width": 20
+                    }
+                  }
+                },
+                {
+                  "type": "text",
+                  "attributes": {
+                    "text": "ご注文内容",
+                    "text_size": 11,
+                    "valign": "middle",
+                    "inset": {
+                      "bottom": 5
+                    },
+                    "border_bottom": {
+                      "width": 2
+                    },
+                    "size": {
+                      "width": 535
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "orientation": "horizontal",
+              "layout": {
+                "width": "match_parent",
+                "height": "wrap_content",
+                "ratio": 1
+              },
+              "elements": [
+                {
+                  "type": "text",
+                  "attributes": {
+                    "size": {
+                      "width": 20
+                    }
+                  }
+                },
+                {
+                  "type": "text",
+                  "attributes": {
+                    "text": "ご注文No",
+                    "text_size": 8,
+                    "valign": "middle",
+                    "inset": {
+                      "top": 2,
+                      "bottom": 2
+                    },
+                    "layout": {
+                      "width": "match_parent",
+                      "height": "wrap_content",
+                      "ratio": 0.2
+                    },
+                    "border_bottom": {
+                      "width": 1
+                    }
+                  }
+                },
+                {
+                  "type": "text",
+                  "attributes": {
+                    "text": "1587366896-3042-57",
+                    "text_size": 8,
+                    "valign": "middle",
+                    "inset": {
+                      "top": 2,
+                      "bottom": 2
+                    },
+                    "layout": {
+                      "width": "match_parent",
+                      "height": "wrap_content",
+                      "ratio": 0.73
+                    },
+                    "border_bottom": {
+                      "width": 1
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "orientation": "horizontal",
+              "layout": {
+                "width": "match_parent",
+                "ratio": 1
+              },
+              "elements": [
+                {
+                  "type": "text",
+                  "attributes": {
+                    "size": {
+                      "width": 20
+                    }
+                  }
+                },
+                {
+                  "type": "text",
+                  "attributes": {
+                    "text": "ご注文日時",
+                    "text_size": 8,
+                    "valign": "middle",
+                    "inset": {
+                      "top": 2,
+                      "bottom": 2
+                    },
+                    "layout": {
+                      "width": "match_parent",
+                      "height": "wrap_content",
+                      "ratio": 0.2
+                    },
+                    "border_bottom": {
+                      "width": 1
+                    }
+                  }
+                },
+                {
+                  "type": "text",
+                  "attributes": {
+                    "text": "2020/04/20 16:14:56",
+                    "text_size": 8,
+                    "valign": "middle",
+                    "inset": {
+                      "top": 2,
+                      "bottom": 2
+                    },
+                    "layout": {
+                      "width": "match_parent",
+                      "height": "wrap_content",
+                      "ratio": 0.73
+                    },
+                    "border_bottom": {
+                      "width": 1
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "orientation": "horizontal",
+              "layout": {
+                "width": "match_parent",
+                "height": "wrap_content",
+                "ratio": 1
+              },
+              "elements": [
+                {
+                  "type": "text",
+                  "attributes": {
+                    "size": {
+                      "width": 20
+                    }
+                  }
+                },
+                {
+                  "type": "text",
+                  "attributes": {
+                    "text": "お支払い方法",
+                    "text_size": 8,
+                    "valign": "middle",
+                    "inset": {
+                      "top": 2,
+                      "bottom": 2
+                    },
+                    "layout": {
+                      "width": "match_parent",
+                      "height": "wrap_content",
+                      "ratio": 0.2
+                    },
+                    "border_bottom": {
+                      "width": 1
+                    }
+                  }
+                },
+                {
+                  "type": "text",
+                  "attributes": {
+                    "text": "クレジットカード",
+                    "text_size": 8,
+                    "valign": "middle",
+                    "inset": {
+                      "top": 2,
+                      "bottom": 2
+                    },
+                    "layout": {
+                      "width": "match_parent",
+                      "height": "wrap_content",
+                      "ratio": 0.73
+                    },
+                    "border_bottom": {
+                      "width": 1
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "orientation": "horizontal",
+              "layout": {
+                "width": "match_parent",
+                "height": "wrap_content",
+                "ratio": 1
+              },
+              "elements": [
+                {
+                  "type": "text",
+                  "attributes": {
+                    "size": {
+                      "width": 20
+                    }
+                  }
+                },
+                {
+                  "type": "text",
+                  "attributes": {
+                    "text": "メールアドレス",
+                    "text_size": 8,
+                    "valign": "middle",
+                    "inset": {
+                      "top": 2,
+                      "bottom": 2
+                    },
+                    "layout": {
+                      "width": "match_parent",
+                      "height": "wrap_content",
+                      "ratio": 0.2
+                    },
+                    "border_bottom": {
+                      "width": 1
+                    }
+                  }
+                },
+                {
+                  "type": "text",
+                  "attributes": {
+                    "text": "example@exmaple.com",
+                    "text_size": 8,
+                    "valign": "middle",
+                    "inset": {
+                      "top": 2,
+                      "bottom": 2
+                    },
+                    "layout": {
+                      "width": "match_parent",
+                      "height": "wrap_content",
+                      "ratio": 0.73
+                    },
+                    "border_bottom": {
+                      "width": 1
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "orientation": "horizontal",
+              "layout": {
+                "width": "match_parent",
+                "height": "wrap_content",
+                "ratio": 1
+              },
+              "elements": [
+                {
+                  "type": "text",
+                  "attributes": {
+                    "size": {
+                      "width": 20
+                    }
+                  }
+                },
+                {
+                  "type": "text",
+                  "attributes": {
+                    "text": "お電話番号",
+                    "text_size": 8,
+                    "valign": "middle",
+                    "inset": {
+                      "top": 2,
+                      "bottom": 2
+                    },
+                    "layout": {
+                      "width": "match_parent",
+                      "height": "wrap_content",
+                      "ratio": 0.2
+                    },
+                    "border_bottom": {
+                      "width": 1
+                    }
+                  }
+                },
+                {
+                  "type": "text",
+                  "attributes": {
+                    "text": "03-0000-0000",
+                    "text_size": 8,
+                    "valign": "middle",
+                    "inset": {
+                      "top": 2,
+                      "bottom": 2
+                    },
+                    "layout": {
+                      "width": "match_parent",
+                      "height": "wrap_content",
+                      "ratio": 0.73
+                    },
+                    "border_bottom": {
+                      "width": 1
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "fixed_title": {
+        "size": {
+          "width": 575,
+          "height": 20
+        },
+        "liner_layout": {
+          "orientation": "vertical",
+          "layout": {
+            "width": "match_parent",
+            "height": "wrap_content",
+            "ratio": 1
+          },
+          "liner_layouts": [
+            {
+              "orientation": "horizontal",
+              "layout": {
+                "width": "match_parent",
+                "height": "wrap_content",
+                "ratio": 1
+              },
+              "elements": [
+                {
+                  "type": "text",
+                  "attributes": {
+                    "size": {
+                      "width": 20
+                    }
+                  }
+                },
+                {
+                  "type": "text",
+                  "attributes": {
+                    "text": "商品・商品コード",
+                    "text_size": 8,
+                    "valign": "middle",
+                    "inset": {
+                      "top": 2,
+                      "bottom": 2
+                    },
+                    "layout": {
+                      "width": "match_parent",
+                      "height": "wrap_content",
+                      "ratio": 0.5
+                    }
+                  }
+                },
+                {
+                  "type": "text",
+                  "attributes": {
+                    "text": "数量",
+                    "text_size": 8,
+                    "valign": "middle",
+                    "inset": {
+                      "top": 2,
+                      "bottom": 2
+                    },
+                    "layout": {
+                      "width": "match_parent",
+                      "height": "wrap_content",
+                      "ratio": 0.2
+                    }
+                  }
+                },
+                {
+                  "type": "text",
+                  "attributes": {
+                    "text": "小計",
+                    "text_size": 8,
+                    "valign": "middle",
+                    "inset": {
+                      "top": 2,
+                      "bottom": 2
+                    },
+                    "layout": {
+                      "width": "match_parent",
+                      "height": "wrap_content",
+                      "ratio": 0.25
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "orientation": "horizontal",
+              "layout": {
+                "width": "match_parent",
+                "ratio": 1
+              },
+              "elements": [
+                {
+                  "type": "text",
+                  "attributes": {
+                    "size": {
+                      "width": 20,
+                      "height": 1
+                    }
+                  }
+                },
+                {
+                  "type": "text",
+                  "attributes": {
+                    "size": {
+                      "width": 20,
+                      "height": 1
+                    },
+                    "layout": {
+                      "width": "match_parent",
+                      "height": "wrap_content",
+                      "ratio": 0.93
+                    },
+                    "border_bottom": {
+                      "width": 1
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "liner_layout": {
+        "orientation": "vertical",
+        "layout": {
+          "width": "match_parent",
+          "height": "wrap_content",
+          "ratio": 1
+        },
+        "liner_layouts": [
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "height": "wrap_content",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "サプリメント1\nsupplement_001",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.5
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "1",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.2
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "¥2,500",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.25
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.93
+                  },
+                  "border_bottom": {
+                    "width": 1
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "height": "wrap_content",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "サプリメント2\nsupplement_001",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.5
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "1",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.2
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "¥2,500",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.25
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.93
+                  },
+                  "border_bottom": {
+                    "width": 1
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "height": "wrap_content",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "サプリメント3\nsupplement_001",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.5
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "1",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.2
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "¥2,500",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.25
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.93
+                  },
+                  "border_bottom": {
+                    "width": 1
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "height": "wrap_content",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "サプリメント4\nsupplement_001",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.5
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "1",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.2
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "¥2,500",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.25
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.93
+                  },
+                  "border_bottom": {
+                    "width": 1
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "height": "wrap_content",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "サプリメント5\nsupplement_001",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.5
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "1",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.2
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "¥2,500",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.25
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.93
+                  },
+                  "border_bottom": {
+                    "width": 1
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "height": "wrap_content",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "サプリメント6\nsupplement_001",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.5
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "1",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.2
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "¥2,500",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.25
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.93
+                  },
+                  "border_bottom": {
+                    "width": 1
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "height": "wrap_content",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "サプリメント7\nsupplement_001",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.5
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "1",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.2
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "¥2,500",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.25
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.93
+                  },
+                  "border_bottom": {
+                    "width": 1
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "height": "wrap_content",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "サプリメント8\nsupplement_001",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.5
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "1",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.2
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "¥2,500",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.25
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.93
+                  },
+                  "border_bottom": {
+                    "width": 1
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "height": "wrap_content",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "サプリメント9\nsupplement_001",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.5
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "1",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.2
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "¥2,500",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.25
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.93
+                  },
+                  "border_bottom": {
+                    "width": 1
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "height": "wrap_content",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "サプリメント10\nsupplement_001",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.5
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "1",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.2
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "¥2,500",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.25
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.93
+                  },
+                  "border_bottom": {
+                    "width": 1
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "height": "wrap_content",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "サプリメント11\nsupplement_001",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.5
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "1",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.2
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "¥2,500",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.25
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.93
+                  },
+                  "border_bottom": {
+                    "width": 1
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "height": "wrap_content",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "サプリメント12\nsupplement_001",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.5
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "1",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.2
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "¥2,500",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.25
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.93
+                  },
+                  "border_bottom": {
+                    "width": 1
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "height": "wrap_content",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "サプリメント13\nsupplement_001",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.5
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "1",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.2
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "¥2,500",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.25
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.93
+                  },
+                  "border_bottom": {
+                    "width": 1
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "height": "wrap_content",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "サプリメント14\nsupplement_001",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.5
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "1",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.2
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "¥2,500",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.25
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.93
+                  },
+                  "border_bottom": {
+                    "width": 1
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "height": "wrap_content",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "商品合計",
+                  "text_size": 8,
+                  "align": "right",
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.5
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.2
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "¥2,500",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.25
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.93
+                  },
+                  "border_bottom": {
+                    "width": 1
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "height": "wrap_content",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "消費税",
+                  "text_size": 8,
+                  "align": "right",
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.5
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.2
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "¥250",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.25
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.93
+                  },
+                  "border_bottom": {
+                    "width": 1
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "height": "wrap_content",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "送料",
+                  "text_size": 8,
+                  "align": "right",
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.5
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.2
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "¥500",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.25
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.93
+                  },
+                  "border_bottom": {
+                    "width": 1
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "height": "wrap_content",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "割引",
+                  "text_size": 8,
+                  "align": "right",
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.5
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.2
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "¥0",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.25
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.93
+                  },
+                  "border_bottom": {
+                    "width": 1
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "height": "wrap_content",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "手数料",
+                  "text_size": 8,
+                  "align": "right",
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.5
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.2
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "¥0",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.25
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.93
+                  },
+                  "border_bottom": {
+                    "width": 1
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "height": "wrap_content",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "合計",
+                  "text_size": 8,
+                  "align": "right",
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.5
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.2
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "¥3,250",
+                  "text_size": 8,
+                  "valign": "middle",
+                  "inset": {
+                    "top": 2,
+                    "bottom": 2
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.25
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "size": {
+                    "width": 20,
+                    "height": 1
+                  },
+                  "layout": {
+                    "width": "match_parent",
+                    "height": "wrap_content",
+                    "ratio": 0.93
+                  },
+                  "border_bottom": {
+                    "width": 2
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
