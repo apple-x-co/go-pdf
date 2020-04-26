@@ -138,6 +138,22 @@
                       "ratio": 1
                     }
                   }
+                },
+                {
+                  "type": "text",
+                  "attributes": {
+                    "text": "山田 太郎 さま",
+                    "text_size": 8,
+                    "valign": "middle",
+                    "inset": {
+                      "left": 20
+                    },
+                    "layout": {
+                      "width": "match_parent",
+                      "height": "wrap_content",
+                      "ratio": 1
+                    }
+                  }
                 }
               ]
             },
@@ -185,6 +201,19 @@
                   "type": "text",
                   "attributes": {
                     "text": "神奈川県鎌倉市小町1-3-7 大石ビル2F",
+                    "text_size": 8,
+                    "valign": "middle",
+                    "layout": {
+                      "width": "match_parent",
+                      "height": "wrap_content",
+                      "ratio": 1
+                    }
+                  }
+                },
+                {
+                  "type": "text",
+                  "attributes": {
+                    "text": "山田 花子 さま",
                     "text_size": 8,
                     "valign": "middle",
                     "layout": {
@@ -269,6 +298,7 @@
                     "text_size": 11,
                     "valign": "middle",
                     "inset": {
+                      "top": 10,
                       "bottom": 5
                     },
                     "border_bottom": {
@@ -313,7 +343,12 @@
                       "ratio": 0.2
                     },
                     "border_bottom": {
-                      "width": 1
+                      "width": 1,
+                      "color": {
+                        "r": 180,
+                        "g": 180,
+                        "b": 180
+                      }
                     }
                   }
                 },
@@ -333,7 +368,12 @@
                       "ratio": 0.73
                     },
                     "border_bottom": {
-                      "width": 1
+                      "width": 1,
+                      "color": {
+                        "r": 180,
+                        "g": 180,
+                        "b": 180
+                      }
                     }
                   }
                 }
@@ -370,7 +410,12 @@
                       "ratio": 0.2
                     },
                     "border_bottom": {
-                      "width": 1
+                      "width": 1,
+                      "color": {
+                        "r": 180,
+                        "g": 180,
+                        "b": 180
+                      }
                     }
                   }
                 },
@@ -390,7 +435,12 @@
                       "ratio": 0.73
                     },
                     "border_bottom": {
-                      "width": 1
+                      "width": 1,
+                      "color": {
+                        "r": 180,
+                        "g": 180,
+                        "b": 180
+                      }
                     }
                   }
                 }
@@ -428,7 +478,12 @@
                       "ratio": 0.2
                     },
                     "border_bottom": {
-                      "width": 1
+                      "width": 1,
+                      "color": {
+                        "r": 180,
+                        "g": 180,
+                        "b": 180
+                      }
                     }
                   }
                 },
@@ -448,7 +503,12 @@
                       "ratio": 0.73
                     },
                     "border_bottom": {
-                      "width": 1
+                      "width": 1,
+                      "color": {
+                        "r": 180,
+                        "g": 180,
+                        "b": 180
+                      }
                     }
                   }
                 }
@@ -486,7 +546,12 @@
                       "ratio": 0.2
                     },
                     "border_bottom": {
-                      "width": 1
+                      "width": 1,
+                      "color": {
+                        "r": 180,
+                        "g": 180,
+                        "b": 180
+                      }
                     }
                   }
                 },
@@ -506,7 +571,12 @@
                       "ratio": 0.73
                     },
                     "border_bottom": {
-                      "width": 1
+                      "width": 1,
+                      "color": {
+                        "r": 180,
+                        "g": 180,
+                        "b": 180
+                      }
                     }
                   }
                 }
@@ -544,7 +614,12 @@
                       "ratio": 0.2
                     },
                     "border_bottom": {
-                      "width": 1
+                      "width": 1,
+                      "color": {
+                        "r": 180,
+                        "g": 180,
+                        "b": 180
+                      }
                     }
                   }
                 },
@@ -564,7 +639,12 @@
                       "ratio": 0.73
                     },
                     "border_bottom": {
-                      "width": 1
+                      "width": 1,
+                      "color": {
+                        "r": 180,
+                        "g": 180,
+                        "b": 180
+                      }
                     }
                   }
                 }
@@ -799,7 +879,12 @@
                     "ratio": 0.93
                   },
                   "border_bottom": {
-                    "width": 1
+                    "width": 1,
+                    "color": {
+                      "r": 180,
+                      "g": 180,
+                      "b": 180
+                    }
                   }
                 }
               }
@@ -903,7 +988,12 @@
                     "ratio": 0.93
                   },
                   "border_bottom": {
-                    "width": 1
+                    "width": 1,
+                    "color": {
+                      "r": 180,
+                      "g": 180,
+                      "b": 180
+                    }
                   }
                 }
               }
@@ -1007,7 +1097,12 @@
                     "ratio": 0.93
                   },
                   "border_bottom": {
-                    "width": 1
+                    "width": 1,
+                    "color": {
+                      "r": 180,
+                      "g": 180,
+                      "b": 180
+                    }
                   }
                 }
               }
@@ -1111,7 +1206,12 @@
                     "ratio": 0.93
                   },
                   "border_bottom": {
-                    "width": 1
+                    "width": 1,
+                    "color": {
+                      "r": 180,
+                      "g": 180,
+                      "b": 180
+                    }
                   }
                 }
               }
@@ -1215,7 +1315,12 @@
                     "ratio": 0.93
                   },
                   "border_bottom": {
-                    "width": 1
+                    "width": 1,
+                    "color": {
+                      "r": 180,
+                      "g": 180,
+                      "b": 180
+                    }
                   }
                 }
               }
@@ -1319,7 +1424,12 @@
                     "ratio": 0.93
                   },
                   "border_bottom": {
-                    "width": 1
+                    "width": 1,
+                    "color": {
+                      "r": 180,
+                      "g": 180,
+                      "b": 180
+                    }
                   }
                 }
               }
@@ -1423,7 +1533,12 @@
                     "ratio": 0.93
                   },
                   "border_bottom": {
-                    "width": 1
+                    "width": 1,
+                    "color": {
+                      "r": 180,
+                      "g": 180,
+                      "b": 180
+                    }
                   }
                 }
               }
@@ -1527,7 +1642,12 @@
                     "ratio": 0.93
                   },
                   "border_bottom": {
-                    "width": 1
+                    "width": 1,
+                    "color": {
+                      "r": 180,
+                      "g": 180,
+                      "b": 180
+                    }
                   }
                 }
               }
@@ -1631,7 +1751,12 @@
                     "ratio": 0.93
                   },
                   "border_bottom": {
-                    "width": 1
+                    "width": 1,
+                    "color": {
+                      "r": 180,
+                      "g": 180,
+                      "b": 180
+                    }
                   }
                 }
               }
@@ -1735,7 +1860,12 @@
                     "ratio": 0.93
                   },
                   "border_bottom": {
-                    "width": 1
+                    "width": 1,
+                    "color": {
+                      "r": 180,
+                      "g": 180,
+                      "b": 180
+                    }
                   }
                 }
               }
@@ -1839,7 +1969,12 @@
                     "ratio": 0.93
                   },
                   "border_bottom": {
-                    "width": 1
+                    "width": 1,
+                    "color": {
+                      "r": 180,
+                      "g": 180,
+                      "b": 180
+                    }
                   }
                 }
               }
@@ -1943,7 +2078,12 @@
                     "ratio": 0.93
                   },
                   "border_bottom": {
-                    "width": 1
+                    "width": 1,
+                    "color": {
+                      "r": 180,
+                      "g": 180,
+                      "b": 180
+                    }
                   }
                 }
               }
@@ -2047,7 +2187,12 @@
                     "ratio": 0.93
                   },
                   "border_bottom": {
-                    "width": 1
+                    "width": 1,
+                    "color": {
+                      "r": 180,
+                      "g": 180,
+                      "b": 180
+                    }
                   }
                 }
               }
@@ -2151,7 +2296,12 @@
                     "ratio": 0.93
                   },
                   "border_bottom": {
-                    "width": 1
+                    "width": 1,
+                    "color": {
+                      "r": 180,
+                      "g": 180,
+                      "b": 180
+                    }
                   }
                 }
               }
@@ -2254,7 +2404,12 @@
                     "ratio": 0.93
                   },
                   "border_bottom": {
-                    "width": 1
+                    "width": 1,
+                    "color": {
+                      "r": 180,
+                      "g": 180,
+                      "b": 180
+                    }
                   }
                 }
               }
@@ -2357,7 +2512,12 @@
                     "ratio": 0.93
                   },
                   "border_bottom": {
-                    "width": 1
+                    "width": 1,
+                    "color": {
+                      "r": 180,
+                      "g": 180,
+                      "b": 180
+                    }
                   }
                 }
               }
@@ -2460,7 +2620,12 @@
                     "ratio": 0.93
                   },
                   "border_bottom": {
-                    "width": 1
+                    "width": 1,
+                    "color": {
+                      "r": 180,
+                      "g": 180,
+                      "b": 180
+                    }
                   }
                 }
               }
@@ -2563,7 +2728,12 @@
                     "ratio": 0.93
                   },
                   "border_bottom": {
-                    "width": 1
+                    "width": 1,
+                    "color": {
+                      "r": 180,
+                      "g": 180,
+                      "b": 180
+                    }
                   }
                 }
               }
@@ -2666,7 +2836,12 @@
                     "ratio": 0.93
                   },
                   "border_bottom": {
-                    "width": 1
+                    "width": 1,
+                    "color": {
+                      "r": 180,
+                      "g": 180,
+                      "b": 180
+                    }
                   }
                 }
               }
