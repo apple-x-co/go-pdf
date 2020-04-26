@@ -1,0 +1,178 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "element": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "template_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "properties": {
+            }
+          }
+        }
+      }
+    },
+    "element_template": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "properties": {
+            }
+          }
+        }
+      }
+    },
+    "layout": {
+      "type": "object",
+      "properties": {
+        "width": {
+          "type": "string",
+          "enum": [
+            "wrap_content",
+            "match_parent"
+          ]
+        },
+        "height": {
+          "type": "string",
+          "enum": [
+            "wrap_content",
+            "match_parent"
+          ]
+        },
+        "ratio": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      },
+      "required": [
+        "ratio"
+      ]
+    },
+    "size": {
+      "type": "object",
+      "properties": {
+        "width": {
+          "type": "integer"
+        },
+        "height": {
+          "type": "integer"
+        }
+      }
+    },
+    "liner_layout": {
+      "type": "object",
+      "properties": {
+        "orientation": {
+          "type": "string",
+          "enum": [
+            "horizontal",
+            "vertical"
+          ]
+        },
+        "line_height": {
+          "type": "number"
+        },
+        "liner_layouts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/liner_layout"
+          }
+        },
+        "elements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/element"
+          }
+        },
+        "layout": {
+          "$ref": "#/definitions/layout"
+        }
+      }
+    },
+    "header": {
+      "type": "object",
+      "properties": {
+        "size": {
+          "$ref": "#/definitions/size"
+        },
+        "liner_layout": {
+          "$ref": "#/definitions/liner_layout"
+        }
+      }
+    },
+    "footer": {
+      "type": "object",
+      "properties": {
+        "size": {
+          "$ref": "#/definitions/size"
+        },
+        "liner_layout": {
+          "$ref": "#/definitions/liner_layout"
+        }
+      }
+    },
+    "page": {
+      "type": "object",
+      "properties": {
+        "liner_layout": {
+          "$ref": "#/definitions/liner_layout"
+        },
+        "page_header": {
+          "$ref": "#/definitions/header"
+        },
+        "page_footer": {
+          "$ref": "#/definitions/footer"
+        },
+        "fixed_title": {
+          "$ref": "#/definitions/header"
+        }
+      }
+    }
+  },
+  "type": "object",
+  "properties": {
+    "element": {
+      "$ref": "#/definitions/element"
+    },
+    "element_template": {
+      "$ref": "#/definitions/element_template"
+    },
+    "layout": {
+      "$ref": "#/definitions/layout"
+    },
+    "size": {
+      "$ref": "#/definitions/size"
+    },
+    "liner_layout": {
+      "$ref": "#/definitions/liner_layout"
+    },
+    "header": {
+      "$ref": "#/definitions/header"
+    },
+    "footer": {
+      "$ref": "#/definitions/footer"
+    },
+    "page": {
+      "$ref": "#/definitions/page"
+    }
+  }
+}
