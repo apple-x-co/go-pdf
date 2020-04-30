@@ -12,6 +12,16 @@
       }
     },
     {
+      "id": "data-row-space-width-20-height-1",
+      "type": "text",
+      "attributes": {
+        "size": {
+          "width": 20,
+          "height": 1
+        }
+      }
+    },
+    {
       "id": "data-order-header",
       "type": "text",
       "attributes": {
@@ -58,6 +68,18 @@
             "g": 180,
             "b": 180
           }
+        }
+      }
+    },
+    {
+      "id": "data-order-item-header",
+      "type": "text",
+      "attributes": {
+        "text_size": 8,
+        "valign": "middle",
+        "inset": {
+          "top": 2,
+          "bottom": 2
         }
       }
     }
@@ -537,14 +559,9 @@
                 },
                 {
                   "type": "text",
+                  "template_id": "data-order-item-header",
                   "attributes": {
                     "text": "商品・商品コード",
-                    "text_size": 8,
-                    "valign": "middle",
-                    "inset": {
-                      "top": 2,
-                      "bottom": 2
-                    },
                     "layout": {
                       "width": "match_parent",
                       "height": "wrap_content",
@@ -554,14 +571,9 @@
                 },
                 {
                   "type": "text",
+                  "template_id": "data-order-item-header",
                   "attributes": {
                     "text": "数量",
-                    "text_size": 8,
-                    "valign": "middle",
-                    "inset": {
-                      "top": 2,
-                      "bottom": 2
-                    },
                     "layout": {
                       "width": "match_parent",
                       "height": "wrap_content",
@@ -571,14 +583,9 @@
                 },
                 {
                   "type": "text",
+                  "template_id": "data-order-item-header",
                   "attributes": {
                     "text": "小計",
-                    "text_size": 8,
-                    "valign": "middle",
-                    "inset": {
-                      "top": 2,
-                      "bottom": 2
-                    },
                     "layout": {
                       "width": "match_parent",
                       "height": "wrap_content",
@@ -597,12 +604,7 @@
               "elements": [
                 {
                   "type": "text",
-                  "attributes": {
-                    "size": {
-                      "width": 20,
-                      "height": 1
-                    }
-                  }
+                  "template_id": "data-row-space-width-20-height-1"
                 },
                 {
                   "type": "text",
@@ -708,12 +710,7 @@
             "elements": [
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  }
-                }
+                "template_id": "data-row-space-width-20-height-1"
               },
               {
                 "type": "text",
@@ -813,12 +810,7 @@
             "elements": [
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  }
-                }
+                "template_id": "data-row-space-width-20-height-1"
               },
               {
                 "type": "text",
@@ -918,12 +910,7 @@
             "elements": [
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  }
-                }
+                "template_id": "data-row-space-width-20-height-1"
               },
               {
                 "type": "text",
@@ -1023,12 +1010,7 @@
             "elements": [
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  }
-                }
+                "template_id": "data-row-space-width-20-height-1"
               },
               {
                 "type": "text",
@@ -1128,12 +1110,7 @@
             "elements": [
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  }
-                }
+                "template_id": "data-row-space-width-20-height-1"
               },
               {
                 "type": "text",
@@ -1233,12 +1210,7 @@
             "elements": [
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  }
-                }
+                "template_id": "data-row-space-width-20-height-1"
               },
               {
                 "type": "text",
@@ -1338,12 +1310,7 @@
             "elements": [
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  }
-                }
+                "template_id": "data-row-space-width-20-height-1"
               },
               {
                 "type": "text",
@@ -1443,12 +1410,7 @@
             "elements": [
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  }
-                }
+                "template_id": "data-row-space-width-20-height-1"
               },
               {
                 "type": "text",
@@ -1548,12 +1510,7 @@
             "elements": [
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  }
-                }
+                "template_id": "data-row-space-width-20-height-1"
               },
               {
                 "type": "text",
@@ -1653,12 +1610,7 @@
             "elements": [
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  }
-                }
+                "template_id": "data-row-space-width-20-height-1"
               },
               {
                 "type": "text",
@@ -1758,12 +1710,7 @@
             "elements": [
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  }
-                }
+                "template_id": "data-row-space-width-20-height-1"
               },
               {
                 "type": "text",
@@ -1863,12 +1810,7 @@
             "elements": [
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  }
-                }
+                "template_id": "data-row-space-width-20-height-1"
               },
               {
                 "type": "text",
@@ -1968,12 +1910,7 @@
             "elements": [
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  }
-                }
+                "template_id": "data-row-space-width-20-height-1"
               },
               {
                 "type": "text",
@@ -2073,12 +2010,7 @@
             "elements": [
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  }
-                }
+                "template_id": "data-row-space-width-20-height-1"
               },
               {
                 "type": "text",
@@ -2177,12 +2109,7 @@
             "elements": [
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  }
-                }
+                "template_id": "data-row-space-width-20-height-1"
               },
               {
                 "type": "text",
@@ -2281,12 +2208,7 @@
             "elements": [
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  }
-                }
+                "template_id": "data-row-space-width-20-height-1"
               },
               {
                 "type": "text",
@@ -2385,12 +2307,7 @@
             "elements": [
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  }
-                }
+                "template_id": "data-row-space-width-20-height-1"
               },
               {
                 "type": "text",
@@ -2489,12 +2406,7 @@
             "elements": [
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  }
-                }
+                "template_id": "data-row-space-width-20-height-1"
               },
               {
                 "type": "text",
@@ -2593,12 +2505,7 @@
             "elements": [
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  }
-                }
+                "template_id": "data-row-space-width-20-height-1"
               },
               {
                 "type": "text",
@@ -2697,12 +2604,7 @@
             "elements": [
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  }
-                }
+                "template_id": "data-row-space-width-20-height-1"
               },
               {
                 "type": "text",
