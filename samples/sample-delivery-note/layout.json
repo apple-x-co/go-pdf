@@ -10,6 +10,56 @@
           "width": 20
         }
       }
+    },
+    {
+      "id": "data-order-header",
+      "type": "text",
+      "attributes": {
+        "text_size": 8,
+        "valign": "middle",
+        "inset": {
+          "top": 2,
+          "bottom": 2
+        },
+        "layout": {
+          "width": "match_parent",
+          "height": "wrap_content",
+          "ratio": 0.2
+        },
+        "border_bottom": {
+          "width": 1,
+          "color": {
+            "r": 180,
+            "g": 180,
+            "b": 180
+          }
+        }
+      }
+    },
+    {
+      "id": "data-order-body",
+      "type": "text",
+      "attributes": {
+        "text_size": 8,
+        "valign": "middle",
+        "inset": {
+          "top": 2,
+          "bottom": 2
+        },
+        "layout": {
+          "width": "match_parent",
+          "height": "wrap_content",
+          "ratio": 0.73
+        },
+        "border_bottom": {
+          "width": 1,
+          "color": {
+            "r": 180,
+            "g": 180,
+            "b": 180
+          }
+        }
+      }
     }
   ],
   "header": {
@@ -332,52 +382,16 @@
                 },
                 {
                   "type": "text",
+                  "template_id": "data-order-header",
                   "attributes": {
-                    "text": "ご注文No",
-                    "text_size": 8,
-                    "valign": "middle",
-                    "inset": {
-                      "top": 2,
-                      "bottom": 2
-                    },
-                    "layout": {
-                      "width": "match_parent",
-                      "height": "wrap_content",
-                      "ratio": 0.2
-                    },
-                    "border_bottom": {
-                      "width": 1,
-                      "color": {
-                        "r": 180,
-                        "g": 180,
-                        "b": 180
-                      }
-                    }
+                    "text": "ご注文No"
                   }
                 },
                 {
                   "type": "text",
+                  "template_id": "data-order-body",
                   "attributes": {
-                    "text": "1587366896-3042-57",
-                    "text_size": 8,
-                    "valign": "middle",
-                    "inset": {
-                      "top": 2,
-                      "bottom": 2
-                    },
-                    "layout": {
-                      "width": "match_parent",
-                      "height": "wrap_content",
-                      "ratio": 0.73
-                    },
-                    "border_bottom": {
-                      "width": 1,
-                      "color": {
-                        "r": 180,
-                        "g": 180,
-                        "b": 180
-                      }
-                    }
+                    "text": "1587366896-3042-57"
                   }
                 }
               ]
@@ -395,52 +409,16 @@
                 },
                 {
                   "type": "text",
+                  "template_id": "data-order-header",
                   "attributes": {
-                    "text": "ご注文日時",
-                    "text_size": 8,
-                    "valign": "middle",
-                    "inset": {
-                      "top": 2,
-                      "bottom": 2
-                    },
-                    "layout": {
-                      "width": "match_parent",
-                      "height": "wrap_content",
-                      "ratio": 0.2
-                    },
-                    "border_bottom": {
-                      "width": 1,
-                      "color": {
-                        "r": 180,
-                        "g": 180,
-                        "b": 180
-                      }
-                    }
+                    "text": "ご注文日時"
                   }
                 },
                 {
                   "type": "text",
+                  "template_id": "data-order-body",
                   "attributes": {
-                    "text": "2020/04/20 16:14:56",
-                    "text_size": 8,
-                    "valign": "middle",
-                    "inset": {
-                      "top": 2,
-                      "bottom": 2
-                    },
-                    "layout": {
-                      "width": "match_parent",
-                      "height": "wrap_content",
-                      "ratio": 0.73
-                    },
-                    "border_bottom": {
-                      "width": 1,
-                      "color": {
-                        "r": 180,
-                        "g": 180,
-                        "b": 180
-                      }
-                    }
+                    "text": "2020/04/20 16:14:56"
                   }
                 }
               ]
@@ -459,52 +437,16 @@
                 },
                 {
                   "type": "text",
+                  "template_id": "data-order-header",
                   "attributes": {
-                    "text": "お支払い方法",
-                    "text_size": 8,
-                    "valign": "middle",
-                    "inset": {
-                      "top": 2,
-                      "bottom": 2
-                    },
-                    "layout": {
-                      "width": "match_parent",
-                      "height": "wrap_content",
-                      "ratio": 0.2
-                    },
-                    "border_bottom": {
-                      "width": 1,
-                      "color": {
-                        "r": 180,
-                        "g": 180,
-                        "b": 180
-                      }
-                    }
+                    "text": "お支払い方法"
                   }
                 },
                 {
                   "type": "text",
+                  "template_id": "data-order-body",
                   "attributes": {
-                    "text": "クレジットカード",
-                    "text_size": 8,
-                    "valign": "middle",
-                    "inset": {
-                      "top": 2,
-                      "bottom": 2
-                    },
-                    "layout": {
-                      "width": "match_parent",
-                      "height": "wrap_content",
-                      "ratio": 0.73
-                    },
-                    "border_bottom": {
-                      "width": 1,
-                      "color": {
-                        "r": 180,
-                        "g": 180,
-                        "b": 180
-                      }
-                    }
+                    "text": "クレジットカード"
                   }
                 }
               ]
@@ -523,52 +465,16 @@
                 },
                 {
                   "type": "text",
+                  "template_id": "data-order-header",
                   "attributes": {
-                    "text": "メールアドレス",
-                    "text_size": 8,
-                    "valign": "middle",
-                    "inset": {
-                      "top": 2,
-                      "bottom": 2
-                    },
-                    "layout": {
-                      "width": "match_parent",
-                      "height": "wrap_content",
-                      "ratio": 0.2
-                    },
-                    "border_bottom": {
-                      "width": 1,
-                      "color": {
-                        "r": 180,
-                        "g": 180,
-                        "b": 180
-                      }
-                    }
+                    "text": "メールアドレス"
                   }
                 },
                 {
                   "type": "text",
+                  "template_id": "data-order-body",
                   "attributes": {
-                    "text": "example@exmaple.com",
-                    "text_size": 8,
-                    "valign": "middle",
-                    "inset": {
-                      "top": 2,
-                      "bottom": 2
-                    },
-                    "layout": {
-                      "width": "match_parent",
-                      "height": "wrap_content",
-                      "ratio": 0.73
-                    },
-                    "border_bottom": {
-                      "width": 1,
-                      "color": {
-                        "r": 180,
-                        "g": 180,
-                        "b": 180
-                      }
-                    }
+                    "text": "example@exmaple.com"
                   }
                 }
               ]
@@ -587,52 +493,16 @@
                 },
                 {
                   "type": "text",
+                  "template_id": "data-order-header",
                   "attributes": {
-                    "text": "お電話番号",
-                    "text_size": 8,
-                    "valign": "middle",
-                    "inset": {
-                      "top": 2,
-                      "bottom": 2
-                    },
-                    "layout": {
-                      "width": "match_parent",
-                      "height": "wrap_content",
-                      "ratio": 0.2
-                    },
-                    "border_bottom": {
-                      "width": 1,
-                      "color": {
-                        "r": 180,
-                        "g": 180,
-                        "b": 180
-                      }
-                    }
+                    "text": "お電話番号"
                   }
                 },
                 {
                   "type": "text",
+                  "template_id": "data-order-body",
                   "attributes": {
-                    "text": "03-0000-0000",
-                    "text_size": 8,
-                    "valign": "middle",
-                    "inset": {
-                      "top": 2,
-                      "bottom": 2
-                    },
-                    "layout": {
-                      "width": "match_parent",
-                      "height": "wrap_content",
-                      "ratio": 0.73
-                    },
-                    "border_bottom": {
-                      "width": 1,
-                      "color": {
-                        "r": 180,
-                        "g": 180,
-                        "b": 180
-                      }
-                    }
+                    "text": "03-0000-0000"
                   }
                 }
               ]
