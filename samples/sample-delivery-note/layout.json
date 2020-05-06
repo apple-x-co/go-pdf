@@ -82,6 +82,71 @@
           "bottom": 2
         }
       }
+    },
+    {
+      "id": "data-order-item-body",
+      "type": "text",
+      "attributes": {
+        "text_size": 8,
+        "valign": "middle",
+        "inset": {
+          "top": 2,
+          "bottom": 2
+        }
+      }
+    },
+    {
+      "id": "data-order-item-separator",
+      "type": "text",
+      "attributes": {
+        "size": {
+          "width": 20,
+          "height": 1
+        },
+        "layout": {
+          "width": "match_parent",
+          "height": "wrap_content",
+          "ratio": 0.93
+        },
+        "border_bottom": {
+          "width": 1,
+          "color": {
+            "r": 180,
+            "g": 180,
+            "b": 180
+          }
+        }
+      }
+    },
+    {
+      "id": "data-order-summary-head",
+      "type": "text",
+      "attributes": {
+        "text_size": 10,
+        "align": "right",
+        "valign": "middle",
+        "inset": {
+          "top": 2,
+          "bottom": 2
+        },
+        "layout": {
+          "width": "match_parent",
+          "height": "wrap_content",
+          "ratio": 0.5
+        }
+      }
+    },
+    {
+      "id": "data-order-summary-body",
+      "type": "text",
+      "attributes": {
+        "text_size": 10,
+        "valign": "middle",
+        "inset": {
+          "top": 2,
+          "bottom": 2
+        }
+      }
     }
   ],
   "header": {
@@ -650,14 +715,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "サプリメント1\nsupplement_001",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -667,14 +727,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "1",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -684,14 +739,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "¥2,500",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -714,25 +764,7 @@
               },
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  },
-                  "layout": {
-                    "width": "match_parent",
-                    "height": "wrap_content",
-                    "ratio": 0.93
-                  },
-                  "border_bottom": {
-                    "width": 1,
-                    "color": {
-                      "r": 180,
-                      "g": 180,
-                      "b": 180
-                    }
-                  }
-                }
+                "template_id": "data-order-item-separator"
               }
             ]
           },
@@ -750,14 +782,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "サプリメント2\nsupplement_001",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -767,14 +794,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "1",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -784,14 +806,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "¥2,500",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -814,25 +831,7 @@
               },
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  },
-                  "layout": {
-                    "width": "match_parent",
-                    "height": "wrap_content",
-                    "ratio": 0.93
-                  },
-                  "border_bottom": {
-                    "width": 1,
-                    "color": {
-                      "r": 180,
-                      "g": 180,
-                      "b": 180
-                    }
-                  }
-                }
+                "template_id": "data-order-item-separator"
               }
             ]
           },
@@ -850,14 +849,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "サプリメント3\nsupplement_001",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -867,14 +861,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "1",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -884,14 +873,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "¥2,500",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -914,25 +898,7 @@
               },
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  },
-                  "layout": {
-                    "width": "match_parent",
-                    "height": "wrap_content",
-                    "ratio": 0.93
-                  },
-                  "border_bottom": {
-                    "width": 1,
-                    "color": {
-                      "r": 180,
-                      "g": 180,
-                      "b": 180
-                    }
-                  }
-                }
+                "template_id": "data-order-item-separator"
               }
             ]
           },
@@ -950,14 +916,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "サプリメント4\nsupplement_001",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -967,14 +928,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "1",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -984,14 +940,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "¥2,500",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -1014,25 +965,7 @@
               },
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  },
-                  "layout": {
-                    "width": "match_parent",
-                    "height": "wrap_content",
-                    "ratio": 0.93
-                  },
-                  "border_bottom": {
-                    "width": 1,
-                    "color": {
-                      "r": 180,
-                      "g": 180,
-                      "b": 180
-                    }
-                  }
-                }
+                "template_id": "data-order-item-separator"
               }
             ]
           },
@@ -1050,14 +983,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "サプリメント5\nsupplement_001",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -1067,14 +995,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "1",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -1084,14 +1007,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "¥2,500",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -1114,25 +1032,7 @@
               },
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  },
-                  "layout": {
-                    "width": "match_parent",
-                    "height": "wrap_content",
-                    "ratio": 0.93
-                  },
-                  "border_bottom": {
-                    "width": 1,
-                    "color": {
-                      "r": 180,
-                      "g": 180,
-                      "b": 180
-                    }
-                  }
-                }
+                "template_id": "data-order-item-separator"
               }
             ]
           },
@@ -1150,14 +1050,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "サプリメント6\nsupplement_001",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -1167,14 +1062,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "1",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -1184,14 +1074,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "¥2,500",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -1214,25 +1099,7 @@
               },
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  },
-                  "layout": {
-                    "width": "match_parent",
-                    "height": "wrap_content",
-                    "ratio": 0.93
-                  },
-                  "border_bottom": {
-                    "width": 1,
-                    "color": {
-                      "r": 180,
-                      "g": 180,
-                      "b": 180
-                    }
-                  }
-                }
+                "template_id": "data-order-item-separator"
               }
             ]
           },
@@ -1250,14 +1117,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "サプリメント7\nsupplement_001",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -1267,14 +1129,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "1",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -1284,14 +1141,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "¥2,500",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -1314,25 +1166,7 @@
               },
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  },
-                  "layout": {
-                    "width": "match_parent",
-                    "height": "wrap_content",
-                    "ratio": 0.93
-                  },
-                  "border_bottom": {
-                    "width": 1,
-                    "color": {
-                      "r": 180,
-                      "g": 180,
-                      "b": 180
-                    }
-                  }
-                }
+                "template_id": "data-order-item-separator"
               }
             ]
           },
@@ -1350,14 +1184,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "サプリメント8\nsupplement_001",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -1367,14 +1196,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "1",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -1384,14 +1208,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "¥2,500",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -1414,25 +1233,7 @@
               },
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  },
-                  "layout": {
-                    "width": "match_parent",
-                    "height": "wrap_content",
-                    "ratio": 0.93
-                  },
-                  "border_bottom": {
-                    "width": 1,
-                    "color": {
-                      "r": 180,
-                      "g": 180,
-                      "b": 180
-                    }
-                  }
-                }
+                "template_id": "data-order-item-separator"
               }
             ]
           },
@@ -1450,14 +1251,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "サプリメント9\nsupplement_001",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -1467,14 +1263,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "1",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -1484,14 +1275,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "¥2,500",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -1514,25 +1300,7 @@
               },
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  },
-                  "layout": {
-                    "width": "match_parent",
-                    "height": "wrap_content",
-                    "ratio": 0.93
-                  },
-                  "border_bottom": {
-                    "width": 1,
-                    "color": {
-                      "r": 180,
-                      "g": 180,
-                      "b": 180
-                    }
-                  }
-                }
+                "template_id": "data-order-item-separator"
               }
             ]
           },
@@ -1550,14 +1318,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "サプリメント10\nsupplement_001",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -1567,14 +1330,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "1",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -1584,14 +1342,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "¥2,500",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -1614,25 +1367,7 @@
               },
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  },
-                  "layout": {
-                    "width": "match_parent",
-                    "height": "wrap_content",
-                    "ratio": 0.93
-                  },
-                  "border_bottom": {
-                    "width": 1,
-                    "color": {
-                      "r": 180,
-                      "g": 180,
-                      "b": 180
-                    }
-                  }
-                }
+                "template_id": "data-order-item-separator"
               }
             ]
           },
@@ -1650,14 +1385,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "サプリメント11\nsupplement_001",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -1667,14 +1397,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "1",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -1684,14 +1409,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "¥2,500",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -1714,25 +1434,7 @@
               },
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  },
-                  "layout": {
-                    "width": "match_parent",
-                    "height": "wrap_content",
-                    "ratio": 0.93
-                  },
-                  "border_bottom": {
-                    "width": 1,
-                    "color": {
-                      "r": 180,
-                      "g": 180,
-                      "b": 180
-                    }
-                  }
-                }
+                "template_id": "data-order-item-separator"
               }
             ]
           },
@@ -1750,14 +1452,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "サプリメント12\nsupplement_001",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -1767,14 +1464,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "1",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -1784,14 +1476,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "¥2,500",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -1814,25 +1501,7 @@
               },
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  },
-                  "layout": {
-                    "width": "match_parent",
-                    "height": "wrap_content",
-                    "ratio": 0.93
-                  },
-                  "border_bottom": {
-                    "width": 1,
-                    "color": {
-                      "r": 180,
-                      "g": 180,
-                      "b": 180
-                    }
-                  }
-                }
+                "template_id": "data-order-item-separator"
               }
             ]
           },
@@ -1850,14 +1519,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "サプリメント13\nsupplement_001",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -1867,14 +1531,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "1",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -1884,14 +1543,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "¥2,500",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -1914,25 +1568,7 @@
               },
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  },
-                  "layout": {
-                    "width": "match_parent",
-                    "height": "wrap_content",
-                    "ratio": 0.93
-                  },
-                  "border_bottom": {
-                    "width": 1,
-                    "color": {
-                      "r": 180,
-                      "g": 180,
-                      "b": 180
-                    }
-                  }
-                }
+                "template_id": "data-order-item-separator"
               }
             ]
           },
@@ -1950,14 +1586,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "サプリメント14\nsupplement_001",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -1967,14 +1598,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "1",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -1984,14 +1610,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "¥2,500",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -2014,25 +1635,7 @@
               },
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  },
-                  "layout": {
-                    "width": "match_parent",
-                    "height": "wrap_content",
-                    "ratio": 0.93
-                  },
-                  "border_bottom": {
-                    "width": 1,
-                    "color": {
-                      "r": 180,
-                      "g": 180,
-                      "b": 180
-                    }
-                  }
-                }
+                "template_id": "data-order-item-separator"
               }
             ]
           },
@@ -2050,20 +1653,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-summary-head",
                 "attributes": {
-                  "text": "商品合計",
-                  "text_size": 8,
-                  "align": "right",
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
-                  "layout": {
-                    "width": "match_parent",
-                    "height": "wrap_content",
-                    "ratio": 0.5
-                  }
+                  "text": "商品合計"
                 }
               },
               {
@@ -2083,14 +1675,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-summary-body",
                 "attributes": {
                   "text": "¥2,500",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -2113,25 +1700,7 @@
               },
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  },
-                  "layout": {
-                    "width": "match_parent",
-                    "height": "wrap_content",
-                    "ratio": 0.93
-                  },
-                  "border_bottom": {
-                    "width": 1,
-                    "color": {
-                      "r": 180,
-                      "g": 180,
-                      "b": 180
-                    }
-                  }
-                }
+                "template_id": "data-order-item-separator"
               }
             ]
           },
@@ -2149,20 +1718,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-summary-head",
                 "attributes": {
-                  "text": "消費税",
-                  "text_size": 8,
-                  "align": "right",
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
-                  "layout": {
-                    "width": "match_parent",
-                    "height": "wrap_content",
-                    "ratio": 0.5
-                  }
+                  "text": "消費税"
                 }
               },
               {
@@ -2182,14 +1740,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-summary-body",
                 "attributes": {
                   "text": "¥250",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -2212,25 +1765,7 @@
               },
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  },
-                  "layout": {
-                    "width": "match_parent",
-                    "height": "wrap_content",
-                    "ratio": 0.93
-                  },
-                  "border_bottom": {
-                    "width": 1,
-                    "color": {
-                      "r": 180,
-                      "g": 180,
-                      "b": 180
-                    }
-                  }
-                }
+                "template_id": "data-order-item-separator"
               }
             ]
           },
@@ -2248,20 +1783,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-summary-head",
                 "attributes": {
-                  "text": "送料",
-                  "text_size": 8,
-                  "align": "right",
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
-                  "layout": {
-                    "width": "match_parent",
-                    "height": "wrap_content",
-                    "ratio": 0.5
-                  }
+                  "text": "送料"
                 }
               },
               {
@@ -2281,14 +1805,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-summary-body",
                 "attributes": {
                   "text": "¥500",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -2311,25 +1830,7 @@
               },
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  },
-                  "layout": {
-                    "width": "match_parent",
-                    "height": "wrap_content",
-                    "ratio": 0.93
-                  },
-                  "border_bottom": {
-                    "width": 1,
-                    "color": {
-                      "r": 180,
-                      "g": 180,
-                      "b": 180
-                    }
-                  }
-                }
+                "template_id": "data-order-item-separator"
               }
             ]
           },
@@ -2347,20 +1848,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-summary-head",
                 "attributes": {
-                  "text": "割引",
-                  "text_size": 8,
-                  "align": "right",
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
-                  "layout": {
-                    "width": "match_parent",
-                    "height": "wrap_content",
-                    "ratio": 0.5
-                  }
+                  "text": "割引"
                 }
               },
               {
@@ -2380,14 +1870,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-summary-body",
                 "attributes": {
                   "text": "¥0",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -2410,25 +1895,7 @@
               },
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  },
-                  "layout": {
-                    "width": "match_parent",
-                    "height": "wrap_content",
-                    "ratio": 0.93
-                  },
-                  "border_bottom": {
-                    "width": 1,
-                    "color": {
-                      "r": 180,
-                      "g": 180,
-                      "b": 180
-                    }
-                  }
-                }
+                "template_id": "data-order-item-separator"
               }
             ]
           },
@@ -2446,20 +1913,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-summary-head",
                 "attributes": {
-                  "text": "手数料",
-                  "text_size": 8,
-                  "align": "right",
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
-                  "layout": {
-                    "width": "match_parent",
-                    "height": "wrap_content",
-                    "ratio": 0.5
-                  }
+                  "text": "手数料"
                 }
               },
               {
@@ -2479,14 +1935,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-summary-body",
                 "attributes": {
                   "text": "¥0",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
@@ -2509,25 +1960,7 @@
               },
               {
                 "type": "text",
-                "attributes": {
-                  "size": {
-                    "width": 20,
-                    "height": 1
-                  },
-                  "layout": {
-                    "width": "match_parent",
-                    "height": "wrap_content",
-                    "ratio": 0.93
-                  },
-                  "border_bottom": {
-                    "width": 1,
-                    "color": {
-                      "r": 180,
-                      "g": 180,
-                      "b": 180
-                    }
-                  }
-                }
+                "template_id": "data-order-item-separator"
               }
             ]
           },
@@ -2545,20 +1978,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-summary-head",
                 "attributes": {
-                  "text": "合計",
-                  "text_size": 8,
-                  "align": "right",
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
-                  "layout": {
-                    "width": "match_parent",
-                    "height": "wrap_content",
-                    "ratio": 0.5
-                  }
+                  "text": "合計"
                 }
               },
               {
@@ -2578,14 +2000,9 @@
               },
               {
                 "type": "text",
+                "template_id": "data-order-summary-body",
                 "attributes": {
                   "text": "¥3,250",
-                  "text_size": 8,
-                  "valign": "middle",
-                  "inset": {
-                    "top": 2,
-                    "bottom": 2
-                  },
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
