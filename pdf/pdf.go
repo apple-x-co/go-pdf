@@ -80,7 +80,7 @@ func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 		log.Print(err.Error())
 		return
 	}
-	documentConfigure.SetFontHeight(float64(float64(parser.Ascender()+parser.XHeight()+parser.Descender()) * 1000.00 / float64(parser.UnitsPerEm())))
+	documentConfigure.SetFontHeight(float64(parser.Ascender()+parser.XHeight()+parser.Descender()) * 1000.00 / float64(parser.UnitsPerEm()))
 
 	p.gp.SetTextColor(documentConfigure.TextColor.R, documentConfigure.TextColor.G, documentConfigure.TextColor.B)
 
@@ -294,7 +294,15 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, page types.Page, l
 					if elementLayoutSize.Height != UnsetHeight {
 						measureSize.Height = elementLayoutSize.Height
 					}
+
+					if decoded.Wrap && decoded.Size.IsZero() {
+						texts, _ := p.gp.SplitText(decoded.Text, elementLayoutSize.Width)
+						measureSize.Height = measureSize.Height * float64(len(texts))
+					}
 				}
+
+				measureSize.Width += decoded.Inset.Horizontal()
+				measureSize.Height += decoded.Inset.Vertical()
 
 				// FIX POSITION
 				if decoded.Origin.X != UnsetX && decoded.Origin.Y != UnsetY {
@@ -511,7 +519,7 @@ func (p *PDF) measureText(documentConfigure types.DocumentConfigure, decoded typ
 
 	if p.isMultiLineText(decoded.Text) {
 		measureSize := types.Size{}
-		measureHeight := documentConfigure.FontHeight() * (float64(documentConfigure.TextSize) / 1000.0)
+		measureHeight := documentConfigure.FontHeight() * (float64(decoded.TextSize) / 1000.0)
 
 		texts := strings.Split(decoded.Text, "\n")
 		for _, text := range texts {
@@ -529,14 +537,14 @@ func (p *PDF) measureText(documentConfigure types.DocumentConfigure, decoded typ
 			measureSize.Height = decoded.Size.Height
 		}
 
-		measureSize.Width += decoded.Inset.Horizontal()
-		measureSize.Height += decoded.Inset.Vertical()
+		//measureSize.Width += decoded.Inset.Horizontal()
+		//measureSize.Height += decoded.Inset.Vertical()
 
 		return measureSize
 	}
 
 	measureWidth, _ := p.gp.MeasureTextWidth(decoded.Text)
-	measureHeight := documentConfigure.FontHeight() * (float64(documentConfigure.TextSize) / 1000.0)
+	measureHeight := documentConfigure.FontHeight() * (float64(decoded.TextSize) / 1000.0)
 
 	var measureSize types.Size
 	if decoded.Size.Width != UnsetWidth && decoded.Size.Height != UnsetHeight {
@@ -549,8 +557,8 @@ func (p *PDF) measureText(documentConfigure types.DocumentConfigure, decoded typ
 		measureSize = types.Size{Width: measureWidth, Height: measureHeight}
 	}
 
-	measureSize.Width += decoded.Inset.Horizontal()
-	measureSize.Height += decoded.Inset.Vertical()
+	//measureSize.Width += decoded.Inset.Horizontal()
+	//measureSize.Height += decoded.Inset.Vertical()
 
 	return measureSize
 }
