@@ -1,0 +1,139 @@
+{
+  "width": 595,
+  "height": 842,
+  "pages": [
+    {
+      "liner_layout": {
+        "orientation": "vertical",
+        "layout": {
+          "width": "match_parent",
+          "ratio": 1
+        },
+        "liner_layouts": [
+          {
+            "orientation": "vertical",
+            "layout": {
+              "width": "match_parent",
+              "ratio": 1
+            },
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "a. あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをんあいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをんあいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん",
+                  "wrap": "true",
+                  "layout": {
+                    "width": "match_parent",
+                    "ratio": 1
+                  }
+                }
+              },
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "b. あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをんあいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをんあいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん",
+                  "wrap": "true",
+                  "layout": {
+                    "width": "match_parent",
+                    "ratio": 1
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "horizontal",
+            "layout": {
+              "width": "match_parent",
+              "ratio": 1
+            },
+            "liner_layouts": [
+              {
+                "orientation": "vertical",
+                "layout": {
+                  "width": "match_parent",
+                  "ratio": 0.5
+                },
+                "elements": [
+                  {
+                    "type": "text",
+                    "attributes": {
+                      "text": "1. あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん",
+                      "wrap": "true",
+                      "layout": {
+                        "width": "match_parent",
+                        "ratio": 1
+                      },
+                      "color": {
+                        "r": 175,
+                        "g": 223,
+                        "b": 228
+                      }
+                    }
+                  },
+                  {
+                    "type": "text",
+                    "attributes": {
+                      "text": "2. あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん",
+                      "wrap": "true",
+                      "layout": {
+                        "width": "match_parent",
+                        "ratio": 1
+                      },
+                      "color": {
+                        "r": 59,
+                        "g": 175,
+                        "b": 117
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "orientation": "vertical",
+                "layout": {
+                  "width": "match_parent",
+                  "ratio": 0.5
+                },
+                "elements": [
+                  {
+                    "type": "text",
+                    "attributes": {
+                      "text": "3. あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん",
+                      "wrap": "true",
+                      "layout": {
+                        "width": "match_parent",
+                        "ratio": 1
+                      },
+                      "color": {
+                        "r": 175,
+                        "g": 223,
+                        "b": 228
+                      }
+                    }
+                  },
+                  {
+                    "type": "text",
+                    "attributes": {
+                      "text": "4. あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん",
+                      "wrap": "true",
+                      "layout": {
+                        "width": "match_parent",
+                        "ratio": 1
+                      },
+                      "color": {
+                        "r": 59,
+                        "g": 175,
+                        "b": 117
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

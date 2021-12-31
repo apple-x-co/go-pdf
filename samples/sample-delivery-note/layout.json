@@ -29,7 +29,7 @@
         "valign": "middle",
         "inset": {
           "top": 2,
-          "bottom": 2
+          "bottom": 4
         },
         "layout": {
           "width": "match_parent",
@@ -54,7 +54,7 @@
         "valign": "middle",
         "inset": {
           "top": 2,
-          "bottom": 2
+          "bottom": 4
         },
         "layout": {
           "width": "match_parent",
@@ -79,7 +79,7 @@
         "valign": "middle",
         "inset": {
           "top": 2,
-          "bottom": 2
+          "bottom": 4
         }
       }
     },
@@ -91,7 +91,7 @@
         "valign": "middle",
         "inset": {
           "top": 2,
-          "bottom": 2
+          "bottom": 4
         }
       }
     },
@@ -126,8 +126,8 @@
         "align": "right",
         "valign": "middle",
         "inset": {
-          "top": 2,
-          "bottom": 2
+          "top": 4,
+          "bottom": 4
         },
         "layout": {
           "width": "match_parent",
@@ -143,8 +143,8 @@
         "text_size": 10,
         "valign": "middle",
         "inset": {
-          "top": 2,
-          "bottom": 2
+          "top": 4,
+          "bottom": 4
         }
       }
     }
@@ -195,7 +195,8 @@
                 "text": "〒248-0006",
                 "text_size": 10,
                 "inset": {
-                  "left": 20
+                  "left": 20,
+                  "bottom": 1
                 },
                 "layout": {
                   "width": "match_parent",
@@ -262,7 +263,8 @@
                     "valign": "middle",
                     "inset": {
                       "left": 20,
-                      "top": 5
+                      "top": 5,
+                      "bottom": 2
                     },
                     "layout": {
                       "width": "match_parent",
@@ -274,16 +276,16 @@
                 {
                   "type": "text",
                   "attributes": {
-                    "text": "神奈川県鎌倉市小町1-3-7 大石ビル2F",
+                    "text": "神奈川県鎌倉市小町1-3-7 大石ビル2F ABCDEFGHIJKLMNOPQRSTUVWXYZ あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん 12345678909876543212345678901234567890987654321234567890",
                     "text_size": 8,
-                    "valign": "middle",
                     "inset": {
                       "left": 20
                     },
+                    "wrap": "true",
                     "layout": {
                       "width": "match_parent",
                       "height": "wrap_content",
-                      "ratio": 1
+                      "ratio": 0.9
                     }
                   }
                 },
@@ -336,7 +338,8 @@
                     "text_size": 8,
                     "valign": "middle",
                     "inset": {
-                      "top": 5
+                      "top": 5,
+                      "bottom": 2
                     },
                     "layout": {
                       "width": "match_parent",
@@ -348,13 +351,13 @@
                 {
                   "type": "text",
                   "attributes": {
-                    "text": "神奈川県鎌倉市小町1-3-7 大石ビル2F",
+                    "text": "神奈川県鎌倉市小町1-3-7 大石ビル2F ABCDEFGHIJKLMNOPQRSTUVWXYZ あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん 12345678909876543212345678901234567890987654321234567890",
                     "text_size": 8,
-                    "valign": "middle",
+                    "wrap": "true",
                     "layout": {
                       "width": "match_parent",
                       "height": "wrap_content",
-                      "ratio": 1
+                      "ratio": 0.9
                     }
                   }
                 },

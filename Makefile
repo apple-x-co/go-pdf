@@ -6,27 +6,32 @@ REVISION := '$(shell git rev-parse --short HEAD)'
 BUILD_TAGS_PRODUCTION := 'production'
 BUILD_TAGS_DEVELOPMENT := 'development unittest'
 
-all: clean dev-mac linux
+build-all: clean dev-mac linux
 
 .PHONY: version
 version:
 	echo $(VERSION).$(REVISION)
 
-.PHONY: base
-base:
+.PHONY: build
+build:
 	go build -o $(BIN_NAME) -tags '$(BUILD_TAGS) netgo' -installsuffix netgo -ldflags '-s -w -X main.version=$(VERSION) -X main.revision=$(REVISION) -extldflags "-static"' main.go
+
+.PHONY: run
+run:
+	go run ./main.go --in samples/sample-delivery-note/layout.json --out samples/sample-delivery-note/output.pdf --ttf fonts/TakaoPGothic.ttf
+	#go run ./main.go --in samples/text-wrap2/layout.json --out samples/text-wrap2/output.pdf --ttf fonts/TakaoPGothic.ttf
 
 .PHONY: dev-mac
 dev-mac:
 	go mod tidy
 	go fmt
 	if [ ! -d bin ]; then mkdir bin; fi
-	$(MAKE) base BUILD_TAGS=$(BUILD_TAGS_DEVELOPMENT) BIN_NAME=bin/$(BIN)-dev-mac
+	$(MAKE) build BUILD_TAGS=$(BUILD_TAGS_DEVELOPMENT) BIN_NAME=bin/$(BIN)-dev-mac
 
 .PHONY: linux
 linux:
 	if [ ! -d bin ]; then mkdir bin; fi
-	$(MAKE) base BUILD_TAGS=$(BUILD_TAGS_PRODUCTION) CGO_ENABLED=0 GOOS=linux GOARCH=amd64 BIN_NAME=bin/$(BIN)-linux64
+	$(MAKE) build BUILD_TAGS=$(BUILD_TAGS_PRODUCTION) CGO_ENABLED=0 GOOS=linux GOARCH=amd64 BIN_NAME=bin/$(BIN)-linux64
 
 .PHONY: clean
 clean:
@@ -38,8 +43,8 @@ ci-test:
 	if [ ! -d work ]; then mkdir work; fi
 	./bin/$(BIN)-dev-mac --in layout.json --out work/output.pdf --ttf fonts/TakaoPGothic.ttf
 
-.PHONY: samples
-samples:
+.PHONY: exec-samples
+exec-samples:
 	./bin/$(BIN)-dev-mac --in samples/commpress-level/layout.json --out samples/commpress-level/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/header-footer/layout.json --out samples/header-footer/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/header-footer-layoutconstant/layout.json --out samples/header-footer-layoutconstant/output.pdf --ttf fonts/TakaoPGothic.ttf
@@ -69,3 +74,4 @@ samples:
 	./bin/$(BIN)-dev-mac --in samples/text-template/layout.json --out samples/text-template/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/text-textsize/layout.json --out samples/text-textsize/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/text-wrap/layout.json --out samples/text-wrap/output.pdf --ttf fonts/TakaoPGothic.ttf
+	./bin/$(BIN)-dev-mac --in samples/text-wrap2/layout.json --out samples/text-wrap2/output.pdf --ttf fonts/TakaoPGothic.ttf
