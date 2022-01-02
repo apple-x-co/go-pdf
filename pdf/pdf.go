@@ -64,10 +64,10 @@ func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 	}
 
 	p.gp.SetMargins(
-		documentConfigure.Inset.Left,
-		documentConfigure.Inset.Top,
-		documentConfigure.Inset.Right,
-		documentConfigure.Inset.Bottom,
+		documentConfigure.Margin.Left,
+		documentConfigure.Margin.Top,
+		documentConfigure.Margin.Right,
+		documentConfigure.Margin.Bottom,
 	)
 	p.gp.SetCompressLevel(documentConfigure.CompressLevel)
 
@@ -185,7 +185,7 @@ func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 			if pageHeaderRect.Size.Width == UnsetWidth {
 				pageHeaderRect.Size.Width = p.contentRect.Width()
 			}
-			contentRect = contentRect.Inset(types.EdgeInset{
+			contentRect = contentRect.ApplyMargin(types.Margin{
 				Top: page.PageHeader.Size.Height,
 			})
 			p.draw(documentConfigure, page, page.PageHeader.LinerLayout, pageHeaderRect, true, false)
@@ -200,7 +200,7 @@ func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 			if titleRect.Size.Width == UnsetWidth {
 				titleRect.Size.Width = p.contentRect.Width()
 			}
-			contentRect = contentRect.Inset(types.EdgeInset{
+			contentRect = contentRect.ApplyMargin(types.Margin{
 				Top: page.FixedTitle.Size.Height,
 			})
 			p.draw(documentConfigure, page, page.FixedTitle.LinerLayout, titleRect, true, false)
@@ -322,13 +322,13 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, page types.Page, l
 					}
 				}
 
-				measureSize.Width += decoded.Inset.Horizontal()
-				measureSize.Height += decoded.Inset.Vertical()
+				measureSize.Width += decoded.Margin.Horizontal()
+				measureSize.Height += decoded.Margin.Vertical()
 
 				// FIX POSITION
 				if decoded.Origin.X != UnsetX && decoded.Origin.Y != UnsetY {
 					textFrame := types.Rect{Origin: types.Origin{X: decoded.Origin.X, Y: decoded.Origin.Y}, Size: measureSize}
-					textRect := textFrame.Inset(decoded.Inset)
+					textRect := textFrame.ApplyMargin(decoded.Margin)
 					p.gp.SetX(textRect.MinX())
 					p.gp.SetY(textRect.MinY())
 					p.drawText(documentConfigure, decoded, textRect, textFrame)
@@ -370,10 +370,10 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, page types.Page, l
 							titleRect.Size.Width = p.contentRect.Width()
 						}
 						p.draw(documentConfigure, page, page.FixedTitle.LinerLayout, titleRect, true, false)
-						lineWrapRect = lineWrapRect.Inset(types.EdgeInset{
+						lineWrapRect = lineWrapRect.ApplyMargin(types.Margin{
 							Top: titleRect.Size.Height,
 						})
-						wrapRect = wrapRect.Inset(types.EdgeInset{
+						wrapRect = wrapRect.ApplyMargin(types.Margin{
 							Top: titleRect.Size.Height,
 						})
 					}
@@ -384,7 +384,7 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, page types.Page, l
 
 				// DRAWABLE RECT
 				textFrame := types.Rect{Origin: types.Origin{X: lineWrapRect.MaxX(), Y: lineWrapRect.MinY()}, Size: measureSize}
-				textRect := textFrame.Inset(decoded.Inset)
+				textRect := textFrame.ApplyMargin(decoded.Margin)
 				p.gp.SetX(textRect.MinX())
 				p.gp.SetY(textRect.MinY())
 
@@ -434,7 +434,7 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, page types.Page, l
 				// FIX POSITION
 				if decoded.Origin.X != UnsetX && decoded.Origin.Y != UnsetY {
 					imageFrame := types.Rect{Origin: types.Origin{X: decoded.Origin.X, Y: decoded.Origin.Y}, Size: measureSize}
-					imageRect := imageFrame.Inset(decoded.Inset)
+					imageRect := imageFrame.ApplyMargin(decoded.Margin)
 					p.gp.SetX(imageRect.MinX())
 					p.gp.SetY(imageRect.MinY())
 					p.drawImage(documentConfigure, decoded, imageRect, imageFrame)
@@ -476,10 +476,10 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, page types.Page, l
 							titleRect.Size.Width = p.contentRect.Width()
 						}
 						p.draw(documentConfigure, page, page.FixedTitle.LinerLayout, titleRect, true, false)
-						lineWrapRect = lineWrapRect.Inset(types.EdgeInset{
+						lineWrapRect = lineWrapRect.ApplyMargin(types.Margin{
 							Top: titleRect.Size.Height,
 						})
-						wrapRect = wrapRect.Inset(types.EdgeInset{
+						wrapRect = wrapRect.ApplyMargin(types.Margin{
 							Top: titleRect.Size.Height,
 						})
 					}
@@ -490,7 +490,7 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, page types.Page, l
 
 				// DRAWABLE RECT
 				imageFrame := types.Rect{Origin: types.Origin{X: lineWrapRect.MaxX(), Y: lineWrapRect.MinY()}, Size: measureSize}
-				imageRect := imageFrame.Inset(decoded.Inset)
+				imageRect := imageFrame.ApplyMargin(decoded.Margin)
 				p.gp.SetX(imageRect.MinX())
 				p.gp.SetY(imageRect.MinY())
 
@@ -564,8 +564,8 @@ func (p *PDF) measureText(documentConfigure types.DocumentConfigure, decoded typ
 			measureSize.Height = decoded.Size.Height
 		}
 
-		//measureSize.Width += decoded.Inset.Horizontal()
-		//measureSize.Height += decoded.Inset.Vertical()
+		//measureSize.Width += decoded.Margin.Horizontal()
+		//measureSize.Height += decoded.Margin.Vertical()
 
 		return measureSize
 	}
@@ -584,8 +584,8 @@ func (p *PDF) measureText(documentConfigure types.DocumentConfigure, decoded typ
 		measureSize = types.Size{Width: measureWidth, Height: measureHeight}
 	}
 
-	//measureSize.Width += decoded.Inset.Horizontal()
-	//measureSize.Height += decoded.Inset.Vertical()
+	//measureSize.Width += decoded.Margin.Horizontal()
+	//measureSize.Height += decoded.Margin.Vertical()
 
 	return measureSize
 }
@@ -616,8 +616,8 @@ func (p *PDF) measureImage(documentConfigure types.DocumentConfigure, decoded ty
 		}
 	}
 
-	measureSize.Width += decoded.Inset.Horizontal()
-	measureSize.Height += decoded.Inset.Vertical()
+	measureSize.Width += decoded.Margin.Horizontal()
+	measureSize.Height += decoded.Margin.Vertical()
 
 	return measureSize
 }

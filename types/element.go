@@ -13,35 +13,37 @@ type ElementLineBreak struct {
 }
 
 type ElementText struct {
-	Text            string    `json:"text"`
-	TextSize        int       `json:"text_size"`
-	Color           Color     `json:"color"`
-	Size            Size      `json:"size"`
-	Origin          Origin    `json:"origin"`
-	Border          Border    `json:"border"`
-	BorderTop       Border    `json:"border_top"`
-	BorderRight     Border    `json:"border_right"`
-	BorderBottom    Border    `json:"border_bottom"`
-	BorderLeft      Border    `json:"border_left"`
-	BackgroundColor Color     `json:"background_color"`
-	Align           Align     `json:"align"`
-	Valign          Valign    `json:"valign"`
-	Wrap            bool      `json:"wrap,string"`
-	Inset           EdgeInset `json:"inset"`
-	Layout          Layout    `json:"layout"`
+	Text            string  `json:"text"`
+	TextSize        int     `json:"text_size"`
+	Color           Color   `json:"color"`
+	Size            Size    `json:"size"`
+	Origin          Origin  `json:"origin"`
+	Border          Border  `json:"border"`
+	BorderTop       Border  `json:"border_top"`
+	BorderRight     Border  `json:"border_right"`
+	BorderBottom    Border  `json:"border_bottom"`
+	BorderLeft      Border  `json:"border_left"`
+	BackgroundColor Color   `json:"background_color"`
+	Align           Align   `json:"align"`
+	Valign          Valign  `json:"valign"`
+	Wrap            bool    `json:"wrap,string"`
+	Margin          Margin  `json:"margin"`
+	Padding         Padding `json:"padding"`
+	Layout          Layout  `json:"layout"`
 }
 
 type ElementImage struct {
-	Path         string    `json:"path"`
-	Size         Size      `json:"size"`
-	Origin       Origin    `json:"origin"`
-	Resize       bool      `json:"resize,string"`
-	Resolution   uint      `json:"resolution"`
-	Inset        EdgeInset `json:"inset"`
-	Border       Border    `json:"border"`
-	BorderTop    Border    `json:"border_top"`
-	BorderRight  Border    `json:"border_right"`
-	BorderBottom Border    `json:"border_bottom"`
-	BorderLeft   Border    `json:"border_left"`
-	Layout       Layout    `json:"layout"`
+	Path         string  `json:"path"`
+	Size         Size    `json:"size"`
+	Origin       Origin  `json:"origin"`
+	Resize       bool    `json:"resize,string"`
+	Resolution   uint    `json:"resolution"`
+	Margin       Margin  `json:"margin"`
+	Padding      Padding `json:"padding"`
+	Border       Border  `json:"border"`
+	BorderTop    Border  `json:"border_top"`
+	BorderRight  Border  `json:"border_right"`
+	BorderBottom Border  `json:"border_bottom"`
+	BorderLeft   Border  `json:"border_left"`
+	Layout       Layout  `json:"layout"`
 }

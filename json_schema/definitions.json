@@ -71,8 +71,11 @@
             "background_color": {
               "$ref": "#/definitions/color"
             },
-            "inset": {
-              "$ref": "#/definitions/inset"
+            "margin": {
+              "$ref": "#/definitions/margin"
+            },
+            "padding": {
+              "$ref": "#/definitions/padding"
             },
             "align": {
               "type": "string",
@@ -204,7 +207,25 @@
       },
       "additionalProperties": false
     },
-    "inset": {
+    "margin": {
+      "type": "object",
+      "properties": {
+        "left": {
+          "type": "integer"
+        },
+        "top": {
+          "type": "integer"
+        },
+        "right": {
+          "type": "integer"
+        },
+        "bottom": {
+          "type": "integer"
+        }
+      },
+      "additionalProperties": false
+    },
+    "padding": {
       "type": "object",
       "properties": {
         "left": {

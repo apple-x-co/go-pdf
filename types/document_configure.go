@@ -3,7 +3,7 @@ package types
 type DocumentConfigure struct {
 	Width         float64           `json:"width"`
 	Height        float64           `json:"height"`
-	Inset         EdgeInset         `json:"inset"`
+	Margin        Margin            `json:"margin"`
 	TextSize      int               `json:"text_size"`
 	TextColor     Color             `json:"text_color"`
 	CommonHeader  Header            `json:"header"`

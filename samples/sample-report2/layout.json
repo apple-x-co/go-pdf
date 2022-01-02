@@ -2,7 +2,7 @@
   "$schema": "../../json_schema/document.json",
   "width": 842,
   "height": 595,
-  "inset": {
+  "margin": {
     "left": 30,
     "top": 30,
     "right": 30,
@@ -23,7 +23,7 @@
         "border": {
           "width": 1
         },
-        "inset": {
+        "margin": {
           "top": 5,
           "bottom": 5
         }
@@ -43,7 +43,7 @@
         "border": {
           "width": 1
         },
-        "inset": {
+        "margin": {
           "top": 5,
           "bottom": 5
         }
@@ -63,7 +63,7 @@
         "border": {
           "width": 1
         },
-        "inset": {
+        "margin": {
           "top": 5,
           "bottom": 5
         }
@@ -83,7 +83,7 @@
         "border": {
           "width": 1
         },
-        "inset": {
+        "margin": {
           "top": 5,
           "bottom": 5
         }
@@ -1590,7 +1590,7 @@
                   "border": {
                     "width": 1
                   },
-                  "inset": {
+                  "margin": {
                     "top": 5,
                     "bottom": 5
                   }
@@ -1610,7 +1610,7 @@
                   "border": {
                     "width": 1
                   },
-                  "inset": {
+                  "margin": {
                     "top": 5,
                     "bottom": 5
                   }

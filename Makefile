@@ -1,6 +1,6 @@
 BIN := 'go-pdf'
 
-VERSION := '0.0.4'
+VERSION := '0.0.5'
 REVISION := '$(shell git rev-parse --short HEAD)'
 
 BUILD_TAGS_PRODUCTION := 'production'
