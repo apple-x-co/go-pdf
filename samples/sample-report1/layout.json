@@ -17,7 +17,7 @@
         "border": {
           "width": 1
         },
-        "margin": {
+        "padding": {
           "top": 5,
           "bottom": 5
         }
@@ -37,7 +37,7 @@
         "border": {
           "width": 1
         },
-        "margin": {
+        "padding": {
           "top": 5,
           "bottom": 5
         }
@@ -57,7 +57,7 @@
         "border": {
           "width": 1
         },
-        "margin": {
+        "padding": {
           "top": 5,
           "bottom": 5
         }
@@ -77,7 +77,7 @@
         "border": {
           "width": 1
         },
-        "margin": {
+        "padding": {
           "top": 5,
           "bottom": 5
         }
@@ -446,7 +446,7 @@
                   "border": {
                     "width": 1
                   },
-                  "margin": {
+                  "padding": {
                     "top": 5,
                     "bottom": 5
                   }
@@ -466,7 +466,7 @@
                   "border": {
                     "width": 1
                   },
-                  "margin": {
+                  "padding": {
                     "top": 5,
                     "bottom": 5
                   }

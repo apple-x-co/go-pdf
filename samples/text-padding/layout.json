@@ -1,0 +1,48 @@
+{
+  "$schema": "../../json_schema/document.json",
+  "width": 595,
+  "height": 842,
+  "pages": [
+    {
+      "liner_layout": {
+        "orientation": "horizontal",
+        "elements": [
+          {
+            "type": "text",
+            "attributes": {
+              "text": "NO LAYOUT PADDING",
+              "border": {
+                "width": 1,
+                "color": {
+                  "r": 175,
+                  "g": 223,
+                  "b": 228
+                }
+              }
+            }
+          },
+          {
+            "type": "text",
+            "attributes": {
+              "text": "LAYOUT PADDING",
+              "padding": {
+                "top": 10,
+                "right": 20,
+                "bottom": 10,
+                "left": 20
+              },
+              "border": {
+                "width": 1,
+                "color": {
+                  "r": 175,
+                  "g": 223,
+                  "b": 228
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
