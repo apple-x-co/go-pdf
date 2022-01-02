@@ -1,4 +1,5 @@
 {
+  "$schema": "../../json_schema/document.json",
   "width": 842,
   "height": 595,
   "inset": {
@@ -65,10 +66,6 @@
         "inset": {
           "top": 5,
           "bottom": 5
-        },
-        "textInset": {
-          "left": 1,
-          "right": 1
         }
       }
     },
@@ -89,10 +86,6 @@
         "inset": {
           "top": 5,
           "bottom": 5
-        },
-        "textInset": {
-          "left": 1,
-          "right": 1
         }
       }
     }

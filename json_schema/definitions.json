@@ -5,7 +5,12 @@
       "type": "object",
       "properties": {
         "type": {
-          "type": "string"
+          "type": "string",
+          "enum": [
+            "text",
+            "image",
+            "line_break"
+          ]
         },
         "template_id": {
           "type": [
@@ -14,31 +19,107 @@
           ]
         },
         "attributes": {
-          "type": "array",
-          "items": {
-            "properties": {
+          "type": "object",
+          "properties": {
+            "text": {
+              "type": "string"
+            },
+            "text_size": {
+              "type": "integer"
+            },
+            "wrap": {
+              "type": "string",
+              "enum": [
+                "true",
+                "false"
+              ]
+            },
+            "color": {
+              "$ref": "#/definitions/color"
+            },
+            "path": {
+              "type": "string"
+            },
+            "size": {
+              "$ref": "#/definitions/size"
+            },
+            "resize": {
+              "type": "string",
+              "enum": [
+                "true",
+                "false"
+              ]
+            },
+            "resolution": {
+              "type": "integer"
+            },
+            "border": {
+              "$ref": "#/definitions/border"
+            },
+            "border_left": {
+              "$ref": "#/definitions/border"
+            },
+            "border_top": {
+              "$ref": "#/definitions/border"
+            },
+            "border_right": {
+              "$ref": "#/definitions/border"
+            },
+            "border_bottom": {
+              "$ref": "#/definitions/border"
+            },
+            "background_color": {
+              "$ref": "#/definitions/color"
+            },
+            "inset": {
+              "$ref": "#/definitions/inset"
+            },
+            "align": {
+              "type": "string",
+              "enum": [
+                "left",
+                "center",
+                "right"
+              ]
+            },
+            "valign": {
+              "type": "string",
+              "enum": [
+                "top",
+                "middle",
+                "bottom"
+              ]
+            },
+            "layout": {
+              "$ref": "#/definitions/layout"
+            },
+            "origin": {
+              "$ref": "#/definitions/origin"
             }
-          }
+          },
+          "additionalProperties": false
         }
-      }
+      },
+      "additionalProperties": false
     },
     "element_template": {
       "type": "object",
       "properties": {
         "type": {
-          "type": "string"
+          "type": "string",
+          "enum": [
+            "text",
+            "image"
+          ]
         },
         "id": {
           "type": "string"
         },
         "attributes": {
-          "type": "array",
-          "items": {
-            "properties": {
-            }
-          }
+          "$ref": "#/definitions/element/properties/attributes"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "layout": {
       "type": "object",
@@ -65,18 +146,63 @@
       },
       "required": [
         "ratio"
-      ]
+      ],
+      "additionalProperties": false
+    },
+    "origin": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "integer"
+        },
+        "y": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "x",
+        "y"
+      ],
+      "additionalProperties": false
     },
     "size": {
       "type": "object",
       "properties": {
         "width": {
-          "type": "integer"
+          "type": "number"
         },
         "height": {
+          "type": "number"
+        }
+      },
+      "additionalProperties": false
+    },
+    "color": {
+      "type": "object",
+      "properties": {
+        "r": {
+          "type": "integer"
+        },
+        "g": {
+          "type": "integer"
+        },
+        "b": {
           "type": "integer"
         }
-      }
+      },
+      "additionalProperties": false
+    },
+    "border": {
+      "type": "object",
+      "properties": {
+        "width": {
+          "type": "integer"
+        },
+        "color": {
+          "$ref": "#/definitions/color"
+        }
+      },
+      "additionalProperties": false
     },
     "inset": {
       "type": "object",
@@ -93,7 +219,8 @@
         "bottom": {
           "type": "integer"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "liner_layout": {
       "type": "object",
@@ -123,7 +250,8 @@
         "layout": {
           "$ref": "#/definitions/layout"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "header": {
       "type": "object",
@@ -134,7 +262,8 @@
         "liner_layout": {
           "$ref": "#/definitions/liner_layout"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "footer": {
       "type": "object",
@@ -145,7 +274,8 @@
         "liner_layout": {
           "$ref": "#/definitions/liner_layout"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "page": {
       "type": "object",
@@ -162,7 +292,8 @@
         "fixed_title": {
           "$ref": "#/definitions/header"
         }
-      }
+      },
+      "additionalProperties": false
     }
   },
   "type": "object",

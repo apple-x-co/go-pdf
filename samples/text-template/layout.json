@@ -1,4 +1,5 @@
 {
+  "$schema": "../../json_schema/document.json",
   "width": 595,
   "height": 842,
   "templates": [
