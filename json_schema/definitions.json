@@ -78,6 +78,23 @@
         }
       }
     },
+    "inset": {
+      "type": "object",
+      "properties": {
+        "left": {
+          "type": "integer"
+        },
+        "top": {
+          "type": "integer"
+        },
+        "right": {
+          "type": "integer"
+        },
+        "bottom": {
+          "type": "integer"
+        }
+      }
+    },
     "liner_layout": {
       "type": "object",
       "properties": {
