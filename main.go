@@ -54,6 +54,7 @@ func execute(inputPath string, outputPath string, ttfPath string) {
 	}
 
 	var documentConfigure = types.DocumentConfigure{
+		Inset:         types.EdgeInset{Top: 10, Right: 10, Bottom: 10, Left: 10},
 		TextSize:      pdf.DefaultTextSize,
 		TextColor:     types.Color{R: pdf.DefaultColorR, G: pdf.DefaultColorG, B: pdf.DefaultColorB},
 		AutoPageBreak: true,

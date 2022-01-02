@@ -53,7 +53,7 @@ func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 		p.gp.Start(
 			gopdf.Config{
 				PageSize: gopdf.Rect{W: documentConfigure.Width, H: documentConfigure.Height},
-				Unit:     gopdf.Unit_PT,
+				Unit:     gopdf.UnitPT,
 				Protection: gopdf.PDFProtectionConfig{
 					UseProtection: true,
 					Permissions:   gopdf.PermissionsPrint | gopdf.PermissionsCopy | gopdf.PermissionsModify,
@@ -63,6 +63,12 @@ func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 			})
 	}
 
+	p.gp.SetMargins(
+		documentConfigure.Inset.Left,
+		documentConfigure.Inset.Top,
+		documentConfigure.Inset.Right,
+		documentConfigure.Inset.Bottom,
+	)
 	p.gp.SetCompressLevel(documentConfigure.CompressLevel)
 
 	if err := p.gp.AddTTFFont("default", documentConfigure.TTFPath); err != nil {
@@ -93,6 +99,9 @@ func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 			},
 			Size: documentConfigure.CommonHeader.Size,
 		}
+		if p.commonHeaderRect.Size.Width == 0 {
+			p.commonHeaderRect.Size.Width = documentConfigure.Width - p.gp.MarginLeft() - p.gp.MarginRight()
+		}
 	}
 	if !documentConfigure.CommonFooter.Size.IsZero() {
 		p.commonFooterRect = types.Rect{
@@ -101,6 +110,9 @@ func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 				Y: documentConfigure.Height - p.gp.MarginBottom() - documentConfigure.CommonFooter.Size.Height,
 			},
 			Size: documentConfigure.CommonFooter.Size,
+		}
+		if p.commonFooterRect.Size.Width == 0 {
+			p.commonFooterRect.Size.Width = documentConfigure.Width - p.gp.MarginLeft() - p.gp.MarginRight()
 		}
 	}
 	p.contentRect = types.Rect{
@@ -170,6 +182,9 @@ func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 				Origin: types.Origin{X: contentRect.MinX(), Y: contentRect.MinY()},
 				Size:   page.PageHeader.Size,
 			}
+			if pageHeaderRect.Size.Width == UnsetWidth {
+				pageHeaderRect.Size.Width = p.contentRect.Width()
+			}
 			contentRect = contentRect.Inset(types.EdgeInset{
 				Top: page.PageHeader.Size.Height,
 			})
@@ -181,6 +196,9 @@ func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 			titleRect = types.Rect{
 				Origin: types.Origin{X: contentRect.MinX(), Y: contentRect.MinY()},
 				Size:   page.FixedTitle.Size,
+			}
+			if titleRect.Size.Width == UnsetWidth {
+				titleRect.Size.Width = p.contentRect.Width()
 			}
 			contentRect = contentRect.Inset(types.EdgeInset{
 				Top: page.FixedTitle.Size.Height,
@@ -198,6 +216,9 @@ func (p *PDF) Draw(documentConfigure types.DocumentConfigure) {
 			pageFooterRect = types.Rect{
 				Origin: types.Origin{X: wrapRect.MinX(), Y: wrapRect.MaxY()},
 				Size:   page.PageFooter.Size,
+			}
+			if pageFooterRect.Size.Width == UnsetWidth {
+				pageFooterRect.Size.Width = p.contentRect.Width()
 			}
 		}
 		if !pageFooterRect.Size.IsZero() {
@@ -345,6 +366,9 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, page types.Page, l
 							Origin: types.Origin{X: wrapRect.MinX(), Y: wrapRect.MinY()},
 							Size:   page.FixedTitle.Size,
 						}
+						if titleRect.Size.Width == UnsetWidth {
+							titleRect.Size.Width = p.contentRect.Width()
+						}
 						p.draw(documentConfigure, page, page.FixedTitle.LinerLayout, titleRect, true, false)
 						lineWrapRect = lineWrapRect.Inset(types.EdgeInset{
 							Top: titleRect.Size.Height,
@@ -447,6 +471,9 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, page types.Page, l
 						titleRect := types.Rect{
 							Origin: types.Origin{X: wrapRect.MinX(), Y: wrapRect.MinY()},
 							Size:   page.FixedTitle.Size,
+						}
+						if titleRect.Size.Width == UnsetWidth {
+							titleRect.Size.Width = p.contentRect.Width()
 						}
 						p.draw(documentConfigure, page, page.FixedTitle.LinerLayout, titleRect, true, false)
 						lineWrapRect = lineWrapRect.Inset(types.EdgeInset{

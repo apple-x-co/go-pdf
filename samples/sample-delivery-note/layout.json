@@ -1,26 +1,14 @@
 {
+  "$schema": "../../json_schema/document.json",
   "width": 595,
   "height": 842,
+  "inset": {
+    "left": 30,
+    "top": 30,
+    "right": 30,
+    "bottom": 30
+  },
   "templates": [
-    {
-      "id": "data-row-space-width-20",
-      "type": "text",
-      "attributes": {
-        "size": {
-          "width": 20
-        }
-      }
-    },
-    {
-      "id": "data-row-space-width-20-height-1",
-      "type": "text",
-      "attributes": {
-        "size": {
-          "width": 20,
-          "height": 1
-        }
-      }
-    },
     {
       "id": "data-order-header",
       "type": "text",
@@ -59,7 +47,7 @@
         "layout": {
           "width": "match_parent",
           "height": "wrap_content",
-          "ratio": 0.73
+          "ratio": 0.8
         },
         "border_bottom": {
           "width": 1,
@@ -100,13 +88,12 @@
       "type": "text",
       "attributes": {
         "size": {
-          "width": 20,
           "height": 1
         },
         "layout": {
           "width": "match_parent",
           "height": "wrap_content",
-          "ratio": 0.93
+          "ratio": 1
         },
         "border_bottom": {
           "width": 1,
@@ -151,7 +138,6 @@
   ],
   "header": {
     "size": {
-      "width": 575,
       "height": 200
     },
     "liner_layout": {
@@ -177,10 +163,7 @@
                 "text_size": 15,
                 "valign": "middle",
                 "inset": {
-                  "top": 20,
-                  "right": 20,
-                  "bottom": 20,
-                  "left": 20
+                  "bottom": 20
                 },
                 "layout": {
                   "width": "match_parent",
@@ -195,7 +178,6 @@
                 "text": "〒248-0006",
                 "text_size": 10,
                 "inset": {
-                  "left": 20,
                   "bottom": 1
                 },
                 "layout": {
@@ -210,9 +192,6 @@
               "attributes": {
                 "text": "神奈川県鎌倉市小町1-3-7 大石ビル2F",
                 "text_size": 10,
-                "inset": {
-                  "left": 20
-                },
                 "layout": {
                   "width": "match_parent",
                   "height": "wrap_content",
@@ -245,8 +224,7 @@
                     "text_size": 11,
                     "valign": "middle",
                     "inset": {
-                      "top": 30,
-                      "left": 20
+                      "top": 30
                     },
                     "layout": {
                       "width": "match_parent",
@@ -262,7 +240,6 @@
                     "text_size": 8,
                     "valign": "middle",
                     "inset": {
-                      "left": 20,
                       "top": 5,
                       "bottom": 2
                     },
@@ -278,9 +255,6 @@
                   "attributes": {
                     "text": "神奈川県鎌倉市小町1-3-7 大石ビル2F ABCDEFGHIJKLMNOPQRSTUVWXYZ あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん 12345678909876543212345678901234567890987654321234567890",
                     "text_size": 8,
-                    "inset": {
-                      "left": 20
-                    },
                     "wrap": "true",
                     "layout": {
                       "width": "match_parent",
@@ -295,9 +269,6 @@
                     "text": "山田 太郎 さま",
                     "text_size": 8,
                     "valign": "middle",
-                    "inset": {
-                      "left": 20
-                    },
                     "layout": {
                       "width": "match_parent",
                       "height": "wrap_content",
@@ -383,7 +354,6 @@
   },
   "footer": {
     "size": {
-      "width": 575,
       "height": 20
     },
     "liner_layout": {
@@ -415,7 +385,6 @@
     {
       "page_header": {
         "size": {
-          "width": 575,
           "height": 150
         },
         "liner_layout": {
@@ -436,10 +405,6 @@
               "elements": [
                 {
                   "type": "text",
-                  "template_id": "data-row-space-width-20"
-                },
-                {
-                  "type": "text",
                   "attributes": {
                     "text": "ご注文内容",
                     "text_size": 11,
@@ -451,8 +416,10 @@
                     "border_bottom": {
                       "width": 2
                     },
-                    "size": {
-                      "width": 535
+                    "layout": {
+                      "width": "match_parent",
+                      "height": "wrap_content",
+                      "ratio": 1
                     }
                   }
                 }
@@ -466,10 +433,6 @@
                 "ratio": 1
               },
               "elements": [
-                {
-                  "type": "text",
-                  "template_id": "data-row-space-width-20"
-                },
                 {
                   "type": "text",
                   "template_id": "data-order-header",
@@ -493,10 +456,6 @@
                 "ratio": 1
               },
               "elements": [
-                {
-                  "type": "text",
-                  "template_id": "data-row-space-width-20"
-                },
                 {
                   "type": "text",
                   "template_id": "data-order-header",
@@ -523,10 +482,6 @@
               "elements": [
                 {
                   "type": "text",
-                  "template_id": "data-row-space-width-20"
-                },
-                {
-                  "type": "text",
                   "template_id": "data-order-header",
                   "attributes": {
                     "text": "お支払い方法"
@@ -549,10 +504,6 @@
                 "ratio": 1
               },
               "elements": [
-                {
-                  "type": "text",
-                  "template_id": "data-row-space-width-20"
-                },
                 {
                   "type": "text",
                   "template_id": "data-order-header",
@@ -579,10 +530,6 @@
               "elements": [
                 {
                   "type": "text",
-                  "template_id": "data-row-space-width-20"
-                },
-                {
-                  "type": "text",
                   "template_id": "data-order-header",
                   "attributes": {
                     "text": "お電話番号"
@@ -602,7 +549,6 @@
       },
       "fixed_title": {
         "size": {
-          "width": 575,
           "height": 20
         },
         "liner_layout": {
@@ -623,10 +569,6 @@
               "elements": [
                 {
                   "type": "text",
-                  "template_id": "data-row-space-width-20"
-                },
-                {
-                  "type": "text",
                   "template_id": "data-order-item-header",
                   "attributes": {
                     "text": "商品・商品コード",
@@ -645,7 +587,7 @@
                     "layout": {
                       "width": "match_parent",
                       "height": "wrap_content",
-                      "ratio": 0.2
+                      "ratio": 0.25
                     }
                   }
                 },
@@ -672,19 +614,14 @@
               "elements": [
                 {
                   "type": "text",
-                  "template_id": "data-row-space-width-20-height-1"
-                },
-                {
-                  "type": "text",
                   "attributes": {
                     "size": {
-                      "width": 20,
                       "height": 1
                     },
                     "layout": {
                       "width": "match_parent",
                       "height": "wrap_content",
-                      "ratio": 0.93
+                      "ratio": 1
                     },
                     "border_bottom": {
                       "width": 1
@@ -714,10 +651,6 @@
             "elements": [
               {
                 "type": "text",
-                "template_id": "data-row-space-width-20"
-              },
-              {
-                "type": "text",
                 "template_id": "data-order-item-body",
                 "attributes": {
                   "text": "サプリメント1\nsupplement_001",
@@ -736,7 +669,7 @@
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
-                    "ratio": 0.2
+                    "ratio": 0.25
                   }
                 }
               },
@@ -763,10 +696,6 @@
             "elements": [
               {
                 "type": "text",
-                "template_id": "data-row-space-width-20-height-1"
-              },
-              {
-                "type": "text",
                 "template_id": "data-order-item-separator"
               }
             ]
@@ -779,10 +708,6 @@
               "ratio": 1
             },
             "elements": [
-              {
-                "type": "text",
-                "template_id": "data-row-space-width-20"
-              },
               {
                 "type": "text",
                 "template_id": "data-order-item-body",
@@ -803,7 +728,7 @@
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
-                    "ratio": 0.2
+                    "ratio": 0.25
                   }
                 }
               },
@@ -830,10 +755,6 @@
             "elements": [
               {
                 "type": "text",
-                "template_id": "data-row-space-width-20-height-1"
-              },
-              {
-                "type": "text",
                 "template_id": "data-order-item-separator"
               }
             ]
@@ -846,10 +767,6 @@
               "ratio": 1
             },
             "elements": [
-              {
-                "type": "text",
-                "template_id": "data-row-space-width-20"
-              },
               {
                 "type": "text",
                 "template_id": "data-order-item-body",
@@ -870,7 +787,7 @@
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
-                    "ratio": 0.2
+                    "ratio": 0.25
                   }
                 }
               },
@@ -897,10 +814,6 @@
             "elements": [
               {
                 "type": "text",
-                "template_id": "data-row-space-width-20-height-1"
-              },
-              {
-                "type": "text",
                 "template_id": "data-order-item-separator"
               }
             ]
@@ -913,10 +826,6 @@
               "ratio": 1
             },
             "elements": [
-              {
-                "type": "text",
-                "template_id": "data-row-space-width-20"
-              },
               {
                 "type": "text",
                 "template_id": "data-order-item-body",
@@ -937,7 +846,7 @@
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
-                    "ratio": 0.2
+                    "ratio": 0.25
                   }
                 }
               },
@@ -964,10 +873,6 @@
             "elements": [
               {
                 "type": "text",
-                "template_id": "data-row-space-width-20-height-1"
-              },
-              {
-                "type": "text",
                 "template_id": "data-order-item-separator"
               }
             ]
@@ -980,10 +885,6 @@
               "ratio": 1
             },
             "elements": [
-              {
-                "type": "text",
-                "template_id": "data-row-space-width-20"
-              },
               {
                 "type": "text",
                 "template_id": "data-order-item-body",
@@ -1004,7 +905,7 @@
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
-                    "ratio": 0.2
+                    "ratio": 0.25
                   }
                 }
               },
@@ -1031,10 +932,6 @@
             "elements": [
               {
                 "type": "text",
-                "template_id": "data-row-space-width-20-height-1"
-              },
-              {
-                "type": "text",
                 "template_id": "data-order-item-separator"
               }
             ]
@@ -1047,10 +944,6 @@
               "ratio": 1
             },
             "elements": [
-              {
-                "type": "text",
-                "template_id": "data-row-space-width-20"
-              },
               {
                 "type": "text",
                 "template_id": "data-order-item-body",
@@ -1071,7 +964,7 @@
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
-                    "ratio": 0.2
+                    "ratio": 0.25
                   }
                 }
               },
@@ -1098,10 +991,6 @@
             "elements": [
               {
                 "type": "text",
-                "template_id": "data-row-space-width-20-height-1"
-              },
-              {
-                "type": "text",
                 "template_id": "data-order-item-separator"
               }
             ]
@@ -1114,10 +1003,6 @@
               "ratio": 1
             },
             "elements": [
-              {
-                "type": "text",
-                "template_id": "data-row-space-width-20"
-              },
               {
                 "type": "text",
                 "template_id": "data-order-item-body",
@@ -1138,7 +1023,7 @@
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
-                    "ratio": 0.2
+                    "ratio": 0.25
                   }
                 }
               },
@@ -1165,10 +1050,6 @@
             "elements": [
               {
                 "type": "text",
-                "template_id": "data-row-space-width-20-height-1"
-              },
-              {
-                "type": "text",
                 "template_id": "data-order-item-separator"
               }
             ]
@@ -1181,10 +1062,6 @@
               "ratio": 1
             },
             "elements": [
-              {
-                "type": "text",
-                "template_id": "data-row-space-width-20"
-              },
               {
                 "type": "text",
                 "template_id": "data-order-item-body",
@@ -1205,7 +1082,7 @@
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
-                    "ratio": 0.2
+                    "ratio": 0.25
                   }
                 }
               },
@@ -1232,10 +1109,6 @@
             "elements": [
               {
                 "type": "text",
-                "template_id": "data-row-space-width-20-height-1"
-              },
-              {
-                "type": "text",
                 "template_id": "data-order-item-separator"
               }
             ]
@@ -1248,10 +1121,6 @@
               "ratio": 1
             },
             "elements": [
-              {
-                "type": "text",
-                "template_id": "data-row-space-width-20"
-              },
               {
                 "type": "text",
                 "template_id": "data-order-item-body",
@@ -1272,7 +1141,7 @@
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
-                    "ratio": 0.2
+                    "ratio": 0.25
                   }
                 }
               },
@@ -1299,10 +1168,6 @@
             "elements": [
               {
                 "type": "text",
-                "template_id": "data-row-space-width-20-height-1"
-              },
-              {
-                "type": "text",
                 "template_id": "data-order-item-separator"
               }
             ]
@@ -1315,10 +1180,6 @@
               "ratio": 1
             },
             "elements": [
-              {
-                "type": "text",
-                "template_id": "data-row-space-width-20"
-              },
               {
                 "type": "text",
                 "template_id": "data-order-item-body",
@@ -1339,7 +1200,7 @@
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
-                    "ratio": 0.2
+                    "ratio": 0.25
                   }
                 }
               },
@@ -1366,10 +1227,6 @@
             "elements": [
               {
                 "type": "text",
-                "template_id": "data-row-space-width-20-height-1"
-              },
-              {
-                "type": "text",
                 "template_id": "data-order-item-separator"
               }
             ]
@@ -1382,10 +1239,6 @@
               "ratio": 1
             },
             "elements": [
-              {
-                "type": "text",
-                "template_id": "data-row-space-width-20"
-              },
               {
                 "type": "text",
                 "template_id": "data-order-item-body",
@@ -1406,7 +1259,7 @@
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
-                    "ratio": 0.2
+                    "ratio": 0.25
                   }
                 }
               },
@@ -1433,10 +1286,6 @@
             "elements": [
               {
                 "type": "text",
-                "template_id": "data-row-space-width-20-height-1"
-              },
-              {
-                "type": "text",
                 "template_id": "data-order-item-separator"
               }
             ]
@@ -1449,10 +1298,6 @@
               "ratio": 1
             },
             "elements": [
-              {
-                "type": "text",
-                "template_id": "data-row-space-width-20"
-              },
               {
                 "type": "text",
                 "template_id": "data-order-item-body",
@@ -1473,7 +1318,7 @@
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
-                    "ratio": 0.2
+                    "ratio": 0.25
                   }
                 }
               },
@@ -1500,10 +1345,6 @@
             "elements": [
               {
                 "type": "text",
-                "template_id": "data-row-space-width-20-height-1"
-              },
-              {
-                "type": "text",
                 "template_id": "data-order-item-separator"
               }
             ]
@@ -1516,10 +1357,6 @@
               "ratio": 1
             },
             "elements": [
-              {
-                "type": "text",
-                "template_id": "data-row-space-width-20"
-              },
               {
                 "type": "text",
                 "template_id": "data-order-item-body",
@@ -1540,7 +1377,7 @@
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
-                    "ratio": 0.2
+                    "ratio": 0.25
                   }
                 }
               },
@@ -1567,10 +1404,6 @@
             "elements": [
               {
                 "type": "text",
-                "template_id": "data-row-space-width-20-height-1"
-              },
-              {
-                "type": "text",
                 "template_id": "data-order-item-separator"
               }
             ]
@@ -1583,10 +1416,6 @@
               "ratio": 1
             },
             "elements": [
-              {
-                "type": "text",
-                "template_id": "data-row-space-width-20"
-              },
               {
                 "type": "text",
                 "template_id": "data-order-item-body",
@@ -1607,7 +1436,7 @@
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
-                    "ratio": 0.2
+                    "ratio": 0.25
                   }
                 }
               },
@@ -1634,10 +1463,6 @@
             "elements": [
               {
                 "type": "text",
-                "template_id": "data-row-space-width-20-height-1"
-              },
-              {
-                "type": "text",
                 "template_id": "data-order-item-separator"
               }
             ]
@@ -1650,10 +1475,6 @@
               "ratio": 1
             },
             "elements": [
-              {
-                "type": "text",
-                "template_id": "data-row-space-width-20"
-              },
               {
                 "type": "text",
                 "template_id": "data-order-summary-head",
@@ -1672,7 +1493,7 @@
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
-                    "ratio": 0.2
+                    "ratio": 0.25
                   }
                 }
               },
@@ -1699,10 +1520,6 @@
             "elements": [
               {
                 "type": "text",
-                "template_id": "data-row-space-width-20-height-1"
-              },
-              {
-                "type": "text",
                 "template_id": "data-order-item-separator"
               }
             ]
@@ -1715,10 +1532,6 @@
               "ratio": 1
             },
             "elements": [
-              {
-                "type": "text",
-                "template_id": "data-row-space-width-20"
-              },
               {
                 "type": "text",
                 "template_id": "data-order-summary-head",
@@ -1737,7 +1550,7 @@
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
-                    "ratio": 0.2
+                    "ratio": 0.25
                   }
                 }
               },
@@ -1764,10 +1577,6 @@
             "elements": [
               {
                 "type": "text",
-                "template_id": "data-row-space-width-20-height-1"
-              },
-              {
-                "type": "text",
                 "template_id": "data-order-item-separator"
               }
             ]
@@ -1780,10 +1589,6 @@
               "ratio": 1
             },
             "elements": [
-              {
-                "type": "text",
-                "template_id": "data-row-space-width-20"
-              },
               {
                 "type": "text",
                 "template_id": "data-order-summary-head",
@@ -1802,7 +1607,7 @@
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
-                    "ratio": 0.2
+                    "ratio": 0.25
                   }
                 }
               },
@@ -1829,10 +1634,6 @@
             "elements": [
               {
                 "type": "text",
-                "template_id": "data-row-space-width-20-height-1"
-              },
-              {
-                "type": "text",
                 "template_id": "data-order-item-separator"
               }
             ]
@@ -1845,10 +1646,6 @@
               "ratio": 1
             },
             "elements": [
-              {
-                "type": "text",
-                "template_id": "data-row-space-width-20"
-              },
               {
                 "type": "text",
                 "template_id": "data-order-summary-head",
@@ -1867,7 +1664,7 @@
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
-                    "ratio": 0.2
+                    "ratio": 0.25
                   }
                 }
               },
@@ -1894,10 +1691,6 @@
             "elements": [
               {
                 "type": "text",
-                "template_id": "data-row-space-width-20-height-1"
-              },
-              {
-                "type": "text",
                 "template_id": "data-order-item-separator"
               }
             ]
@@ -1910,10 +1703,6 @@
               "ratio": 1
             },
             "elements": [
-              {
-                "type": "text",
-                "template_id": "data-row-space-width-20"
-              },
               {
                 "type": "text",
                 "template_id": "data-order-summary-head",
@@ -1932,7 +1721,7 @@
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
-                    "ratio": 0.2
+                    "ratio": 0.25
                   }
                 }
               },
@@ -1959,10 +1748,6 @@
             "elements": [
               {
                 "type": "text",
-                "template_id": "data-row-space-width-20-height-1"
-              },
-              {
-                "type": "text",
                 "template_id": "data-order-item-separator"
               }
             ]
@@ -1975,10 +1760,6 @@
               "ratio": 1
             },
             "elements": [
-              {
-                "type": "text",
-                "template_id": "data-row-space-width-20"
-              },
               {
                 "type": "text",
                 "template_id": "data-order-summary-head",
@@ -1997,7 +1778,7 @@
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
-                    "ratio": 0.2
+                    "ratio": 0.25
                   }
                 }
               },
@@ -2024,10 +1805,6 @@
             "elements": [
               {
                 "type": "text",
-                "template_id": "data-row-space-width-20-height-1"
-              },
-              {
-                "type": "text",
                 "attributes": {
                   "size": {
                     "width": 20,
@@ -2036,7 +1813,7 @@
                   "layout": {
                     "width": "match_parent",
                     "height": "wrap_content",
-                    "ratio": 0.93
+                    "ratio": 1
                   },
                   "border_bottom": {
                     "width": 2

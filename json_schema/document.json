@@ -10,6 +10,10 @@
     "height": {
       "type": "integer"
     },
+    "inset": {
+      "type": "object",
+      "$ref": "definitions.json#/definitions/inset"
+    },
     "templates": {
       "type": "array",
       "items": {
