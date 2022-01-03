@@ -19,8 +19,8 @@ build:
 .PHONY: run
 run:
 	#go run ./main.go --in samples/sample-delivery-note/layout.json --out samples/sample-delivery-note/output.pdf --ttf fonts/TakaoPGothic.ttf
-	go run ./main.go --in samples/sample-report1/layout.json --out samples/sample-report1/output.pdf --ttf fonts/TakaoPGothic.ttf
-	#go run ./main.go --in samples/sample-report2/layout.json --out samples/sample-report2/output.pdf --ttf fonts/TakaoPGothic.ttf
+	#go run ./main.go --in samples/sample-report1/layout.json --out samples/sample-report1/output.pdf --ttf fonts/TakaoPGothic.ttf
+	go run ./main.go --in samples/sample-report2/layout.json --out samples/sample-report2/output.pdf --ttf fonts/TakaoPGothic.ttf
 	#go run ./main.go --in samples/text-margin/layout.json --out samples/text-margin/output.pdf --ttf fonts/TakaoPGothic.ttf
 	#go run ./main.go --in samples/text-wrap2/layout.json --out samples/text-wrap2/output.pdf --ttf fonts/TakaoPGothic.ttf
 
