@@ -74,9 +74,6 @@
             "margin": {
               "$ref": "#/definitions/margin"
             },
-            "padding": {
-              "$ref": "#/definitions/padding"
-            },
             "align": {
               "type": "string",
               "enum": [
@@ -208,24 +205,6 @@
       "additionalProperties": false
     },
     "margin": {
-      "type": "object",
-      "properties": {
-        "left": {
-          "type": "integer"
-        },
-        "top": {
-          "type": "integer"
-        },
-        "right": {
-          "type": "integer"
-        },
-        "bottom": {
-          "type": "integer"
-        }
-      },
-      "additionalProperties": false
-    },
-    "padding": {
       "type": "object",
       "properties": {
         "left": {

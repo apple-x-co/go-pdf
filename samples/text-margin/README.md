@@ -9,7 +9,7 @@
 Margin structure
 
 ```
-"padding": {
+"margin": {
     "top": 10,
     "right": 10,
     "bottom": 10,

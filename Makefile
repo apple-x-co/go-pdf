@@ -19,10 +19,9 @@ build:
 .PHONY: run
 run:
 	#go run ./main.go --in samples/sample-delivery-note/layout.json --out samples/sample-delivery-note/output.pdf --ttf fonts/TakaoPGothic.ttf
-	#go run ./main.go --in samples/sample-report1/layout.json --out samples/sample-report1/output.pdf --ttf fonts/TakaoPGothic.ttf
+	go run ./main.go --in samples/sample-report1/layout.json --out samples/sample-report1/output.pdf --ttf fonts/TakaoPGothic.ttf
 	#go run ./main.go --in samples/sample-report2/layout.json --out samples/sample-report2/output.pdf --ttf fonts/TakaoPGothic.ttf
-	go run ./main.go --in samples/text-margin/layout.json --out samples/text-margin/output.pdf --ttf fonts/TakaoPGothic.ttf
-	go run ./main.go --in samples/text-padding/layout.json --out samples/text-padding/output.pdf --ttf fonts/TakaoPGothic.ttf
+	#go run ./main.go --in samples/text-margin/layout.json --out samples/text-margin/output.pdf --ttf fonts/TakaoPGothic.ttf
 	#go run ./main.go --in samples/text-wrap2/layout.json --out samples/text-wrap2/output.pdf --ttf fonts/TakaoPGothic.ttf
 
 .PHONY: dev-mac
@@ -54,7 +53,7 @@ exec-samples:
 	./bin/$(BIN)-dev-mac --in samples/header-footer-layoutconstant/layout.json --out samples/header-footer-layoutconstant/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/image/layout.json --out samples/image/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/image-border/layout.json --out samples/image-border/output.pdf --ttf fonts/TakaoPGothic.ttf
-	./bin/$(BIN)-dev-mac --in samples/image-padding/layout.json --out samples/image-padding/output.pdf --ttf fonts/TakaoPGothic.ttf
+	./bin/$(BIN)-dev-mac --in samples/image-margin/layout.json --out samples/image-margin/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/image-origin/layout.json --out samples/image-origin/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/image-resize/layout.json --out samples/image-resize/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/image-size/layout.json --out samples/image-size/output.pdf --ttf fonts/TakaoPGothic.ttf
@@ -74,7 +73,6 @@ exec-samples:
 	./bin/$(BIN)-dev-mac --in samples/text-linebreak/layout.json --out samples/text-linebreak/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/text-margin/layout.json --out samples/text-margin/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/text-origin/layout.json --out samples/text-origin/output.pdf --ttf fonts/TakaoPGothic.ttf
-	./bin/$(BIN)-dev-mac --in samples/text-padding/layout.json --out samples/text-padding/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/text-size/layout.json --out samples/text-size/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/text-template/layout.json --out samples/text-template/output.pdf --ttf fonts/TakaoPGothic.ttf
 	./bin/$(BIN)-dev-mac --in samples/text-textsize/layout.json --out samples/text-textsize/output.pdf --ttf fonts/TakaoPGothic.ttf

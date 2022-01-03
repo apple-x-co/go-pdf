@@ -1,0 +1,177 @@
+{
+  "$schema": "../../json_schema/document.json",
+  "width": 595,
+  "height": 842,
+  "pages": [
+    {
+      "liner_layout": {
+        "orientation": "horizontal",
+        "liner_layouts": [
+          {
+            "orientation": "vertical",
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "MARGIN - TOP",
+                  "text_size": 8
+                }
+              },
+              {
+                "type": "image",
+                "attributes": {
+                  "path": "work/sample1.jpg",
+                  "size": {
+                    "width": 100
+                  },
+                  "margin": {
+                    "top": 10
+                  },
+                  "border": {
+                    "width": 1,
+                    "color": {
+                      "r": 175,
+                      "g": 223,
+                      "b": 228
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "vertical",
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "MARGIN - RIGHT",
+                  "text_size": 8
+                }
+              },
+              {
+                "type": "image",
+                "attributes": {
+                  "path": "work/sample1.jpg",
+                  "size": {
+                    "width": 100
+                  },
+                  "margin": {
+                    "right": 10
+                  },
+                  "border": {
+                    "width": 1,
+                    "color": {
+                      "r": 175,
+                      "g": 223,
+                      "b": 228
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "vertical",
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "MARGIN - BOTTOM",
+                  "text_size": 8
+                }
+              },
+              {
+                "type": "image",
+                "attributes": {
+                  "path": "work/sample1.jpg",
+                  "size": {
+                    "width": 100
+                  },
+                  "margin": {
+                    "bottom": 10
+                  },
+                  "border": {
+                    "width": 1,
+                    "color": {
+                      "r": 175,
+                      "g": 223,
+                      "b": 228
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "vertical",
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "MARGIN - LEFT",
+                  "text_size": 8
+                }
+              },
+              {
+                "type": "image",
+                "attributes": {
+                  "path": "work/sample1.jpg",
+                  "size": {
+                    "width": 100
+                  },
+                  "margin": {
+                    "left": 10
+                  },
+                  "border": {
+                    "width": 1,
+                    "color": {
+                      "r": 175,
+                      "g": 223,
+                      "b": 228
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "vertical",
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "MARGIN - ALL",
+                  "text_size": 8
+                }
+              },
+              {
+                "type": "image",
+                "attributes": {
+                  "path": "work/sample1.jpg",
+                  "size": {
+                    "width": 100
+                  },
+                  "margin": {
+                    "top": 10,
+                    "right": 10,
+                    "bottom": 10,
+                    "left": 10
+                  },
+                  "border": {
+                    "width": 1,
+                    "color": {
+                      "r": 175,
+                      "g": 223,
+                      "b": 228
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

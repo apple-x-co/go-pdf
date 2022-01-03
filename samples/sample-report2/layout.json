@@ -20,10 +20,16 @@
         },
         "align": "center",
         "valign": "middle",
-        "border": {
+        "border_left": {
           "width": 1
         },
-        "padding": {
+        "border_top": {
+          "width": 1
+        },
+        "border_bottom": {
+          "width": 1
+        },
+        "margin": {
           "top": 5,
           "bottom": 5
         }
@@ -40,10 +46,16 @@
         },
         "align": "center",
         "valign": "middle",
-        "border": {
+        "border_left": {
           "width": 1
         },
-        "padding": {
+        "border_top": {
+          "width": 1
+        },
+        "border_bottom": {
+          "width": 1
+        },
+        "margin": {
           "top": 5,
           "bottom": 5
         }
@@ -60,10 +72,16 @@
         },
         "align": "left",
         "valign": "middle",
-        "border": {
+        "border_left": {
           "width": 1
         },
-        "padding": {
+        "border_top": {
+          "width": 1
+        },
+        "border_bottom": {
+          "width": 1
+        },
+        "margin": {
           "top": 5,
           "bottom": 5
         }
@@ -80,10 +98,16 @@
         },
         "align": "left",
         "valign": "middle",
-        "border": {
+        "border_left": {
           "width": 1
         },
-        "padding": {
+        "border_top": {
+          "width": 1
+        },
+        "border_bottom": {
+          "width": 1
+        },
+        "margin": {
           "top": 5,
           "bottom": 5
         }
@@ -226,7 +250,10 @@
               "type": "text",
               "template_id": "table-header-t1",
               "attributes": {
-                "text": "Amount"
+                "text": "Amount",
+                "border_right": {
+                  "width": 1
+                }
               }
             }
           ]
@@ -304,7 +331,10 @@
                 "template_id": "table-body-t1",
                 "attributes": {
                   "text": "73.35",
-                  "align": "right"
+                  "align": "right",
+                  "border_right": {
+                    "width": 1
+                  }
                 }
               }
             ]
@@ -374,7 +404,10 @@
                 "template_id": "table-body-t1",
                 "attributes": {
                   "text": "73.35",
-                  "align": "right"
+                  "align": "right",
+                  "border_right": {
+                    "width": 1
+                  }
                 }
               }
             ]
@@ -444,7 +477,10 @@
                 "template_id": "table-body-t1",
                 "attributes": {
                   "text": "73.35",
-                  "align": "right"
+                  "align": "right",
+                  "border_right": {
+                    "width": 1
+                  }
                 }
               }
             ]
@@ -514,7 +550,10 @@
                 "template_id": "table-body-t1",
                 "attributes": {
                   "text": "73.35",
-                  "align": "right"
+                  "align": "right",
+                  "border_right": {
+                    "width": 1
+                  }
                 }
               }
             ]
@@ -584,7 +623,10 @@
                 "template_id": "table-body-t1",
                 "attributes": {
                   "text": "73.35",
-                  "align": "right"
+                  "align": "right",
+                  "border_right": {
+                    "width": 1
+                  }
                 }
               }
             ]
@@ -654,7 +696,10 @@
                 "template_id": "table-body-t1",
                 "attributes": {
                   "text": "73.35",
-                  "align": "right"
+                  "align": "right",
+                  "border_right": {
+                    "width": 1
+                  }
                 }
               }
             ]
@@ -724,7 +769,10 @@
                 "template_id": "table-body-t1",
                 "attributes": {
                   "text": "73.35",
-                  "align": "right"
+                  "align": "right",
+                  "border_right": {
+                    "width": 1
+                  }
                 }
               }
             ]
@@ -794,7 +842,10 @@
                 "template_id": "table-body-t1",
                 "attributes": {
                   "text": "73.35",
-                  "align": "right"
+                  "align": "right",
+                  "border_right": {
+                    "width": 1
+                  }
                 }
               }
             ]
@@ -864,7 +915,10 @@
                 "template_id": "table-body-t1",
                 "attributes": {
                   "text": "73.35",
-                  "align": "right"
+                  "align": "right",
+                  "border_right": {
+                    "width": 1
+                  }
                 }
               }
             ]
@@ -934,7 +988,10 @@
                 "template_id": "table-body-t1",
                 "attributes": {
                   "text": "73.35",
-                  "align": "right"
+                  "align": "right",
+                  "border_right": {
+                    "width": 1
+                  }
                 }
               }
             ]
@@ -1004,7 +1061,10 @@
                 "template_id": "table-body-t1",
                 "attributes": {
                   "text": "73.35",
-                  "align": "right"
+                  "align": "right",
+                  "border_right": {
+                    "width": 1
+                  }
                 }
               }
             ]
@@ -1074,7 +1134,10 @@
                 "template_id": "table-body-t1",
                 "attributes": {
                   "text": "73.35",
-                  "align": "right"
+                  "align": "right",
+                  "border_right": {
+                    "width": 1
+                  }
                 }
               }
             ]
@@ -1144,7 +1207,10 @@
                 "template_id": "table-body-t1",
                 "attributes": {
                   "text": "73.35",
-                  "align": "right"
+                  "align": "right",
+                  "border_right": {
+                    "width": 1
+                  }
                 }
               }
             ]
@@ -1214,7 +1280,10 @@
                 "template_id": "table-body-t1",
                 "attributes": {
                   "text": "73.35",
-                  "align": "right"
+                  "align": "right",
+                  "border_right": {
+                    "width": 1
+                  }
                 }
               }
             ]
@@ -1284,7 +1353,10 @@
                 "template_id": "table-body-t1",
                 "attributes": {
                   "text": "73.35",
-                  "align": "right"
+                  "align": "right",
+                  "border_right": {
+                    "width": 1
+                  }
                 }
               }
             ]
@@ -1354,7 +1426,10 @@
                 "template_id": "table-body-t1",
                 "attributes": {
                   "text": "73.35",
-                  "align": "right"
+                  "align": "right",
+                  "border_right": {
+                    "width": 1
+                  }
                 }
               }
             ]
@@ -1424,7 +1499,10 @@
                 "template_id": "table-body-t1",
                 "attributes": {
                   "text": "73.35",
-                  "align": "right"
+                  "align": "right",
+                  "border_right": {
+                    "width": 1
+                  }
                 }
               }
             ]
@@ -1494,7 +1572,10 @@
                 "template_id": "table-body-t1",
                 "attributes": {
                   "text": "73.35",
-                  "align": "right"
+                  "align": "right",
+                  "border_right": {
+                    "width": 1
+                  }
                 }
               }
             ]
@@ -1564,7 +1645,10 @@
                 "template_id": "table-body-t1",
                 "attributes": {
                   "text": "73.35",
-                  "align": "right"
+                  "align": "right",
+                  "border_right": {
+                    "width": 1
+                  }
                 }
               }
             ]
@@ -1590,7 +1674,7 @@
                   "border": {
                     "width": 1
                   },
-                  "padding": {
+                  "margin": {
                     "top": 5,
                     "bottom": 5
                   }
@@ -1610,7 +1694,7 @@
                   "border": {
                     "width": 1
                   },
-                  "padding": {
+                  "margin": {
                     "top": 5,
                     "bottom": 5
                   }
