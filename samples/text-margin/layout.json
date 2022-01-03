@@ -25,7 +25,7 @@
             "type": "text",
             "attributes": {
               "text": "LAYOUT MARGIN",
-              "inset": {
+              "margin": {
                 "top": 10,
                 "right": 20,
                 "bottom": 10,

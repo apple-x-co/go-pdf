@@ -71,8 +71,8 @@
             "background_color": {
               "$ref": "#/definitions/color"
             },
-            "inset": {
-              "$ref": "#/definitions/inset"
+            "margin": {
+              "$ref": "#/definitions/margin"
             },
             "align": {
               "type": "string",
@@ -204,7 +204,7 @@
       },
       "additionalProperties": false
     },
-    "inset": {
+    "margin": {
       "type": "object",
       "properties": {
         "left": {

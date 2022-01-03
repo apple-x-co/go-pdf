@@ -19,9 +19,9 @@
     "compress_level": {
       "type": "integer"
     },
-    "inset": {
+    "margin": {
       "type": "object",
-      "$ref": "definitions.json#/definitions/inset"
+      "$ref": "definitions.json#/definitions/margin"
     },
     "password": {
       "type": "string"
