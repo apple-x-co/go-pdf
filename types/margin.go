@@ -15,15 +15,15 @@ func (E *Margin) Vertical() float64 {
 	return E.Top + E.Bottom
 }
 
-func (R *Rect) ApplyMargin(padding Margin) Rect {
+func (R *Rect) ApplyMargin(margin Margin) Rect {
 	return Rect{
 		Origin: Origin{
-			X: R.Origin.X + padding.Left,
-			Y: R.Origin.Y + padding.Top,
+			X: R.Origin.X + margin.Left,
+			Y: R.Origin.Y + margin.Top,
 		},
 		Size: Size{
-			Width:  R.Size.Width - padding.Horizontal(),
-			Height: R.Size.Height - padding.Vertical(),
+			Width:  R.Size.Width - margin.Horizontal(),
+			Height: R.Size.Height - margin.Vertical(),
 		},
 	}
 }
