@@ -19,6 +19,9 @@
           "top": 2,
           "bottom": 4
         },
+        "content_margin": {
+          "left": 2
+        },
         "layout": {
           "width": "match_parent",
           "height": "wrap_content",
@@ -80,6 +83,9 @@
         "margin": {
           "top": 2,
           "bottom": 4
+        },
+        "content_margin": {
+          "left": 2
         }
       }
     },
@@ -437,14 +443,20 @@
                   "type": "text",
                   "template_id": "data-order-header",
                   "attributes": {
-                    "text": "ご注文No"
+                    "text": "ご注文No",
+                    "margin": {
+                      "top": 4
+                    }
                   }
                 },
                 {
                   "type": "text",
                   "template_id": "data-order-body",
                   "attributes": {
-                    "text": "1587366896-3042-57"
+                    "text": "1587366896-3042-57",
+                    "margin": {
+                      "top": 4
+                    }
                   }
                 }
               ]

@@ -1,6 +1,6 @@
 # go-pdf
 
-json to pdf
+CLI tools to generate PDF from JSON
 
 ## Feature
 
@@ -11,6 +11,7 @@ json to pdf
 * Header / Body / Footer
 * Image resizing
 * Text break
+* Text wrap
 
 ## Specification
 
@@ -23,7 +24,7 @@ https://github.com/minoryorg/Noto-Sans-CJK-JP
 
 ## Samples
 
-* [Report](./samples/sample-report/output.pdf)
+* [Report](./samples/sample-report1/output.pdf)
 
 [See Other](./samples/)
 
@@ -46,6 +47,7 @@ go-pdf --help
 
 ```json
 {
+  "$schema": "https://raw.githubusercontent.com/apple-x-co/go-pdf/master/json_schema/document.json",
   "width": 595,
   "height": 842,
   "pages": [

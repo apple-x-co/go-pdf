@@ -74,6 +74,9 @@
             "margin": {
               "$ref": "#/definitions/margin"
             },
+            "content_margin": {
+              "$ref": "#/definitions/content_margin"
+            },
             "align": {
               "type": "string",
               "enum": [
@@ -205,6 +208,24 @@
       "additionalProperties": false
     },
     "margin": {
+      "type": "object",
+      "properties": {
+        "left": {
+          "type": "integer"
+        },
+        "top": {
+          "type": "integer"
+        },
+        "right": {
+          "type": "integer"
+        },
+        "bottom": {
+          "type": "integer"
+        }
+      },
+      "additionalProperties": false
+    },
+    "content_margin": {
       "type": "object",
       "properties": {
         "left": {

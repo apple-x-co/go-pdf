@@ -325,10 +325,11 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, page types.Page, l
 				// TOTAL SIZE
 				size := types.Size{Width: measureSize.Width + decoded.Margin.Horizontal(), Height: measureSize.Height + decoded.Margin.Vertical()}
 
-				// FIXED POSITION
+				// DRAW FIXED POSITION
 				if decoded.Origin.X != UnsetX && decoded.Origin.Y != UnsetY {
 					textFrame := types.Rect{Origin: types.Origin{X: decoded.Origin.X, Y: decoded.Origin.Y}, Size: size}
 					textRect := textFrame.ApplyMargin(decoded.Margin)
+					textRect = textRect.ApplyContentMargin(decoded.ContentMargin)
 					p.gp.SetX(textRect.MinX())
 					p.gp.SetY(textRect.MinY())
 					p.drawText(documentConfigure, decoded, textRect, textFrame)
@@ -385,6 +386,7 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, page types.Page, l
 				// DRAWABLE RECT
 				textFrame := types.Rect{Origin: types.Origin{X: lineWrapRect.MaxX(), Y: lineWrapRect.MinY()}, Size: size}
 				textRect := textFrame.ApplyMargin(decoded.Margin)
+				textRect = textRect.ApplyContentMargin(decoded.ContentMargin)
 				p.gp.SetX(textRect.MinX())
 				p.gp.SetY(textRect.MinY())
 
@@ -434,10 +436,11 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, page types.Page, l
 				// TOTAL SIZE
 				size := types.Size{Width: measureSize.Width, Height: measureSize.Height}
 
-				// FIXED POSITION
+				// DRAW FIXED POSITION
 				if decoded.Origin.X != UnsetX && decoded.Origin.Y != UnsetY {
 					imageFrame := types.Rect{Origin: types.Origin{X: decoded.Origin.X, Y: decoded.Origin.Y}, Size: size}
 					imageRect := imageFrame.ApplyMargin(decoded.Margin)
+					imageRect = imageRect.ApplyContentMargin(decoded.ContentMargin)
 					p.gp.SetX(imageRect.MinX())
 					p.gp.SetY(imageRect.MinY())
 					p.drawImage(documentConfigure, decoded, imageRect, imageFrame)
@@ -494,6 +497,7 @@ func (p *PDF) draw(documentConfigure types.DocumentConfigure, page types.Page, l
 				// DRAWABLE RECT
 				imageFrame := types.Rect{Origin: types.Origin{X: lineWrapRect.MaxX(), Y: lineWrapRect.MinY()}, Size: size}
 				imageRect := imageFrame.ApplyMargin(decoded.Margin)
+				imageRect = imageRect.ApplyContentMargin(decoded.ContentMargin)
 				p.gp.SetX(imageRect.MinX())
 				p.gp.SetY(imageRect.MinY())
 

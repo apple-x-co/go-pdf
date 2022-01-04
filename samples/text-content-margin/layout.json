@@ -1,0 +1,97 @@
+{
+  "$schema": "../../json_schema/document.json",
+  "width": 595,
+  "height": 842,
+  "text_size": 8,
+  "pages": [
+    {
+      "liner_layout": {
+        "orientation": "horizontal",
+        "elements": [
+          {
+            "type": "text",
+            "attributes": {
+              "text": "NO CONTENT MARGIN",
+              "border": {
+                "width": 1,
+                "color": {
+                  "r": 175,
+                  "g": 223,
+                  "b": 228
+                }
+              }
+            }
+          },
+          {
+            "type": "text",
+            "attributes": {
+              "text": "CONTENT MARGIN - LEFT",
+              "content_margin": {
+                "left": 5
+              },
+              "border": {
+                "width": 1,
+                "color": {
+                  "r": 175,
+                  "g": 223,
+                  "b": 228
+                }
+              }
+            }
+          },
+          {
+            "type": "text",
+            "attributes": {
+              "text": "CONTENT MARGIN - TOP",
+              "content_margin": {
+                "top": 5
+              },
+              "border": {
+                "width": 1,
+                "color": {
+                  "r": 175,
+                  "g": 223,
+                  "b": 228
+                }
+              }
+            }
+          },
+          {
+            "type": "text",
+            "attributes": {
+              "text": "CONTENT MARGIN - RIGHT",
+              "content_margin": {
+                "right": 5
+              },
+              "border": {
+                "width": 1,
+                "color": {
+                  "r": 175,
+                  "g": 223,
+                  "b": 228
+                }
+              }
+            }
+          },
+          {
+            "type": "text",
+            "attributes": {
+              "text": "CONTENT MARGIN - BOTTOM",
+              "content_margin": {
+                "bottom": 5
+              },
+              "border": {
+                "width": 1,
+                "color": {
+                  "r": 175,
+                  "g": 223,
+                  "b": 228
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

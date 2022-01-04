@@ -1,0 +1,142 @@
+{
+  "$schema": "../../json_schema/document.json",
+  "width": 595,
+  "height": 842,
+  "pages": [
+    {
+      "liner_layout": {
+        "orientation": "horizontal",
+        "liner_layouts": [
+          {
+            "orientation": "vertical",
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "CONTENT MARGIN - TOP",
+                  "text_size": 8
+                }
+              },
+              {
+                "type": "image",
+                "attributes": {
+                  "path": "work/sample1.jpg",
+                  "size": {
+                    "width": 100
+                  },
+                  "content_margin": {
+                    "top": 10
+                  },
+                  "border": {
+                    "width": 1,
+                    "color": {
+                      "r": 175,
+                      "g": 223,
+                      "b": 228
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "vertical",
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "CONTENT MARGIN - RIGHT",
+                  "text_size": 8
+                }
+              },
+              {
+                "type": "image",
+                "attributes": {
+                  "path": "work/sample1.jpg",
+                  "size": {
+                    "width": 100
+                  },
+                  "content_margin": {
+                    "right": 10
+                  },
+                  "border": {
+                    "width": 1,
+                    "color": {
+                      "r": 175,
+                      "g": 223,
+                      "b": 228
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "vertical",
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "CONTENT MARGIN - BOTTOM",
+                  "text_size": 8
+                }
+              },
+              {
+                "type": "image",
+                "attributes": {
+                  "path": "work/sample1.jpg",
+                  "size": {
+                    "width": 100
+                  },
+                  "content_margin": {
+                    "bottom": 10
+                  },
+                  "border": {
+                    "width": 1,
+                    "color": {
+                      "r": 175,
+                      "g": 223,
+                      "b": 228
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "orientation": "vertical",
+            "elements": [
+              {
+                "type": "text",
+                "attributes": {
+                  "text": "CONTENT MARGIN - LEFT",
+                  "text_size": 8
+                }
+              },
+              {
+                "type": "image",
+                "attributes": {
+                  "path": "work/sample1.jpg",
+                  "size": {
+                    "width": 100
+                  },
+                  "content_margin": {
+                    "left": 10
+                  },
+                  "border": {
+                    "width": 1,
+                    "color": {
+                      "r": 175,
+                      "g": 223,
+                      "b": 228
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
